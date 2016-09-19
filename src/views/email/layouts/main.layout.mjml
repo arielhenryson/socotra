@@ -1,0 +1,48 @@
+<mjml>
+  <mj-body>
+    <mj-container background-color="#E1E1E1">
+    
+      <!-- view in browser -->
+      <mj-section padding="5">
+        <mj-column>
+          <mj-text
+                line-height="1"
+                color="#828282"
+                font-size="12"
+                align="center">
+                <span style="{{_hideOnBrowser}}">If you can't see this message </span>
+                <span style="{{_hideOnBrowser}}">
+                  <a href="{{_browserLink}}" style="color: inherit" target="_blank">View it in your browser.</a>
+                </span>
+          </mj-text>
+        </mj-column>
+      </mj-section>
+      <!-- end view in browser -->
+
+
+      <!-- body -->
+      {{body}}
+      <!-- end body -->
+
+
+      <!-- footer -->
+      <mj-section>
+        <mj-column>
+          <mj-text
+                color="#828282"
+                line-height="12"
+                font-size="12"
+                align="center">
+                <span>Copyright © {{_year}} {{_appName}}. All rights reserved.</span></p>
+                <span>If you do not want to recieve emails from us, you can </span>
+                <span>
+                  <a href="{{unsubscribeLink}}" style="color: inherit" target="_blank">unsubscribe.</a>
+                </span>
+          </mj-text>
+        </mj-column>
+      </mj-section>
+      <!-- end footer -->
+
+    </mj-container>
+  </mj-body>
+</mjml>

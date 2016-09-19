@@ -1,0 +1,28 @@
+[
+  {
+    "path": "/",
+    "method": "GET",
+    "controller": "index",
+    "middlewares": ["auth"]
+  },
+  {
+    "path": "/unsubscribe/:userID",
+    "controller": "unsubscribe",
+    "middlewares": []
+  },
+  {
+    "path": "/activation/:activationKey",
+    "controller": "activation",
+    "middlewares": []
+  },
+  {
+    "path": "/api/signup",
+    "controller": "signupAPI",
+    "middlewares": []
+  },
+  {
+    "path": "/api/login",
+    "controller": "loginAPI",
+    "middlewares": []
+  }
+]

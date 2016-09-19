@@ -1,0 +1,53 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = require('@angular/core');
+var Home = (function () {
+    function Home() {
+    }
+    Home = __decorate([
+        core_1.Component({
+            template: "\n    page1\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], Home);
+    return Home;
+}());
+exports.Home = Home;
+var Page2 = (function () {
+    function Page2() {
+    }
+    Page2 = __decorate([
+        core_1.Component({
+            template: "\n    page2\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], Page2);
+    return Page2;
+}());
+exports.Page2 = Page2;
+var Page3 = (function () {
+    function Page3() {
+    }
+    Page3 = __decorate([
+        core_1.Component({
+            template: "\n    page3\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], Page3);
+    return Page3;
+}());
+exports.Page3 = Page3;
+exports._routes = [
+    { path: 'home', component: Home },
+    { path: 'page2', component: Page2 },
+    { path: 'page3', component: Page3 }
+];
+//# sourceMappingURL=app.routes.js.map
