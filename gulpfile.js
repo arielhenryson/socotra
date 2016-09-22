@@ -168,7 +168,7 @@ gulp.task('startServer', ['webpack'],  () => {
 });
 
 gulp.task('test', () => {
-   console.log("Should run test");
+    console.log("Should run test");
 });
 
 
