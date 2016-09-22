@@ -21,16 +21,17 @@
 		"password": "QWE1234567890",
 		"host":"smtp.gmail.com"
 	},
-	"srcFolder": "./src/**",
-	"srcTSFiles": "./src/**/*.ts",
+	"srcFolder": "./src",
+    "srcTSFiles": "./src/**/*.ts",
 	"angularTSFile": "./src/public/app/**/*.ts",
-	"angularBuildFolder": "./.build/public/app/",
-	"serverStart": "./.build/core/main.js",
-	"buildDir": "./.build",
+    "angularBuildFolder": "./.build/public/app/",
+    "serverStart": "./.build/core/main.js",
+    "buildDir": "./.build",
 	"mainStyleFile": "./src/public/scss/style.scss",
-	"emailMainLayout": "./src/views/email/layouts/main.layout.mjml",
-	"emailSrcDir": "./src/views/email/*.mjml",
-	"emailBuildDir":"./.build/views/email/build/",
-	"emailPartialsBuild": "./.build/views/email/partialsBuild",
-	"NODE_ENV": "development"
+	"mainStyleFolder": "./src/public/scss",
+    "emailMainLayout": "./src/views/email/layouts/main.layout.mjml",
+    "emailSrcDir": "./src/views/email/*.mjml",
+    "emailBuildDir":"./.build/views/email/build/",
+    "emailPartialsBuild": "./.build/views/email/partialsBuild",
+    "NODE_ENV": "development"
 }

@@ -46,7 +46,6 @@ export class FileStorage extends DB {
         
         // first we try to get the file metadata
         const fileInfo: any = await this.getFileInfo(id);
-        console.log(fileInfo);
 
         if (fileInfo === null) {
             return ({

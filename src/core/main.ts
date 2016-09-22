@@ -61,14 +61,13 @@ db.promiseConnection().then(() => {
     app.use("/node_modules", express.static(path.join(ROOT, '/../node_modules')));
 
 
-    // Server extend layer for adding global middlewares
-    // that are specific for your app
+    // // Server extend layer for adding global middlewares
+    // // that are specific for your app
     try {
         require('../serverExtend')(app);
     } catch (e) {
         console.log("No server extend layer found");
     }
-
 
     // Routing
     require('./routes')(app);

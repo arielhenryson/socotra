@@ -1,29 +1,28 @@
-"use strict";
-
-const gulp = require('gulp');
-const typescript = require('gulp-typescript');
-const nodemon = require('gulp-nodemon');
-const mjml = require('gulp-mjml');
-const fs = require('fs');
-const foreach = require('gulp-foreach');
-const glob = require('glob');
-const mkdirp = require('mkdirp');
-const getDirName = require('path').dirname;
-const config = JSON.parse(fs.readFileSync('./src/config/config.json'));
-const forever = require('forever-monitor');
-const sass = require('gulp-sass');
-const inlineNg2Template = require('gulp-inline-ng2-template');
-const tsConfig = typescript.createProject('./tsconfig.json', { typescript: require('typescript')});
-const tsConfigNode = typescript.createProject('./tsconfigNode.json', { typescript: require('typescript')});
+const gulp = require("gulp");
+const typescript = require("gulp-typescript");
+const nodemon = require("gulp-nodemon");
+const mjml = require("gulp-mjml");
+const fs = require("fs");
+const foreach = require("gulp-foreach");
+const glob = require("glob");
+const mkdirp = require("mkdirp");
+const getDirName = require("path").dirname;
+const config = JSON.parse(fs.readFileSync("./src/config/config.json"));
+const forever = require("forever-monitor");
+const sass = require("gulp-sass");
+const inlineNg2Template = require("gulp-inline-ng2-template");
+const tsConfig = typescript.createProject("./tsconfig.json", { typescript: require("typescript")});
+const tsConfigNode = typescript.createProject("./tsconfigNode.json", { typescript: require("typescript")});
 const webpack = require("webpack");
+let spawn = require("child_process").spawn,node;
 
-let webpackConfig = require("./webpack.config.js");
+let webpackConfig = require("./../../Desktop/Socotra/webpack.config.js");
 
 console.log("----------------------------------------------------------");
 console.log("");
 console.log("");
 if (config.NODE_ENV === "development") {
-    webpackConfig = require("./webpack.config.dev.js");
+    webpackConfig = require("./../../Desktop/Socotra/webpack.config.dev.js");
 
 
     console.log("   Running in development mode");
@@ -47,21 +46,27 @@ function writeFile(path, contents, cb) {
 
 
 //Copy all of the src folder to the build directory
-gulp.task('copySrcFolder', () => {
-    return gulp.src([config.srcFolder, '!' + config.srcTSFiles])
+gulp.task("copySrcFolder", () => {
+    return gulp.src([
+        config.srcFolder + "/**",
+        '!' + config.srcTSFiles,
+        "!" + config.mainStyleFolder + "/**",
+        "!" + config.srcFolder + "/views/email/**",
+        "!" + config.srcFolder + "/public/app/**"
+    ])
         .pipe(gulp.dest(config.buildDir))
 });
 
 
 //Build the email partials
-gulp.task('buildEmailParts', ['copySrcFolder'], (cb) => {
+gulp.task('buildEmailParts', [], (cb) => {
     let layoutParms = {
         _appName: config.appName,
         _year: new Date().getFullYear()
     };
     let layout = fs.readFileSync(config.emailMainLayout, "utf8");
 
-    //Insert the layout param to the template
+//Insert the layout param to the template
     for (let key in layoutParms) {
         //For replace all string not only the first
         //string we use regex with g
@@ -97,7 +102,7 @@ gulp.task('compileEmail',['buildEmailParts'], () => {
 
 
 //Compile SASS to CSS
-gulp.task('compileSASS', ['compileEmail'], () => {
+gulp.task('compileSASS', [], () => {
     return gulp.src(config.mainStyleFile)
         .pipe(sass.sync().on('error', sass.logError))
         .pipe(gulp.dest(config.buildDir + '/public/css'));
@@ -105,18 +110,18 @@ gulp.task('compileSASS', ['compileEmail'], () => {
 
 
 //compile all the server side file to ES6 for Node.JS
-gulp.task('compileTSServer', ['compileSASS'], () => {
+gulp.task('compileTSServer', [], () => {
     return gulp.src([config.srcTSFiles ,"!" + config.angularTSFile])
         .pipe(typescript(tsConfigNode))
         .pipe(gulp.dest(config.buildDir));
 });
 
 //compile all the client side file to ES5
-gulp.task('compileTSClient', ['compileTSServer'], () => {
+gulp.task('compileTSClient', [], () => {
     return gulp.src([config.angularTSFile])
         .pipe(inlineNg2Template({
             useRelativePaths: false,
-            base: config.buildDir + '/public/app/',
+            base: config.srcFolder + '/public/app/',
             removeLineBreaks: true,
             indent: 1
         }))
@@ -129,7 +134,7 @@ gulp.task("webpack", ['compileTSClient'], (cb) => {
     // modify some webpack config options
     var myConfig = Object.create(webpackConfig);
 
-    // run webpack
+// run webpack
     webpack(myConfig, (err, stats) => {
         if (err) {
             console.log(err);
@@ -139,32 +144,70 @@ gulp.task("webpack", ['compileTSClient'], (cb) => {
     });
 });
 
+gulp.task("serve", () => {
+    if (node) node.kill();
+    node = spawn('node', [config.serverStart], {stdio: 'inherit'});
+    node.on('close', function (code) {
+        if (code === 8) {
+            gulp.log('Error detected, waiting for changes...');
+        }
+    });
+});
+
 //Compile and run server
-gulp.task('startServer', ['webpack'],  () => {
-    if (config.NODE_ENV === "development") {
-        const nodemonOptions = {
-            script: config.serverStart,
-            ext: 'ts json mjml html scss'
-        };
+gulp.task('startServer', ['compile'],  () => {
+    gulp.start('serve');
 
-        nodemon(nodemonOptions).on('restart',['compile'], () => {
-            setTimeout(() => {
-                console.log("change detected resetting server");
-            }, 500)
-        });
-    } else {
-        let child = new(forever.Monitor)(config.serverStart, {
-            max: 3,
-            silent: true,
-            args: []
-        });
+//watch for email template change
+    gulp.watch(config.srcFolder + "/views/email/**");
 
-        child.on('exit', function() {
-            console.log('app.js has exited after 3 restarts');
-        });
 
-        child.start();
-    }
+    gulp.watch(config.srcFolder + "/public/scss/**" , ['compileSASS']);
+
+
+    gulp.watch(config.srcFolder +"/public/app/**" , ['webpack']);
+
+    gulp.watch([
+        config.srcFolder +"/**",
+        "!" + config.srcFolder + "/public/**"
+    ] , ['compileTSServer']);
+
+    let waiter;
+    gulp.watch(config.buildDir + "/**" , function () {
+        clearTimeout(waiter);
+        waiter = setTimeout(function () {
+            console.log("change in build dir restart server");
+            gulp.start('serve');
+        }, 2000);
+    });
+
+
+    /*
+     if (config.NODE_ENV === "development") {
+     const nodemonOptions = {
+     script: config.serverStart,
+     ext: 'ts json mjml html scss'
+     };
+
+     nodemon(nodemonOptions).on('restart',['compile'], () => {
+     setTimeout(() => {
+     console.log("change detected resetting server");
+     }, 500)
+     });
+     } else {
+     let child = new(forever.Monitor)(config.serverStart, {
+     max: 3,
+     silent: true,
+     args: []
+     });
+
+     child.on('exit', function() {
+     console.log('app.js has exited after 3 restarts');
+     });
+
+     child.start();
+     }
+     */
 });
 
 gulp.task('test', () => {
@@ -175,5 +218,4 @@ gulp.task('test', () => {
 gulp.task('compile', ['copySrcFolder', 'buildEmailParts', 'compileEmail',
     'compileSASS', 'compileTSServer', 'compileTSClient', 'webpack']);
 
-gulp.task('run', ['copySrcFolder', 'buildEmailParts', 'compileEmail',
-    'compileSASS', 'compileTSServer', 'compileTSClient', 'webpack', 'startServer']);
+gulp.task('run', ['startServer']);

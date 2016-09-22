@@ -1,6 +1,6 @@
 "use strict";
 
-// the polyfills must be the first thing imported
+// the polyfills must be the first thing imported ///
 import 'angular2-universal-polyfills';
 
 

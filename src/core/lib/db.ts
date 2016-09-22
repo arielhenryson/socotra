@@ -39,9 +39,10 @@ export class DB {
             if (mongo !== null) {
                 this.db = mongo;
 
-                (function(clearInterval){
+
+                (function (clearInterval){
                     clearInterval(watcher);
-                }(clearInterval))
+                }(clearInterval));
             }
         }, 1000);
     }
@@ -63,9 +64,9 @@ export class DB {
                         resolve(true);
                     });
 
-                    (function(clearInterval){
+                    (function (clearInterval){
                         clearInterval(watcher);
-                    }(clearInterval))
+                    }(clearInterval));
                 }
             }, 1000);
         });
