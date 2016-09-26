@@ -9,7 +9,7 @@ import {DB} from '../core/lib/db';
 
 const config = require('../config/config.json');
 const ROOT: string = path.join(__dirname, '../');
-const app: express.Application = express();
+const app: any = express();
 const fs = require('fs');
 const compression = require('compression');
 app.use(compression());
