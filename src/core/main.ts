@@ -19,12 +19,14 @@ app.locals.ROOT = ROOT;
 app.locals.config = config;
 
 // create .temp folder for store temp files
-try {
-    fs.statSync('.temp/uploads');
-} catch (e) {
-    fs.mkdirSync('.temp/uploads');
+function makeDir(dir) {
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir);
+    }
 }
 
+makeDir(".temp");
+makeDir(".temp/uploads");
 
 let db = new DB();
 db.promiseConnection().then(() => {
