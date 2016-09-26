@@ -1,6 +1,5 @@
 const gulp = require("gulp");
 const typescript = require("gulp-typescript");
-const nodemon = require("gulp-nodemon");
 const mjml = require("gulp-mjml");
 const fs = require("fs");
 const foreach = require("gulp-foreach");
@@ -8,7 +7,6 @@ const glob = require("glob");
 const mkdirp = require("mkdirp");
 const getDirName = require("path").dirname;
 const config = JSON.parse(fs.readFileSync("./src/config/config.json"));
-const forever = require("forever-monitor");
 const sass = require("gulp-sass");
 const inlineNg2Template = require("gulp-inline-ng2-template");
 const tsConfig = typescript.createProject("./tsconfig.json", { typescript: require("typescript")});
@@ -16,13 +14,13 @@ const tsConfigNode = typescript.createProject("./tsconfigNode.json", { typescrip
 const webpack = require("webpack");
 let spawn = require("child_process").spawn,node;
 
-let webpackConfig = require("./../../Desktop/Socotra/webpack.config.js");
+let webpackConfig = require("./webpack.config.js");
 
 console.log("----------------------------------------------------------");
 console.log("");
 console.log("");
 if (config.NODE_ENV === "development") {
-    webpackConfig = require("./../../Desktop/Socotra/webpack.config.dev.js");
+    webpackConfig = require("./webpack.config.dev.js");
 
 
     console.log("   Running in development mode");
@@ -154,68 +152,61 @@ gulp.task("serve", () => {
     });
 });
 
+
+var taskCounter = 0;
+gulp.task('addToTaskCounter', function () {
+    taskCounter++;
+});
+
+gulp.task('ServerStart', function () {
+    taskCounter--;
+
+    // there are active task that didn't finished yet
+    // so the last task will restart the server
+    // so wee can skip restart
+    if (taskCounter > 0) {
+        return;
+    }
+
+    gulp.start('serve');
+});
+
+
+
+
 //Compile and run server
 gulp.task('startServer', ['compile'],  () => {
     gulp.start('serve');
 
-//watch for email template change
-    gulp.watch(config.srcFolder + "/views/email/**");
+    //watch for email template change
+    gulp.watch(config.srcFolder + "/views/email/**", function() {
+        runSequence('addToTaskCounter', 'compileEmail', 'ServerStart');
+    });
 
 
-    gulp.watch(config.srcFolder + "/public/scss/**" , ['compileSASS']);
+    gulp.watch(config.srcFolder + "/public/scss/**" , function() {
+        runSequence('addToTaskCounter', 'compileSASS', 'ServerStart');
+    });
 
 
-    gulp.watch(config.srcFolder +"/public/app/**" , ['webpack']);
+    gulp.watch(config.srcFolder +"/public/app/**" , function() {
+        runSequence('addToTaskCounter', 'webpack', 'ServerStart');
+    });
 
     gulp.watch([
         config.srcFolder +"/**",
         "!" + config.srcFolder + "/public/**"
-    ] , ['compileTSServer']);
-
-    let waiter;
-    gulp.watch(config.buildDir + "/**" , function () {
-        clearTimeout(waiter);
-        waiter = setTimeout(function () {
-            console.log("change in build dir restart server");
-            gulp.start('serve');
-        }, 2000);
+    ] , function() {
+        runSequence('addToTaskCounter', 'compileTSServer', 'ServerStart');
     });
-
-
-    /*
-     if (config.NODE_ENV === "development") {
-     const nodemonOptions = {
-     script: config.serverStart,
-     ext: 'ts json mjml html scss'
-     };
-
-     nodemon(nodemonOptions).on('restart',['compile'], () => {
-     setTimeout(() => {
-     console.log("change detected resetting server");
-     }, 500)
-     });
-     } else {
-     let child = new(forever.Monitor)(config.serverStart, {
-     max: 3,
-     silent: true,
-     args: []
-     });
-
-     child.on('exit', function() {
-     console.log('app.js has exited after 3 restarts');
-     });
-
-     child.start();
-     }
-     */
 });
 
 gulp.task('test', () => {
     console.log("Should run test");
 });
 
-
-gulp.task('compile', ['copySrcFolder', 'buildEmailParts', 'compileEmail',
+var runSequence = require('run-sequence');
+gulp.task('compile', ['copySrcFolder', 'compileEmail',
     'compileSASS', 'compileTSServer', 'compileTSClient', 'webpack']);
 
 gulp.task('run', ['startServer']);
