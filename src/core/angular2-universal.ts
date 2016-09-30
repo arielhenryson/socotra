@@ -19,12 +19,14 @@ import {MainModule} from "../public/app/mainModule";
 
 
 module.exports = (app) => {
+    const ROOT = app.locals.ROOT;
+
     enableProdMode();
 
 
     // Express View
     app.engine('.html', createEngine({}));
-    app.set('views', __dirname + "/../public/");
+    app.set('views', ROOT + "/public/");
     app.set('view engine', 'html');
 
 

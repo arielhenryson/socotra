@@ -22,7 +22,7 @@
 		"host":"smtp.gmail.com"
 	},
 	"srcFolder": "./src",
-	"serverStart": "./.build/core/main.js",
+	"serverStart": "./.build/main.js",
 	"buildDir": "./.build",
 	"NODE_ENV": "development"
 }
