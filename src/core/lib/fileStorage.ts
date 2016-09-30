@@ -5,7 +5,11 @@
 import * as fs from 'fs';
 import {DB} from '../lib/db';
 
-const config = require('../../config/config.json');
+export let config = null; // export for _upload.mid
+export function setConfigForFileStorage(_config) {
+    config = _config;
+}
+
 const GridFSBucket = require('mongodb').GridFSBucket;
 const GridStore = require('mongodb').GridStore;
 

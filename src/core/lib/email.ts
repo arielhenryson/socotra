@@ -2,7 +2,13 @@
 
 "use strict";
 
-const config = require('../../config/config.json');
+let config = null;
+
+export function setConfigForEmail(_config) {
+    config = _config;
+}
+
+
 const nodemailer = require('nodemailer');
 const fs = require('fs');
 

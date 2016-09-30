@@ -5,13 +5,16 @@
 import * as path from 'path';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import {DB} from './lib/db';
+import {DB, setConfigForDB} from './lib/db';
+import {setConfigForEmail} from "./lib/email";
+import {setConfigForFileStorage} from "./lib/fileStorage";
 
 const ROOT: string = path.join(__dirname, '../');
 const app: any = express();
 const fs = require('fs');
 const compression = require('compression');
 app.use(compression());
+
 
 
 
@@ -40,14 +43,21 @@ export class Server {
 
         app.locals.ROOT = ROOT;
         app.locals.config = this.options.config;
+
+
     }
 
     run() {
         const ROOT = this.options.config.root;
         const config = this.options.config;
 
-        let db = new DB(config);
+        setConfigForDB(config);
+        let db = new DB();
         db.promiseConnection().then(() => {
+            // pass the config file to the object in the framework
+            setConfigForEmail(config);
+            setConfigForFileStorage(config);
+
             // Set up cookie-parser
             app.use(require('cookie-parser')());
 
@@ -70,10 +80,6 @@ export class Server {
 
             // angular2-universal
             require('./angular2-universal')(app);
-
-
-            // Set view engine
-            require('./viewEngine')(app);
 
 
             // Setting the static folder fo the app

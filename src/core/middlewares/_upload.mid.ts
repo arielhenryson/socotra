@@ -1,8 +1,6 @@
 /// <reference path="../../core/_all.d.ts" />
-
-const config = require('../../config/config.json');
 const multer  = require('multer');
-import {FileStorage} from  '../lib/fileStorage';
+import {FileStorage, config} from  '../lib/fileStorage';
 import * as fs from 'fs';
 
 const mmm = require('mmmagic');
@@ -10,7 +8,7 @@ const Magic = mmm.Magic;
 
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
-        callback(null, '.temp/uploads');
+        callback(null, config.root + '/../.temp/uploads');
     },
     filename: (req, file, callback) => {
         callback(null, file.fieldname + '-' + Date.now());
@@ -24,6 +22,7 @@ const multerOptions = {
     storage : storage
 };
 
+
 const upload = multer(multerOptions).array('files[]');
 const gridStorage = new FileStorage();
 
@@ -36,6 +35,7 @@ module.exports = (req, res, next) => {
         return new Promise((resolve, reject) => {
             if (typeof req.uploadAllowedTypes === "undefined") {
                 resolve(true);
+                return;
             }
 
             const magic = new Magic(mmm.MAGIC_MIME_TYPE);
@@ -87,9 +87,14 @@ module.exports = (req, res, next) => {
                     size: file.size,
                     encoding: file.encoding,
                     mimetype: file.mimetype,
-                    userID: req.session.user.id
+                    userID: null
                 }
             };
+
+
+            if (typeof req.session.user !== "undefined" && typeof req.session.user.id !== "undefined") {
+                data.metadata.userID = req.session.user.id;
+            }
 
             checkFileType(file.path).then(function (fileTypeOK) {
                 if (!fileTypeOK) {

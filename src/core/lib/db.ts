@@ -6,18 +6,16 @@ const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 
 let config = null;
+export function setConfigForDB(_config) {
+    config = _config;
+}
 
 let mongo = null;
 
 export class DB {
     public db;
 
-    constructor(options?) {
-        if (config === null && typeof options !== "undefined") {
-            config = options;
-        }
-
-
+    constructor() {
         this.connect();
     }
 
