@@ -28,7 +28,6 @@ function makeDir(dir) {
 
 export class Server {
     private options = {
-        root: "",
         config: null,
         extend: null
     };
@@ -44,10 +43,10 @@ export class Server {
     }
 
     run() {
-        const ROOT = this.options.root;
+        const ROOT = this.options.config.root;
         const config = this.options.config;
 
-        let db = new DB();
+        let db = new DB(config);
         db.promiseConnection().then(() => {
             // Set up cookie-parser
             app.use(require('cookie-parser')());

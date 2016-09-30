@@ -6,9 +6,8 @@ function extend(app) {
    // console.log(__dirname);
 }
 
-
+config.root = __dirname;
 const _server = new Server({
-    root: __dirname,
     extend: extend,
     config: config
 });

@@ -24,5 +24,6 @@
 	"srcFolder": "./src",
 	"serverStart": "./.build/main.js",
 	"buildDir": "./.build",
-	"NODE_ENV": "development"
+	"NODE_ENV": "development",
+	"root": ""
 }

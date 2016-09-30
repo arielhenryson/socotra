@@ -13,6 +13,7 @@ module.exports = (req, res) => {
     createUser.then((results) => {
         if (results.error) {
             res.json(results);
+            return;
         }
 
         res.json({

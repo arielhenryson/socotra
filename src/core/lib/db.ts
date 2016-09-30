@@ -2,30 +2,22 @@
 "use strict";
 
 import * as crypto from 'crypto';
-const config = require('../../config/config.json');
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 
-// mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
-let url = `${config.dbHost}:${config.dbPort}/${config.dbName}`;
-if (typeof config.dbUserPassword !== undefined &&
-    config.dbUserPassword.length) {
-    // Authenticate a database
-    url = `${config.dbUserName$}:${config.dbUserPassword}@${config.dbHost}:${config.dbPort} /${config.dbName}`;
-
-}
+let config = null;
 
 let mongo = null;
-
-MongoClient.connect("mongodb://" + url, function(error, db) {
-    console.log("database connection established");
-    mongo = db;
-});
 
 export class DB {
     public db;
 
-    constructor() {
+    constructor(options?) {
+        if (config === null && typeof options !== "undefined") {
+            config = options;
+        }
+
+
         this.connect();
     }
 
@@ -34,6 +26,20 @@ export class DB {
             this.db = mongo;
             return;
         }
+
+        // mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
+        let url = `${config.dbHost}:${config.dbPort}/${config.dbName}`;
+        if (typeof config.dbUserPassword !== undefined &&
+            config.dbUserPassword.length) {
+            // Authenticate a database
+            url = `${config.dbUserName$}:${config.dbUserPassword}@${config.dbHost}:${config.dbPort} /${config.dbName}`;
+
+        }
+
+        MongoClient.connect("mongodb://" + url, function(error, db) {
+            console.log("database connection established");
+            mongo = db;
+        });
 
         let watcher = setInterval(() => {
             if (mongo !== null) {
