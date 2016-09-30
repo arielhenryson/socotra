@@ -47,8 +47,8 @@ function writeFile(path, contents, cb) {
 gulp.task("copySrcFolder", () => {
     return gulp.src([
         config.srcFolder + "/**",
-        '!' + config.srcTSFiles,
-        "!" + config.mainStyleFolder + "/**",
+        '!' + config.srcFolder + "/**/*.ts",
+        "!" + config.srcFolder + "/public/scss/**",
         "!" + config.srcFolder + "/views/email/**",
         "!" + config.srcFolder + "/public/app/**"
     ])
@@ -62,7 +62,7 @@ gulp.task('buildEmailParts', [], (cb) => {
         _appName: config.appName,
         _year: new Date().getFullYear()
     };
-    let layout = fs.readFileSync(config.emailMainLayout, "utf8");
+    let layout = fs.readFileSync(config.srcFolder + "/views/email/layouts/main.layout.mjml", "utf8");
 
 //Insert the layout param to the template
     for (let key in layoutParms) {
@@ -72,7 +72,7 @@ gulp.task('buildEmailParts', [], (cb) => {
         layout = layout.replace(re, layoutParms[key]);
     }
 
-    glob.sync(config.emailSrcDir).forEach((filePath, idx, array) => {
+    glob.sync(config.srcFolder + "/views/email/*.mjml").forEach((filePath, idx, array) => {
         //If the filePath is folder we skip to the next one
         if (fs.statSync(filePath).isDirectory()) {
             return;
@@ -82,7 +82,7 @@ gulp.task('buildEmailParts', [], (cb) => {
         fileName = fileName[fileName.length -1];
         const fileContent =  fs.readFileSync(filePath, "utf8");
         let template = layout.replace('{{body}}', fileContent);
-        writeFile(config.emailPartialsBuild + '/' + fileName, template, function () {
+        writeFile(config.buildDir + "/views/email/partialsBuild/" + fileName, template, function () {
             if (idx === array.length - 1){
                 cb();
             }
@@ -93,15 +93,15 @@ gulp.task('buildEmailParts', [], (cb) => {
 
 //Compile email from MJML to HTML
 gulp.task('compileEmail',['buildEmailParts'], () => {
-    return gulp.src(config.emailPartialsBuild + '/*.mjml')
+    return gulp.src(config.buildDir + "/views/email/partialsBuild/*.mjml")
         .pipe(mjml())
-        .pipe(gulp.dest(config.emailBuildDir))
+        .pipe(gulp.dest(config.buildDir + "/views/email/build/"))
 });
 
 
 //Compile SASS to CSS
 gulp.task('compileSASS', [], () => {
-    return gulp.src(config.mainStyleFile)
+    return gulp.src(config.srcFolder + "/public/scss/style.scss")
         .pipe(sass.sync().on('error', sass.logError))
         .pipe(gulp.dest(config.buildDir + '/public/css'));
 });
@@ -109,14 +109,14 @@ gulp.task('compileSASS', [], () => {
 
 //compile all the server side file to ES6 for Node.JS
 gulp.task('compileTSServer', [], () => {
-    return gulp.src([config.srcTSFiles ,"!" + config.angularTSFile])
+    return gulp.src([config.srcFolder + "/**/*.ts" ,"!" + config.srcFolder + "/public/app/**/*.ts"])
         .pipe(typescript(tsConfigNode))
         .pipe(gulp.dest(config.buildDir));
 });
 
 //compile all the client side file to ES5
 gulp.task('compileTSClient', [], () => {
-    return gulp.src([config.angularTSFile])
+    return gulp.src([config.srcFolder + "/public/app/**/*.ts"])
         .pipe(inlineNg2Template({
             useRelativePaths: false,
             base: config.srcFolder + '/public/app/',
@@ -124,7 +124,7 @@ gulp.task('compileTSClient', [], () => {
             indent: 1
         }))
         .pipe(typescript(tsConfig))
-        .pipe(gulp.dest(config.angularBuildFolder));
+        .pipe(gulp.dest(config.buildDir + "/public/app/"));
 });
 
 

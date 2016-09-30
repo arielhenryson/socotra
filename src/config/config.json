@@ -22,16 +22,7 @@
 		"host":"smtp.gmail.com"
 	},
 	"srcFolder": "./src",
-    "srcTSFiles": "./src/**/*.ts",
-	"angularTSFile": "./src/public/app/**/*.ts",
-    "angularBuildFolder": "./.build/public/app/",
-    "serverStart": "./.build/core/main.js",
-    "buildDir": "./.build",
-	"mainStyleFile": "./src/public/scss/style.scss",
-	"mainStyleFolder": "./src/public/scss",
-    "emailMainLayout": "./src/views/email/layouts/main.layout.mjml",
-    "emailSrcDir": "./src/views/email/*.mjml",
-    "emailBuildDir":"./.build/views/email/build/",
-    "emailPartialsBuild": "./.build/views/email/partialsBuild",
-    "NODE_ENV": "development"
+	"serverStart": "./.build/core/main.js",
+	"buildDir": "./.build",
+	"NODE_ENV": "development"
 }
