@@ -4,11 +4,8 @@
 
 import * as fs from 'fs';
 import {DB} from '../lib/db';
+import {config} from "../global";
 
-export let config = null; // export for _upload.mid
-export function setConfigForFileStorage(_config) {
-    config = _config;
-}
 
 const GridFSBucket = require('mongodb').GridFSBucket;
 const GridStore = require('mongodb').GridStore;

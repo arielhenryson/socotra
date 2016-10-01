@@ -2,13 +2,10 @@
 "use strict";
 
 import * as crypto from 'crypto';
+import {config} from "../global";
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 
-let config = null;
-export function setConfigForDB(_config) {
-    config = _config;
-}
 
 let mongo = null;
 

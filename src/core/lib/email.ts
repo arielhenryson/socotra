@@ -2,17 +2,11 @@
 
 "use strict";
 
-let config = null;
-
-export function setConfigForEmail(_config) {
-    config = _config;
-}
-
 
 const nodemailer = require('nodemailer');
 const fs = require('fs');
-
 import {DB} from './db';
+import {config} from "../global";
 
 export class Email extends DB {
     private sender;

@@ -1,6 +1,7 @@
 /// <reference path="../../core/_all.d.ts" />
+import {config} from "../global";
 const multer  = require('multer');
-import {FileStorage, config} from  '../lib/fileStorage';
+import {FileStorage} from  '../lib/fileStorage';
 import * as fs from 'fs';
 
 const mmm = require('mmmagic');

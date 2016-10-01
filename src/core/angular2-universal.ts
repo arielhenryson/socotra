@@ -1,8 +1,9 @@
 /// <reference path="../core/_all.d.ts" />
 
+import {config} from "./global";
+
 // the polyfills must be the first thing imported in node.js
 import 'angular2-universal-polyfills';
-
 
 // Angular 2
 import { enableProdMode } from '@angular/core';
@@ -14,8 +15,9 @@ import { createEngine } from 'angular2-express-engine';
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 
-import {_routes} from "../public/app/app.routes";
-import {MainModule} from "../public/app/mainModule";
+
+const _routes = require(config.root + "/public/app/app.routes")._routes;
+const MainModule = require(config.root + "/public/app/mainModule").MainModule;
 
 
 module.exports = (app) => {

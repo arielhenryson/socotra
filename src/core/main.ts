@@ -5,20 +5,14 @@
 import * as path from 'path';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import {DB, setConfigForDB} from './lib/db';
-import {setConfigForEmail} from "./lib/email";
-import {setConfigForFileStorage} from "./lib/fileStorage";
+import {DB} from './lib/db';
+import {setConfig} from "./global";
 
 const ROOT: string = path.join(__dirname, '../');
 const app: any = express();
 const fs = require('fs');
 const compression = require('compression');
 app.use(compression());
-
-
-
-
-
 
 
 // create .temp folder for store temp files
@@ -51,12 +45,11 @@ export class Server {
         const ROOT = this.options.config.root;
         const config = this.options.config;
 
-        setConfigForDB(config);
+        setConfig(config);
+
         let db = new DB();
         db.promiseConnection().then(() => {
             // pass the config file to the object in the framework
-            setConfigForEmail(config);
-            setConfigForFileStorage(config);
 
             // Set up cookie-parser
             app.use(require('cookie-parser')());
