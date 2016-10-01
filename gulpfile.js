@@ -147,7 +147,11 @@ gulp.task("webpack", ['compileTSClient'], (cb) => {
 gulp.task("serve", () => {
     if (node) node.kill();
     node = spawn('node', [config.serverStart], {stdio: 'inherit'});
-    node.on('close', function () {
+    node.on('close', function (code) {
+        if(code === null) {
+            return;
+        }
+
         if (config.NODE_ENV === "development") {
             console.log('Error detected, waiting for changes...');
         } else {
