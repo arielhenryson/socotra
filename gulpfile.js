@@ -49,6 +49,8 @@ gulp.task("copySrcFolder", () => {
         config.srcFolder + "/**",
         '!' + config.srcFolder + "/**/*.ts",
         "!" + config.srcFolder + "/public/scss/**",
+        "!" + config.srcFolder + "/public/less/**",
+        "!" + config.srcFolder + "/public/app/**",
         "!" + config.srcFolder + "/views/email/**",
         "!" + config.srcFolder + "/public/app/**"
     ])
