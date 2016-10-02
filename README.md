@@ -1,6 +1,7 @@
 #Socotra
 ##Socotra is a Web Framework for building isomorphic scalable, high-performance Web Applications
 [![Known Vulnerabilities](https://snyk.io/test/github/arielhenryson/socotra/badge.svg)](https://snyk.io/test/github/arielhenryson/socotra)
+
 Build web apps using TypeScript Node.JS Express Angular 2 and MongoDB.
 
 The project is still in its early stages and under heavy development
