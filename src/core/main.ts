@@ -8,7 +8,19 @@ import * as bodyParser from 'body-parser';
 import {DB} from './lib/db';
 import {setConfig} from "./global";
 
-const ROOT: string = path.join(__dirname, '../');
+
+// set root folder
+let pathArray: any = process.argv[1];
+pathArray = pathArray.split('/');
+pathArray.pop();
+let ROOT = "/";
+for (let i in pathArray) {
+    ROOT += pathArray[i] + '/';
+}
+// end set root folder
+
+
+
 const app: any = express();
 const fs = require('fs');
 const compression = require('compression');
@@ -32,13 +44,11 @@ export class Server {
     constructor(options) {
         makeDir(".temp");
         makeDir(".temp/uploads");
-
         this.options = options;
 
+        this.options.config.root = ROOT;
         app.locals.ROOT = ROOT;
         app.locals.config = this.options.config;
-
-
     }
 
     run() {
