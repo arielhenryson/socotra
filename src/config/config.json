@@ -16,6 +16,7 @@
 	"dbUserName": "",
 	"dbUserPassword": "",
 	"logRequest": true,
+	"stripTag": true,
 	"smtp": {
 		"user": "sokotraqw@gmail.com",
 		"password": "QWE1234567890",

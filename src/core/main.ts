@@ -8,6 +8,8 @@ import * as bodyParser from 'body-parser';
 import {DB} from './lib/db';
 import {setConfig} from "./global";
 
+const stripTag = require("./middlewares/stripTags.mid");
+
 
 // set root folder
 let pathArray: any = process.argv[1];
@@ -59,7 +61,11 @@ export class Server {
 
         let db = new DB();
         db.promiseConnection().then(() => {
-            // pass the config file to the object in the framework
+            if (config.stripTag) {
+                // protect against xss attack
+                app.use(stripTag);
+            }
+
 
             // Set up cookie-parser
             app.use(require('cookie-parser')());
