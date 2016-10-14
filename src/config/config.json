@@ -17,7 +17,7 @@
 	"dbUserPassword": "",
 	"logRequest": true,
 	"stripTag": true,
-	"numberOfRequestForIpPerMinute": 1800,
+	"numberOfRequestForIpPerMinute": 7000,
 	"smtp": {
 		"user": "sokotraqw@gmail.com",
 		"password": "QWE1234567890",
