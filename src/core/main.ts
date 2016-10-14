@@ -8,7 +8,6 @@ import * as bodyParser from 'body-parser';
 import {DB} from './lib/db';
 import {setConfig} from "./global";
 
-const stripTag = require("./middlewares/stripTags.mid");
 
 
 // set root folder
@@ -28,12 +27,7 @@ const fs = require('fs');
 const compression = require('compression');
 app.use(compression());
 
-// security
-const helmet = require('helmet');
-app.use(helmet.contentSecurityPolicy());
-app.use(helmet.noSniff());
-app.use(helmet.xssFilter());
-// end security
+
 
 
 // create .temp folder for store temp files
@@ -68,11 +62,7 @@ export class Server {
 
         let db = new DB();
         db.promiseConnection().then(() => {
-            if (config.stripTag) {
-                // protect against xss attack
-                app.use(stripTag);
-            }
-
+            require('./security')(app);
 
             // Set up cookie-parser
             app.use(require('cookie-parser')());
@@ -116,11 +106,6 @@ export class Server {
 
             // Routing
             require('./routes')(app);
-
-
-            // Reducing the http header size
-            // by removing x-powered-by
-            app.disable('x-powered-by');
 
 
             // Set the http server
