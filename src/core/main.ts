@@ -28,6 +28,13 @@ const fs = require('fs');
 const compression = require('compression');
 app.use(compression());
 
+// security
+const helmet = require('helmet');
+app.use(helmet.contentSecurityPolicy());
+app.use(helmet.noSniff());
+app.use(helmet.xssFilter());
+// end security
+
 
 // create .temp folder for store temp files
 function makeDir(dir) {
