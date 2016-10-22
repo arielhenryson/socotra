@@ -106,4 +106,47 @@ export class DB {
     public hash(value: string, solt: string): string {
         return crypto.createHmac("sha256", solt).update(value).digest('hex');
     }
+
+    public dbFindOne(collection: string, where: any, options: any) {
+        return new Promise((resolve) => {
+            this.db.collection(collection).findOne(where, options, (error, data) => {
+                resolve({
+                    error: error,
+                    data: data
+                });
+            });
+        });
+    }
+
+    public dbInsert(collection: string, docs, options: any) {
+        return new Promise((resolve) => {
+            this.db.collection(collection).insert(docs, (error) => {
+                resolve({
+                    error: error
+                });
+            });
+        });
+    }
+
+    public dbUpdate(collection: string, where: any, what: any, options: any) {
+        return new Promise((resolve) => {
+            this.db.collection(collection).update(where, what, options, (error, results) => {
+                resolve({//
+                    error: error,
+                    results: results
+                });
+            });
+        });
+    }
+
+    public dbFind(collection: string, where: any, options: any) {
+        return new Promise((resolve) => {
+            this.db.collection(collection).find(where, options).toArray( (error, data) => {
+                resolve({
+                    error: error,
+                    data: data
+                });
+            });
+        });
+    }
 }
