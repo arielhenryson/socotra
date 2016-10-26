@@ -88,7 +88,7 @@ export class DB {
     }
 
     public makeDoc(data: any): Object {
-        if (typeof data.createTime !== "undefined") {
+        if (typeof data._createTime !== "undefined") {
             return data;
         }
 
