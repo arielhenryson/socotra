@@ -87,9 +87,13 @@ export class DB {
         return new ObjectID();
     }
 
-    public makeDoc(data: Object): Object {
+    public makeDoc(data: any): Object {
+        if (typeof data.createTime !== "undefined") {
+            return data;
+        }
+
         let object = {
-            createTime: new Date()
+            _createTime: new Date()
         };
 
         for (let key in data) {
@@ -120,6 +124,14 @@ export class DB {
 
     public dbInsert(collection: string, docs, options: any) {
         return new Promise((resolve) => {
+            if (docs instanceof Array) {
+                for (let i in docs) {
+                    docs[i] = this.makeDoc(docs[i]);
+                }
+            } else {
+                docs = this.makeDoc(docs);
+            }
+
             this.db.collection(collection).insert(docs, (error) => {
                 resolve({
                     error: error
