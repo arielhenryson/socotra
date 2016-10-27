@@ -24,7 +24,7 @@ const multerOptions = {
 };
 
 
-const upload = multer(multerOptions).array('files[]');
+const upload: any = multer(multerOptions).array('files[]');
 const gridStorage = new FileStorage();
 
 module.exports = (req, res, next) => {
