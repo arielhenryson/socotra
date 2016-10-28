@@ -13,6 +13,8 @@ const tsConfig = typescript.createProject("./tsconfig.json", { typescript: requi
 const tsConfigNode = typescript.createProject("./tsconfigNode.json", { typescript: require("typescript")});
 const webpack = require("webpack");
 const karmaServer = require('karma').Server;
+const jasmineNode = require('gulp-jasmine-node');
+
 let spawn = require("child_process").spawn,node;
 
 let webpackConfig = require("./webpack.config.js");
@@ -213,12 +215,23 @@ gulp.task('startServer', ['compile'],  () => {
     });
 });
 
-gulp.task('test', ['webpack'], (done) => {
+gulp.task('testServer', ['compileTSServer'], () => {
+    return gulp.src([
+        config.buildDir + '/**/*.spec.js',
+        "!" + config.buildDir + '/public/app/**'
+    ]).pipe(jasmineNode({
+        timeout: 10000
+    }));
+});
+
+gulp.task('testClient', ['webpack'], (done) => {
     new karmaServer({
         configFile: __dirname + '/karma.conf.js',
         singleRun: true
     }, function() { done(); }).start();
 });
+
+gulp.task('test', ['testServer', 'testClient']);
 
 var runSequence = require('run-sequence');
 gulp.task('compile', ['copySrcFolder', 'compileEmail',

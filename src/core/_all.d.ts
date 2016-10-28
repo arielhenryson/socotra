@@ -1,0 +1,1 @@
+/// <reference path="../public/app/typings/jasmine.d.ts" />
