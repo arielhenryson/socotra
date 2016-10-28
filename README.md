@@ -10,7 +10,7 @@ The project is still in its early stages and under heavy development
 
 Download the files to your computer
 ```bash
-$ git clone https://github.com/qwikwiz/Socotra
+$ git clone https://github.com/arielhenryson/Socotra
 ```
 Move to download directory
 ```bash
