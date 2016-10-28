@@ -31,5 +31,5 @@ describe('1st tests', () => {
 
 
 
-    it('true is true', () => expect(true).toBe(true));
+    it('test value', () => expect(comp.testValue).toBe("test"));
 });
