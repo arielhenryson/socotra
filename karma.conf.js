@@ -13,9 +13,30 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      '.build/public/dist/vendor.js',
-      '.build/public/dist/app.js',
-      '.build/public/app/**/*.spec.js'
+// Polyfills
+      'node_modules/core-js/client/shim.js',
+      'node_modules/reflect-metadata/Reflect.js',
+
+      // zone.js
+      'node_modules/zone.js/dist/zone.js',
+      'node_modules/zone.js/dist/long-stack-trace-zone.js',
+      'node_modules/zone.js/dist/proxy.js',
+      'node_modules/zone.js/dist/sync-test.js',
+      'node_modules/zone.js/dist/jasmine-patch.js',
+      'node_modules/zone.js/dist/async-test.js',
+      'node_modules/zone.js/dist/fake-async-test.js',
+
+      // RxJs
+      { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
+      { pattern: 'node_modules/rxjs/**/*.js.map', included: false, watched: false },
+
+      // Paths loaded via module imports:
+      // Angular itself
+      { pattern: 'node_modules/@angular/**/*.js', included: false, watched: false },
+      { pattern: 'node_modules/@angular/**/*.js.map', included: false, watched: false },
+
+        // app file
+        '.build/public/app/**/*.spec.js'
     ],
 
 
@@ -27,8 +48,6 @@ module.exports = function(config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
       // add webpack as preprocessor
-      '.build/public/dist/vendor.js': ['webpack'],
-      '.build/public/dist/app.js': ['webpack'],
       '.build/public/app/**/*.spec.js': ['webpack']
     },
 

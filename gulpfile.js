@@ -217,7 +217,7 @@ gulp.task('test', ['webpack'], (done) => {
     new karmaServer({
         configFile: __dirname + '/karma.conf.js',
         singleRun: true
-    }, done).start();
+    }, function() { done(); }).start();
 });
 
 var runSequence = require('run-sequence');

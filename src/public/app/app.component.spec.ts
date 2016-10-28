@@ -1,11 +1,35 @@
+import {TestBed} from "@angular/core/testing";
+
 import {App} from "./app.component";
+import {BrowserDynamicTestingModule,
+    platformBrowserDynamicTesting} from "@angular/platform-browser-dynamic/testing";
+import {RouterTestingModule} from "@angular/router/testing";
 
-describe('AppComponent', () => {
+let fixture;
+let comp;
+
+describe('1st tests', () => {
     beforeEach(() => {
-        this.app = new App();
+        TestBed.initTestEnvironment(
+            BrowserDynamicTestingModule,
+            platformBrowserDynamicTesting()
+        );
+
+        // refine the test module by declaring the test component
+        TestBed.configureTestingModule({
+            declarations: [ App ],
+            imports: [ RouterTestingModule ]
+
+        });
+
+        // create component and test fixture
+        fixture = TestBed.createComponent(App);
+
+        // get test component from the fixture
+        comp = fixture.componentInstance;
     });
 
-    it('should have a property', () => {
-        expect(this.app.testValue).toBe("test");
-    });
+
+
+    it('true is true', () => expect(true).toBe(true));
 });
