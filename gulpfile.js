@@ -12,6 +12,7 @@ const inlineNg2Template = require("gulp-inline-ng2-template");
 const tsConfig = typescript.createProject("./tsconfig.json", { typescript: require("typescript")});
 const tsConfigNode = typescript.createProject("./tsconfigNode.json", { typescript: require("typescript")});
 const webpack = require("webpack");
+const karmaServer = require('karma').Server;
 let spawn = require("child_process").spawn,node;
 
 let webpackConfig = require("./webpack.config.js");
@@ -212,8 +213,11 @@ gulp.task('startServer', ['compile'],  () => {
     });
 });
 
-gulp.task('test', () => {
-    console.log("Should run test");
+gulp.task('test', ['webpack'], (done) => {
+    new karmaServer({
+        configFile: __dirname + '/karma.conf.js',
+        singleRun: true
+    }, done).start();
 });
 
 var runSequence = require('run-sequence');
