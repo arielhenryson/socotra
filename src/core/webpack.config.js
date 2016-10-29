@@ -1,3 +1,6 @@
+const ROOT = "../../";
+
+
 const webpack = require('webpack');
 const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
 
@@ -14,12 +17,12 @@ module.exports = {
         })
     ],
     entry: {
-        app: "./.build/public/app/main",
-        vendor: "./.build/public/app/vendor"
+        app: ROOT + "./.build/public/app/main",
+        vendor: ROOT + "./.build/public/app/vendor"
     },
     output: {
         path: __dirname,
-        filename: "./.build/public/dist/[name].js"
+        filename: ROOT +"./.build/public/dist/[name].js"
     },
     resolve: {
         extensions: ['', '.js', '.ts']
