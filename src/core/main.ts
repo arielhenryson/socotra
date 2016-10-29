@@ -45,8 +45,9 @@ export class Server {
     };
 
     constructor(options) {
-        makeDir(".temp");
-        makeDir(".temp/uploads");
+        console.log(ROOT);
+        makeDir(ROOT + "../.temp");
+        makeDir(ROOT + "../.temp/uploads");
         this.options = options;
 
         this.options.config.root = ROOT;

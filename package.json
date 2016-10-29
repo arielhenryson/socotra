@@ -75,7 +75,8 @@
     "webpack": "2.1.0-beta.22"
   },
   "scripts": {
-    "start": "gulp run",
-    "test": "gulp test"
+    "start": "gulp run  --gulpfile ./src/core/gulpfile.js",
+    "test": "gulp test  --gulpfile ./src/core/gulpfile.js",
+    "compile": "gulp compile  --gulpfile ./src/core/gulpfile.js"
   }
 }

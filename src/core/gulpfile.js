@@ -1,3 +1,6 @@
+const ROOT = "../../";
+
+
 const gulp = require("gulp");
 const typescript = require("gulp-typescript");
 const mjml = require("gulp-mjml");
@@ -6,11 +9,11 @@ const foreach = require("gulp-foreach");
 const glob = require("glob");
 const mkdirp = require("mkdirp");
 const getDirName = require("path").dirname;
-const config = JSON.parse(fs.readFileSync("./src/config/config.json"));
+const config = JSON.parse(fs.readFileSync(ROOT + "src/config/config.json"));
 const sass = require("gulp-sass");
 const inlineNg2Template = require("gulp-inline-ng2-template");
-const tsConfig = typescript.createProject("./tsconfig.json", { typescript: require("typescript")});
-const tsConfigNode = typescript.createProject("./tsconfigNode.json", { typescript: require("typescript")});
+const tsConfig = typescript.createProject(ROOT + "tsconfig.json", { typescript: require("typescript")});
+const tsConfigNode = typescript.createProject(ROOT + "tsconfigNode.json", { typescript: require("typescript")});
 const webpack = require("webpack");
 const karmaServer = require('karma').Server;
 const jasmineNode = require('gulp-jasmine-node');
@@ -18,6 +21,13 @@ const jasmineNode = require('gulp-jasmine-node');
 let spawn = require("child_process").spawn,node;
 
 let webpackConfig = require("./webpack.config.js");
+
+
+
+config.srcFolder = ROOT + config.srcFolder;
+config.buildDir = ROOT + config.buildDir;
+config.serverStart = ROOT + config.serverStart;
+
 
 console.log("----------------------------------------------------------");
 console.log("");

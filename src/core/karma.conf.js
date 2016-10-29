@@ -1,6 +1,10 @@
+const ROOT = "../../";
+
+const specFiles = ROOT + '.build/public/app/**/*.spec.js';
+
 // Karma configuration
 module.exports = function(config) {
-  config.set({
+  let options = {
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
@@ -14,29 +18,29 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
 // Polyfills
-      'node_modules/core-js/client/shim.js',
-      'node_modules/reflect-metadata/Reflect.js',
+      ROOT + 'node_modules/core-js/client/shim.js',
+      ROOT + 'node_modules/reflect-metadata/Reflect.js',
 
       // zone.js
-      'node_modules/zone.js/dist/zone.js',
-      'node_modules/zone.js/dist/long-stack-trace-zone.js',
-      'node_modules/zone.js/dist/proxy.js',
-      'node_modules/zone.js/dist/sync-test.js',
-      'node_modules/zone.js/dist/jasmine-patch.js',
-      'node_modules/zone.js/dist/async-test.js',
-      'node_modules/zone.js/dist/fake-async-test.js',
+      ROOT + 'node_modules/zone.js/dist/zone.js',
+      ROOT + 'node_modules/zone.js/dist/long-stack-trace-zone.js',
+      ROOT + 'node_modules/zone.js/dist/proxy.js',
+      ROOT + 'node_modules/zone.js/dist/sync-test.js',
+      ROOT + 'node_modules/zone.js/dist/jasmine-patch.js',
+      ROOT + 'node_modules/zone.js/dist/async-test.js',
+      ROOT + 'node_modules/zone.js/dist/fake-async-test.js',
 
       // RxJs
-      { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
-      { pattern: 'node_modules/rxjs/**/*.js.map', included: false, watched: false },
+      { pattern: ROOT + 'node_modules/rxjs/**/*.js', included: false, watched: false },
+      { pattern: ROOT + 'node_modules/rxjs/**/*.js.map', included: false, watched: false },
 
       // Paths loaded via module imports:
       // Angular itself
-      { pattern: 'node_modules/@angular/**/*.js', included: false, watched: false },
-      { pattern: 'node_modules/@angular/**/*.js.map', included: false, watched: false },
+      { pattern: ROOT + 'node_modules/@angular/**/*.js', included: false, watched: false },
+      { pattern: ROOT + 'node_modules/@angular/**/*.js.map', included: false, watched: false },
 
-        // app file
-        '.build/public/app/**/*.spec.js'
+      // app file
+      ROOT + '.build/public/app/**/*.spec.js'
     ],
 
 
@@ -46,10 +50,7 @@ module.exports = function(config) {
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: {
-      // add webpack as preprocessor
-      '.build/public/app/**/*.spec.js': ['webpack']
-    },
+    preprocessors: {},
 
     webpack: {
       // karma watches the test entry points
@@ -101,5 +102,9 @@ module.exports = function(config) {
     // Concurrency level
     // how many browser should be started simultaneous
     concurrency: Infinity
-  })
+  };
+
+  options.preprocessors[specFiles] = ['webpack'];
+
+  config.set(options);
 };
