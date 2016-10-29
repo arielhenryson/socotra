@@ -89,8 +89,9 @@ export class Server {
 
 
             // Setting the static folder fo the app
-            app.use("/", express.static(path.join(ROOT, '/public')));
-            app.use("/node_modules", express.static(path.join(ROOT, '/../node_modules')));
+            app.use("/", express.static(path.join(ROOT, '/public'), {
+                    maxAge: config.maxAge
+            }));
 
 
             // // Server extend layer for adding global middlewares

@@ -17,6 +17,7 @@
 	"dbUserPassword": "",
 	"logRequest": true,
 	"stripTag": true,
+	"maxAge": 86400000,
 	"numberOfRequestForIpPerMinute": 7000,
 	"smtp": {
 		"user": "sokotraqw@gmail.com",
