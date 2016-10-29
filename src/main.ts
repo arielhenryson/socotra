@@ -1,4 +1,4 @@
-import {Server} from "./core/main";
+import {Server} from "./core/main";//
 
 const config = require('./config/config.json');
 
