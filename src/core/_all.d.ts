@@ -1,1 +1,1 @@
-/// <reference path="../public/app/typings/jasmine.d.ts" />
+/// <reference path="./typings/jasmine.d.ts" />

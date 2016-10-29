@@ -22,6 +22,7 @@ const MainModule = require(config.root + "/public/app/mainModule").MainModule;
 
 module.exports = (app) => {
     const ROOT = app.locals.ROOT;
+    const config = app.locals.config;
 
     enableProdMode();
 
@@ -44,7 +45,7 @@ module.exports = (app) => {
             preboot: false,
             baseUrl: '/',
             requestUrl: req.originalUrl,
-            originUrl: 'http://localhost:3000'
+            originUrl: 'http://localhost:' + config.httpPort
         });
     }
 

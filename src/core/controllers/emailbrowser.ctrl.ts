@@ -1,8 +1,7 @@
 /// <reference path="../_all.d.ts" />
 
-"use strict";
 
-import {DB} from '../../core/lib/db';
+import {DB} from "../lib/db";
 
 module.exports = (req, res) => {
     const id: string = req.params.id;
