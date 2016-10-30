@@ -1,6 +1,3 @@
-/// <reference path="../_all.d.ts" />
-"use strict";
-
 import * as crypto from 'crypto';
 import {config} from "../global";
 const MongoClient = require('mongodb').MongoClient;

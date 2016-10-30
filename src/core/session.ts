@@ -1,7 +1,3 @@
-/// <reference path="../core/_all.d.ts" />
-
-"use strict";
-
 import {DB} from  './lib/db';
 
 

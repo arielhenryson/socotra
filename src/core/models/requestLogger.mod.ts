@@ -1,6 +1,3 @@
-/// <reference path="../_all.d.ts" />
-"use strict";
-
 import {DB} from  '../lib/db';
 
 export class RequestLogger extends DB {

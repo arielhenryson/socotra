@@ -1,7 +1,3 @@
-/// <reference path="_all.d.ts" />
-
-"use strict";
-
 import * as path from 'path';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';

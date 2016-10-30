@@ -1,8 +1,3 @@
-/// <reference path="../_all.d.ts" />
-
-"use strict";
-
-
 const nodemailer = require('nodemailer');
 const fs = require('fs');
 import {DB} from './db';

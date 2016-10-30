@@ -1,6 +1,3 @@
-/// <reference path="../_all.d.ts" />
-
-
 import {DB} from "../lib/db";
 
 module.exports = (req, res) => {

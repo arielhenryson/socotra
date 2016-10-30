@@ -17,9 +17,9 @@ const tsConfigNode = typescript.createProject(ROOT + "tsconfig.json", { typescri
 const webpack = require("webpack");
 const karmaServer = require('karma').Server;
 const jasmineNode = require('gulp-jasmine-node');
+const runSequence = require('run-sequence');
 
 let spawn = require("child_process").spawn,node;
-
 let webpackConfig = require("./webpack.config.js");
 
 
@@ -83,7 +83,7 @@ gulp.task('buildEmailParts', [], (cb) => {
     for (let key in layoutParms) {
         //For replace all string not only the first
         //string we use regex with g
-        var re = new RegExp('{{' + key +'}}', 'g');
+        const re = new RegExp('{{' + key +'}}', 'g');
         layout = layout.replace(re, layoutParms[key]);
     }
 
@@ -145,7 +145,7 @@ gulp.task('compileTSClient', [], () => {
 
 gulp.task("webpack", ['compileTSClient'], (cb) => {
     // modify some webpack config options
-    var myConfig = Object.create(webpackConfig);
+    const myConfig = Object.create(webpackConfig);
 
 // run webpack
     webpack(myConfig, (err, stats) => {
@@ -177,7 +177,7 @@ gulp.task("serve", () => {
 });
 
 
-var taskCounter = 0;
+let taskCounter = 0;
 gulp.task('addToTaskCounter', function () {
     taskCounter++;
 });
@@ -243,7 +243,7 @@ gulp.task('testClient', ['webpack'], (done) => {
 
 gulp.task('test', ['testServer', 'testClient']);
 
-var runSequence = require('run-sequence');
+
 gulp.task('compile', ['copySrcFolder', 'compileEmail',
     'compileSASS', 'compileTSServer', 'compileTSClient', 'webpack']);
 

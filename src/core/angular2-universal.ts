@@ -1,5 +1,3 @@
-/// <reference path="../core/_all.d.ts" />
-
 import {config} from "./global";
 
 // the polyfills must be the first thing imported in node.js

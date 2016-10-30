@@ -1,8 +1,3 @@
-/// <reference path="../core/_all.d.ts" />
-
-"use strict";
-
-
 import {FileStorage} from  './lib/fileStorage';
 import * as fs from 'fs';
 

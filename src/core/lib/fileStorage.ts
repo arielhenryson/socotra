@@ -1,7 +1,3 @@
-/// <reference path="../_all.d.ts" />
-
-"use strict";
-
 import * as fs from 'fs';
 import {DB} from '../lib/db';
 import {config} from "../global";

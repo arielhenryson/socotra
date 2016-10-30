@@ -1,8 +1,3 @@
-/// <reference path="../core/_all.d.ts" />
-
-"use strict";
-
-
 const helmet = require('helmet');
 const stripTag = require("./middlewares/stripTags.mid");
 const RateLimit = require('express-rate-limit');

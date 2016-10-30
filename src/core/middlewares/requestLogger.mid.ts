@@ -1,6 +1,3 @@
-/// <reference path="../../core/_all.d.ts" />
-
-
 import {RequestLogger} from '../models/requestLogger.mod';
 
 (function() {
