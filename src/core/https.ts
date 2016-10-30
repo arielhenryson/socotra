@@ -1,7 +1,3 @@
-/// <reference path="../core/_all.d.ts" />
-
-"use strict";
-
 import * as https from "https";
 import * as fs from "fs";
 

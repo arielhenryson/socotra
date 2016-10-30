@@ -1,5 +1,3 @@
-/// <reference path="../core/_all.d.ts" />
-
 import {DB}  from '../core/lib/db';
 const config = require('../config/config.json');
 

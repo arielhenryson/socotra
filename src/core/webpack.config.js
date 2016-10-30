@@ -1,9 +1,6 @@
 const ROOT = "../../";
-
-
 const webpack = require('webpack');
 const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
-
 
 
 module.exports = {

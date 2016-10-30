@@ -1,6 +1,3 @@
-/// <reference path="../../core/_all.d.ts" />
-
-
 module.exports = (req, res, next) => {
     const types: string[] = [ "video/mp4", "video/avi"];
 

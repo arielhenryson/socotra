@@ -1,6 +1,3 @@
-/// <reference path="../core/_all.d.ts" />
-
-
 import {DB} from  '../core/lib/db';
 import {DBHelper}  from '../services/dbHelper.service';
 

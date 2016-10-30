@@ -1,8 +1,5 @@
-/// <reference path="../core/_all.d.ts" />
+import {Model} from  './model.mod';
 
-
-import {Model} from  '../models/model.mod';
-import * as validator from '../core/lib/generic/validation';
 
 export class Activation extends Model {
     constructor() {

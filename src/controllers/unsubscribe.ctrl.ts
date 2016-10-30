@@ -1,7 +1,3 @@
-/// <reference path="../core/_all.d.ts" />
-
-
-"use strict";
 import {Unsubscribe} from '../models/unsubscribe.mod';
 
 module.exports = (req, res) => {

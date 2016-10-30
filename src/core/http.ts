@@ -1,7 +1,3 @@
-/// <reference path="../core/_all.d.ts" />
-
-"use strict";
-
 import * as http from "http";
 
 module.exports = (app) => {

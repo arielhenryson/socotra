@@ -1,7 +1,5 @@
-/// <reference path="../core/_all.d.ts" />
-
 import {Email}  from '../core/lib/email';
-import {DBHelper}  from '../services/dbHelper.service';
+import {DBHelper}  from './dbHelper.service';
 
 const config = require('../config/config.json');
 

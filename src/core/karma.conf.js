@@ -1,5 +1,4 @@
 const ROOT = "../../";
-
 const specFiles = ROOT + '.build/public/app/**/*.spec.js';
 
 // Karma configuration
@@ -17,7 +16,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-// Polyfills
+      // Polyfills
       ROOT + 'node_modules/core-js/client/shim.js',
       ROOT + 'node_modules/reflect-metadata/Reflect.js',
 

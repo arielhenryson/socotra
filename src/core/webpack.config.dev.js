@@ -1,6 +1,4 @@
 const ROOT = "../../";
-
-
 const webpack = require('webpack');
 
 
