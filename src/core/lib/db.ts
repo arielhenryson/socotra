@@ -4,6 +4,11 @@ const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 
 
+interface MongoDoc {
+    _createTime?: any;
+    [propName: string]: any;
+}
+
 let mongo = null;
 
 export class DB {
@@ -70,10 +75,13 @@ export class DB {
         });
     }
 
-    public static isValidId(id) {
-        let checkForHexRegExp = new RegExp("^[0-9a-fA-F]{24}$");
-
-        return checkForHexRegExp.exec(id);
+    public static isValidId(str: string) {
+        str = str + '';
+        var len = str.length, valid = false;
+        if (len == 12 || len == 24) {
+            valid = /^[0-9a-fA-F]+$/.test(str);
+        }
+        return valid;
     };
 
     public static createNewId(value) {
@@ -84,7 +92,7 @@ export class DB {
         return new ObjectID();
     }
 
-    public static makeDoc(data: any): Object {
+    public static makeDoc(data: MongoDoc): Object {
         if (typeof data._createTime !== "undefined") {
             return data;
         }
