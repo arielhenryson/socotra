@@ -21,7 +21,7 @@ describe('database class', () => {
         expect(validID).toEqual(true);
     });
 
-    it('expect ABC to be valid _id', () => {
+    it('expect ABC not to be valid _id', () => {
         const validID = DB.isValidId("ABC");
         expect(validID).toEqual(false);
     });
