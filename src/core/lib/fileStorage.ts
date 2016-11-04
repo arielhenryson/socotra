@@ -17,7 +17,7 @@ export class FileStorage extends DB {
         const bucket = new GridFSBucket(this.db);
         
         return new Promise((resolve) => {
-            let id = this.createNewId("");
+            let id = DB.createNewId("");
             let options = {
                 metadata: data.metadata
             };
@@ -39,7 +39,7 @@ export class FileStorage extends DB {
     }
     
     public async readFile(id) {
-        id = this.createNewId(id);
+        id = DB.createNewId(id);
         
         // first we try to get the file metadata
         const fileInfo: any = await this.getFileInfo(id);
@@ -59,7 +59,7 @@ export class FileStorage extends DB {
     }
     
     public deleteFile(id): Promise<any> {
-        id = this.createNewId(id);
+        id = DB.createNewId(id);
         const bucket = new GridFSBucket(this.db);
 
         return new Promise((resolve) => {

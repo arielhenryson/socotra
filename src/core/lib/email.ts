@@ -11,7 +11,7 @@ export class Email extends DB {
         super();
         // create reusable transporter object using the default SMTP transport
         this.sender = nodemailer.createTransport(`smtps://${config.smtp.user}:${config.smtp.password}@${config.smtp.host}`);
-        this.id = this.createNewId("");
+        this.id = DB.createNewId("");
     }
 
     public send(options): void {
@@ -68,8 +68,8 @@ export class Email extends DB {
     // async function that save every email sent from
     // the system
     private saveToDB(data): Promise<boolean> {
-        let sentMail = this.makeDoc(data);
-        const newID = this.createNewId("");
+        let sentMail = DB.makeDoc(data);
+        const newID = DB.createNewId("");
 
         data._id = this.id;
 

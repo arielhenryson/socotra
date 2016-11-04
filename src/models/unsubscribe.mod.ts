@@ -6,7 +6,7 @@ export class Unsubscribe extends Model {
     }
     
     private addToUnsubscribe(email) {
-        const obj = this.makeDoc({
+        const obj = Model.makeDoc({
             email: email
         });
         

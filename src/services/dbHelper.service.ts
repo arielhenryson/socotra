@@ -30,7 +30,7 @@ export class DBHelper extends DB {
     
     public getUserEmailById(id: string) {
         const where = {
-            _id: this.createNewId(id)
+            _id: DB.createNewId(id)
         };
         
         return new Promise((resolve, reject) => {

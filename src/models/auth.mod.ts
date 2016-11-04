@@ -31,10 +31,10 @@ export class Auth extends Model {
     }
 
     private makeNewUser(email: string, password: string) {
-        const solt = this.makeNewSolt();
-        const hashPassword = this.hash(password, solt);
-        const activationKey = this.makeNewSolt();
-        const newUser = this.makeDoc({
+        const solt = Model.makeNewSolt();
+        const hashPassword = Model.hash(password, solt);
+        const activationKey = Model.makeNewSolt();
+        const newUser = Model.makeDoc({
             email: email,
             solt: solt,
             password: hashPassword,

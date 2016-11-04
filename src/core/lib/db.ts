@@ -70,21 +70,21 @@ export class DB {
         });
     }
 
-    public isValidId(id) {
+    public static isValidId(id) {
         let checkForHexRegExp = new RegExp("^[0-9a-fA-F]{24}$");
 
         return checkForHexRegExp.exec(id);
     };
 
-    public createNewId(value) {
-        if (this.isValidId(value)) {
+    public static createNewId(value) {
+        if (DB.isValidId(value)) {
             return new ObjectID(value);
         }
 
         return new ObjectID();
     }
 
-    public makeDoc(data: any): Object {
+    public static makeDoc(data: any): Object {
         if (typeof data._createTime !== "undefined") {
             return data;
         }
@@ -100,11 +100,11 @@ export class DB {
         return object;
     }
 
-    public makeNewSolt(): string {
+    public static makeNewSolt(): string {
         return crypto.randomBytes(16).toString('hex');
     }
 
-    public hash(value: string, solt: string): string {
+    public static hash(value: string, solt: string): string {
         return crypto.createHmac("sha256", solt).update(value).digest('hex');
     }
 
@@ -123,10 +123,10 @@ export class DB {
         return new Promise((resolve) => {
             if (docs instanceof Array) {
                 for (let i in docs) {
-                    docs[i] = this.makeDoc(docs[i]);
+                    docs[i] = DB.makeDoc(docs[i]);
                 }
             } else {
-                docs = this.makeDoc(docs);
+                docs = DB.makeDoc(docs);
             }
 
             this.db.collection(collection).insert(docs, (error) => {
