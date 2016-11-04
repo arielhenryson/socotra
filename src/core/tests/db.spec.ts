@@ -1,7 +1,6 @@
 import {DB} from "../lib/db";
 import {setConfig} from "../global";
 
-setConfig
 
 describe('database class', () => {
     it('test should connect to database', (done) => {
