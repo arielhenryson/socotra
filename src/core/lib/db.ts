@@ -143,7 +143,7 @@ export class DB {
     public dbUpdate(collection: string, where: any, what: any, options: any) {
         return new Promise((resolve) => {
             this.db.collection(collection).update(where, what, options, (error, results) => {
-                resolve({//
+                resolve({
                     error: error,
                     results: results
                 });
