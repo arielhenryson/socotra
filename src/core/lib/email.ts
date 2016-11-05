@@ -39,7 +39,7 @@ export class Email extends DB {
     // insert the parameters to the template
     // and then resolve the template
     public render(templateName, params): Promise<any> {
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
             fs.readFile(config.buildDir + "/views/email/build/" + templateName + '.html', (err, data) => {
                 if (err) {
                     throw err;
