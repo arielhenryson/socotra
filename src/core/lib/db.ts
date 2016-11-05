@@ -84,7 +84,7 @@ export class DB {
         return valid;
     };
 
-    public static createNewId(value) {
+    public static createNewId(value?: string) {
         if (DB.isValidId(value)) {
             return new ObjectID(value);
         }
