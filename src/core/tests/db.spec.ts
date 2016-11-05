@@ -41,4 +41,10 @@ describe('database class', () => {
         const doc: any = DB.makeDoc({});
         expect(doc._createTime instanceof Date).toBe(true);
     });
+
+    it('expect makeNewSolt to create random string', () => {
+        const randomSolt = DB.makeNewSolt();
+
+        expect(typeof randomSolt).toBe("string");
+    });
 });

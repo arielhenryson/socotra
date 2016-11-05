@@ -4,11 +4,6 @@ const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 
 
-interface MongoDoc {
-    _createTime?: any;
-    [propName: string]: any;
-}
-
 let mongo = null;
 
 export class DB {
