@@ -53,7 +53,7 @@ export class DB {
                         UTC: new Date()
                     };
 
-                    this.db.collection("_startLog").insert(what, function (err, doc) {
+                    this.db.collection("_startLog").insert(what, function (err) {
                         if (err) {
                             resolve(false);
                             return;
