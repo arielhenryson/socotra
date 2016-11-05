@@ -11,7 +11,7 @@ export class Auth extends Model {
         super();
     }
 
-    private async sendMailToNewUser(newUser) {
+    public static async sendMailToNewUser(newUser) {
         let emailObj = new AppEmail();
 
         let data = {
@@ -42,7 +42,7 @@ export class Auth extends Model {
             activationKey: activationKey
         });
 
-        this.sendMailToNewUser(newUser);
+        Auth.sendMailToNewUser(newUser);
 
         return new Promise((resolve) => {
             this.db.collection("users").insert(newUser, (err) => {
