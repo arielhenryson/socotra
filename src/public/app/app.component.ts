@@ -6,7 +6,7 @@ import RXBox from "rxbox";
     templateUrl: 'app.component.html',
     providers: [RXBox]
 })
-export class App {//
+export class App {
     constructor(private _store: RXBox) {
         if (typeof window === "undefined") return;
         this._store.debug = true;
@@ -36,7 +36,7 @@ export class App {//
             index++;
             // foo.bar
             this._store.assignState({foo: foo});
-        }, 1000 * 3)
+        }, 1000 * 3);
     }
 
     public testValue = "test";
