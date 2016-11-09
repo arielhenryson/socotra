@@ -58,6 +58,8 @@ export class Server {
 
         let db = new DB();
         db.promiseConnection().then(() => {
+            require('./memoryAnalyzer')(app);
+
             require('./security')(app);
 
             // Set up cookie-parser

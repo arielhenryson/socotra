@@ -27,6 +27,7 @@
     "express-handlebars": "3.0.0",
     "express-rate-limit": "^2.5.0",
     "express-session": "1.13.0",
+    "heapdump": "^0.3.7",
     "helmet": "^2.3.0",
     "lwip": "0.0.9",
     "methods": "1.1.2",
