@@ -64,15 +64,9 @@ export class Server {
             // Set up cookie-parser
             app.use(require('cookie-parser')());
 
-            /*
-
-            */
             // Setting the body parser for handling post requests
             app.use(bodyParser.json());
             app.use(bodyParser.urlencoded({extended: true}));
-            /*
-
-             */
 
             // set up session
             require('./session')(app);
@@ -91,7 +85,7 @@ export class Server {
 
             // Setting the static folder fo the app
             app.use("/", express.static(path.join(ROOT, '/public'), {
-                    maxAge: config.maxAge
+                maxAge: config.maxAge
             }));
 
 
