@@ -5,7 +5,6 @@ import {DB} from './lib/db';
 import {setConfig} from "./global";
 
 
-
 // set root folder
 let pathArray: any = process.argv[1];
 pathArray = pathArray.split('/');
@@ -56,7 +55,7 @@ export class Server {
 
         setConfig(config);
 
-        let db = new DB();
+        const db = new DB();
         db.promiseConnection().then(() => {
             require('./memoryAnalyzer')(app);
 
@@ -65,11 +64,15 @@ export class Server {
             // Set up cookie-parser
             app.use(require('cookie-parser')());
 
+            /*
 
+            */
             // Setting the body parser for handling post requests
             app.use(bodyParser.json());
             app.use(bodyParser.urlencoded({extended: true}));
+            /*
 
+             */
 
             // set up session
             require('./session')(app);

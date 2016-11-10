@@ -1,4 +1,6 @@
 import {DB} from  './lib/db';
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 
 // Instead of saving sessions to RAM
@@ -6,8 +8,6 @@ import {DB} from  './lib/db';
 // to enable working with multiple server
 module.exports = (app) => {
     const config = app.locals.config;
-    const session = require('express-session');
-    const MongoStore = require('connect-mongo')(session);
     const dbObj = new DB();
     const dbOptions = {
         db: dbObj.db,

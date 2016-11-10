@@ -20,6 +20,7 @@
     "angular2-universal": "2.1.0-rc.1",
     "angular2-universal-polyfills": "2.1.0-rc.1",
     "body-parser": "1.15.2",
+    "chokidar": "^1.6.1",
     "compression": "1.6.2",
     "connect-mongo": "1.3.2",
     "cookie-parser": "1.4.2",
@@ -77,8 +78,7 @@
     "webpack": "2.1.0-beta.22"
   },
   "scripts": {
-    "start": "gulp run  --gulpfile ./src/core/gulpfile.js",
-    "test": "gulp test  --gulpfile ./src/core/gulpfile.js",
-    "compile": "gulp compile  --gulpfile ./src/core/gulpfile.js"
+    "start": "node ./src/core/start.js",
+    "test": "gulp test  --gulpfile ./src/core/gulpfile.js"
   }
 }

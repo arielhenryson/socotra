@@ -202,6 +202,7 @@ gulp.task('ServerStart', function () {
 gulp.task('startServer', ['compile'],  () => {
     gulp.start('serve');
 
+
     //watch for email template change
     gulp.watch(config.srcFolder + "/views/email/**", function() {
         runSequence('addToTaskCounter', 'compileEmail', 'ServerStart');
