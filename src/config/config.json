@@ -17,7 +17,6 @@
 	"dbUserPassword": "",
 	"logRequest": true,
 	"stripTag": true,
-	"memoryAnalyzer": false,
 	"maxAge": 86400000,
 	"numberOfRequestForIpPerMinute": 7000,
 	"smtp": {
