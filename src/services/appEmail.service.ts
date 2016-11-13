@@ -1,4 +1,4 @@
-import {Email}  from '../core/lib/email';
+import {Email}  from '../core/';
 import {DBHelper}  from './dbHelper.service';
 
 const config = require('../config/config.json');

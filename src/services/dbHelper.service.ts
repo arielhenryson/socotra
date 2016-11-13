@@ -1,4 +1,4 @@
-import {DB}  from '../core/lib/db';
+import {DB}  from '../core';
 const config = require('../config/config.json');
 
 export class DBHelper extends DB {

@@ -1,4 +1,4 @@
-import {DB} from  '../core/lib/db';
+import {DB} from  '../core';
 import {DBHelper}  from '../services/dbHelper.service';
 
 const config = require('../config/config.json');
