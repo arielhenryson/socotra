@@ -21,6 +21,30 @@ function compile() {
     });
 }
 
+function compileClient() {
+    clearProcess();
+
+    compileProcess = spawn('gulp', ["webpack", "--gulpfile", "./src/core/gulpfile.js"], { stdio: 'inherit' });
+
+    compileProcess.on('close', () => {
+        run();
+    });
+}
+
+function compileServer() {
+    clearProcess();
+
+    compileProcess = spawn('gulp', ["compileTSServer", "--gulpfile", "./src/core/gulpfile.js"], { stdio: 'inherit' });
+
+    compileProcess.on('close', () => {
+        run();
+    });
+}
+
+function compileScss() {
+    compileProcess = spawn('gulp', ["compileSASS", "--gulpfile", "./src/core/gulpfile.js"], { stdio: 'inherit' });
+}
+
 let intentionallyKill = false;
 let watchSet = false;
 function run() {
@@ -50,6 +74,31 @@ function run() {
     if(!watchSet && config.NODE_ENV === "development") {
         watchSet = true;
         chokidar.watch('./src/**/*.*').on('change', path => {
+            console.log(path);
+
+            // compile only client code
+            if (path.search('/public/app/') > -1) {
+                intentionallyKill = true;
+                clearProcess();
+                compileClient();
+                return;
+            }
+
+            // if its typescript but not client side compile tsServer
+            if (path.search('.ts') > -1) {
+                intentionallyKill = true;
+                clearProcess();
+                compileServer();
+                return;
+            }
+
+            // if its sass file
+            if (path.search('/public/scss/') > -1) {
+                compileScss();
+                return;
+            }
+
+
             intentionallyKill = true;
             clearProcess();
             compile();
@@ -58,4 +107,4 @@ function run() {
 }
 
 
-compile();/////////////////////////
+compile();
