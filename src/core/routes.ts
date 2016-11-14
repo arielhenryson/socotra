@@ -5,7 +5,7 @@ import * as fs from 'fs';
 module.exports = (app) => {
     const ROOT = app.locals.ROOT;
     const routes = require(ROOT + 'config/routes.json');
-    const emailBrowserCtrl = require(ROOT + '/core/controllers/emailbrowser.ctrl');
+    const emailBrowserCtrl = require('./controllers/emailbrowser.ctrl');
     
     // email routing
     app.use('/_email/:id', emailBrowserCtrl);
