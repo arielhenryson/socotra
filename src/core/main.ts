@@ -1,8 +1,8 @@
 import * as path from 'path';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import {DB} from './lib/db';
-import {setConfig} from "./global";
+import { DB } from './lib/db';
+import { setConfig } from "./global";
 
 
 // set root folder
@@ -77,6 +77,10 @@ export class Server {
             }
 
 
+            // redirect to SSL when onlySecure = true
+            // in the config file
+            require('./onlySecure')(app);
+
             // angular2-universal
             require('./angular2-universal')(app);
 
@@ -87,8 +91,8 @@ export class Server {
             }));
 
 
-            // // Server extend layer for adding global middlewares
-            // // that are specific for your app
+            // Server extend layer for adding global middlewares
+            // that are specific for your app
             try {
                 this.options.extend(app);
                 if (this.options.extend !== null) {

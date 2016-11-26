@@ -1,6 +1,6 @@
 {
 	"appName": "Socotra",
-	"domain": "http://localhost:3000",
+	"domain": "localhost",
 	"version": "0.0.1",
 	"dbName": "SocotraDB",
 	"systemEmail": "no-replay@qwikwiz.com",
@@ -9,6 +9,7 @@
 	"maxUploadSize": 5e+7,
 	"httpPort": 3000,
 	"httpsPort": 8080,
+	"onlySecure": true,
 	"sessionSecret": "efa109e0efec191b4e3c1da2e516f257",
 	"handlebarsTemplateEngine": true,
 	"dbPort": 27017,
