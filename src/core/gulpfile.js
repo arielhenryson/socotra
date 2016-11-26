@@ -125,7 +125,7 @@ gulp.task('compileSASS', [], () => {
 //compile all the server side file to ES6 for Node.JS
 gulp.task('compileTSServer', [], () => {
     return gulp.src([config.srcFolder + "/**/*.ts" ,"!" + config.srcFolder + "/public/app/**/*.ts"])
-        .pipe(typescript(tsConfigNode))
+        .pipe(tsConfigNode())
         .pipe(gulp.dest(config.buildDir));
 });
 
@@ -138,7 +138,7 @@ gulp.task('compileTSClient', [], () => {
             removeLineBreaks: true,
             indent: 1
         }))
-        .pipe(typescript(tsConfig))
+        .pipe(tsConfig())
         .pipe(gulp.dest(config.buildDir + "/public/app/"));
 });
 
