@@ -52,6 +52,7 @@
     "@types/mime": "0.0.28",
     "@types/node": "6.0.38",
     "@types/serve-static": "1.7.27",
+    "@types/jasmine": "^2.5.38",
     "glob": "7.0.3",
     "gulp": "3.9.1",
     "gulp-clean": "0.3.2",
