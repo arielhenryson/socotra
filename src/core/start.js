@@ -1,7 +1,7 @@
 const fs = require("fs");
 const spawn = require("child_process").spawn;
 const config = JSON.parse(fs.readFileSync("./src/config/config.json"));
-let appProcess, compileProcess, watcher;
+let appProcess, compileProcess;
 const chokidar = require('chokidar');
 
 function clearProcess() {
@@ -52,7 +52,7 @@ function run() {
 
     appProcess = spawn('node', [config.serverStart], { stdio: 'inherit' });
 
-    appProcess.on('close', () => {
+    appProcess.on('close', (err) => {
         if(intentionallyKill) {
             intentionallyKill = false;
             return;
@@ -64,9 +64,15 @@ function run() {
         }
 
         console.log("server stop restart in 3 sec..");
+
+        console.log(err)
+
+        let errorData = "Error server stop at " + new Date() + "\n";
+        fs.appendFile("./errorLog.log", errorData);
+
         setTimeout(() => {
             run();
-        }, 3000);
+        }, 2000);
     });
 
 
