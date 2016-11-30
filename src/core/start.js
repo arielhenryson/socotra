@@ -52,7 +52,7 @@ function run() {
 
     appProcess = spawn('node', [config.serverStart], { stdio: 'inherit' });
 
-    appProcess.on('close', (err) => {
+    appProcess.on('close', () => {
         if(intentionallyKill) {
             intentionallyKill = false;
             return;
@@ -64,8 +64,6 @@ function run() {
         }
 
         console.log("server stop restart in 3 sec..");
-
-        console.log(err)
 
         let errorData = "Error server stop at " + new Date() + "\n";
         fs.appendFile("./errorLog.log", errorData);
