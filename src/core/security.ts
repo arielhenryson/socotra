@@ -6,7 +6,7 @@ module.exports = (app) => {
     const config = app.locals.config;
 
 
-    app.use(helmet.contentSecurityPolicy());
+    // app.use(helmet.contentSecurityPolicy());
     app.use(helmet.noSniff());
     app.use(helmet.xssFilter());
 

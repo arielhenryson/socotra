@@ -5,44 +5,24 @@ let appProcess, compileProcess;
 const chokidar = require('chokidar');
 
 function clearProcess() {
-    if (appProcess) appProcess.kill();
+    if (appProcess) process.kill(-appProcess.pid);
     if (compileProcess) compileProcess.kill();
     appProcess = null;
     compileProcess = null;
 }
 
-function compile() {
+function compile(type) {
     clearProcess();
 
-    compileProcess = spawn('gulp', ["compile", "--gulpfile", "./src/core/gulpfile.js"], { stdio: 'inherit' });
+    compileProcess = spawn('gulp', [type, "--gulpfile", __dirname + "/gulpfile.js"], {
+        stdio: 'inherit'
+    });
+
+    if (type === "compileSASS") return;
 
     compileProcess.on('close', () => {
         run();
     });
-}
-
-function compileClient() {
-    clearProcess();
-
-    compileProcess = spawn('gulp', ["webpack", "--gulpfile", "./src/core/gulpfile.js"], { stdio: 'inherit' });
-
-    compileProcess.on('close', () => {
-        run();
-    });
-}
-
-function compileServer() {
-    clearProcess();
-
-    compileProcess = spawn('gulp', ["compileTSServer", "--gulpfile", "./src/core/gulpfile.js"], { stdio: 'inherit' });
-
-    compileProcess.on('close', () => {
-        run();
-    });
-}
-
-function compileScss() {
-    compileProcess = spawn('gulp', ["compileSASS", "--gulpfile", "./src/core/gulpfile.js"], { stdio: 'inherit' });
 }
 
 let intentionallyKill = false;
@@ -50,7 +30,10 @@ let watchSet = false;
 function run() {
     clearProcess();
 
-    appProcess = spawn('node', [config.serverStart], { stdio: 'inherit' });
+    appProcess = spawn('node', [config.serverStart], {
+        stdio: 'inherit',
+        detached: true
+    });
 
     appProcess.on('close', () => {
         if(intentionallyKill) {
@@ -82,33 +65,31 @@ function run() {
 
             // compile only client code
             if (path.search('/public/app/') > -1) {
-                intentionallyKill = true;
                 clearProcess();
-                compileClient();
+                compile("webpack");
                 return;
             }
 
             // if its typescript but not client side compile tsServer
             if (path.search('.ts') > -1) {
-                intentionallyKill = true;
                 clearProcess();
-                compileServer();
+                compile("compileTSServer");
                 return;
             }
 
             // if its sass file
             if (path.search('/public/scss/') > -1) {
-                compileScss();
+                compile("compileSASS");
                 return;
             }
 
 
             intentionallyKill = true;
             clearProcess();
-            compile();
+            compile("compile");
         });
     }
 }
 
 
-compile();
+compile("compile");
