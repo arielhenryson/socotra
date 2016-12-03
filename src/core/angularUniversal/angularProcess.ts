@@ -9,6 +9,9 @@ const app: any = express();
 // the polyfills must be the first thing imported in node.js
 import 'angular2-universal-polyfills';
 
+import './__workaround.node'; // temporary until 2.1.1 things are patched in Core
+
+
 const config = require(ROOT + 'config/config.json');
 
 

@@ -5,15 +5,15 @@
   "private": true,
   "author": "Ariel Henryson",
   "dependencies": {
-    "@angular/common": "2.1.0",
-    "@angular/compiler": "2.1.0",
-    "@angular/core": "2.1.0",
-    "@angular/forms": "2.1.0",
-    "@angular/http": "2.1.0",
-    "@angular/platform-browser": "2.1.0",
-    "@angular/platform-browser-dynamic": "2.1.0",
-    "@angular/platform-server": "2.1.0",
-    "@angular/router": "3.1.0",
+    "@angular/common": "~2.1.2",
+    "@angular/compiler": "~2.1.2",
+    "@angular/core": "~2.1.2",
+    "@angular/forms": "~2.1.2",
+    "@angular/http": "~2.1.2",
+    "@angular/platform-browser": "~2.1.2",
+    "@angular/platform-browser-dynamic": "~2.1.2",
+    "@angular/platform-server": "~2.1.2",
+    "@angular/router": "~3.1.2",
     "@types/chai": "^3.4.34",
     "angular2-express-engine": "2.1.0-rc.1",
     "angular2-platform-node": "2.1.0-rc.1",
@@ -45,7 +45,7 @@
     "rxbox": "0.0.18",
     "rxjs": "^5.0.0-rc.4",
     "striptags": "^2.1.1",
-    "zone.js": "0.6.21"
+    "zone.js": "~0.6.26"
   },
   "devDependencies": {
     "@types/body-parser": "0.0.33",
