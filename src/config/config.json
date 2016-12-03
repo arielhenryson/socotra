@@ -20,11 +20,12 @@
 	"stripTag": true,
 	"maxAge": 86400000,
 	"serveStaticFiles": true,
+    "development": true,
+    "compression": true,
 	"numberOfRequestForIpPerMinute": 7000,
 	"smtp": {
 		"user": "sokotraqw@gmail.com",
 		"password": "QWE12345678904234",
 		"host":"smtp.gmail.com"
-	},
-    "development": true
+	}
 }

@@ -14,8 +14,6 @@ const ROOT = __dirname + "/../../.build/";
 const app: any = express();
 const fs = require('fs');
 const compression = require('compression');
-app.use(compression());
-
 
 
 
@@ -52,6 +50,10 @@ export class Server {
 
         const db = new DB();
         db.promiseConnection().then(() => {
+            if(config.compression) {
+                app.use(compression());
+            }
+
             require('./security')(app);
 
             // Set up cookie-parser
