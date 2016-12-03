@@ -24,15 +24,15 @@ let webpackConfig = require("./webpack.config.js");
 
 
 
-config.srcFolder = ROOT + config.srcFolder;
-config.buildDir = ROOT + config.buildDir;
-config.serverStart = ROOT + config.serverStart;
+config.srcFolder = ROOT + "./src";
+config.buildDir = ROOT + "./.build";
+config.serverStart = ROOT + "./main.js";
 
 
 console.log("----------------------------------------------------------");
 console.log("");
 console.log("");
-if (config.NODE_ENV === "development") {
+if (config.development) {
     webpackConfig = require("./webpack.config.dev.js");
 
 
@@ -165,7 +165,7 @@ gulp.task("serve", () => {
             return;
         }
 
-        if (config.NODE_ENV === "development") {
+        if (config.development) {
             console.log('Error detected, waiting for changes...');
         } else {
             console.log("server stop restart in 3 sec..");

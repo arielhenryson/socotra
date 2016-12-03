@@ -30,7 +30,7 @@ module.exports = (app) => {
         });
 
         angularProcess.on('close', () => {
-            if (config.NODE_ENV !== "development") {
+            if (config.development) {
                 console.log('Error detected in angular process, waiting for changes...');
                 return;
             }

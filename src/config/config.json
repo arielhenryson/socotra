@@ -19,14 +19,12 @@
 	"logRequest": true,
 	"stripTag": true,
 	"maxAge": 86400000,
+	"serveStaticFiles": true,
 	"numberOfRequestForIpPerMinute": 7000,
 	"smtp": {
 		"user": "sokotraqw@gmail.com",
 		"password": "QWE12345678904234",
 		"host":"smtp.gmail.com"
 	},
-	"srcFolder": "./src",
-	"serverStart": "./.build/main.js",
-	"buildDir": "./.build",
-	"NODE_ENV": "development"
+    "development": true
 }

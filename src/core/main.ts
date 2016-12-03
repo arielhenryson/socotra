@@ -6,13 +6,7 @@ import { setConfig } from "./global";
 
 
 // set root folder
-let pathArray: any = process.argv[1];
-pathArray = pathArray.split('/');
-pathArray.pop();
-let ROOT = "/";
-for (let i in pathArray) {
-    ROOT += pathArray[i] + '/';
-}
+const ROOT = __dirname + "/../../.build/";
 // end set root folder
 
 
@@ -45,6 +39,7 @@ export class Server {
         this.options = options;
 
         this.options.config.root = ROOT;
+        this.options.config.buildDir = "./.build";
         app.locals.ROOT = ROOT;
         app.locals.config = this.options.config;
     }
@@ -86,9 +81,11 @@ export class Server {
 
 
             // Setting the static folder fo the app
-            app.use("/", express.static(path.join(ROOT, '/public'), {
-                maxAge: config.maxAge
-            }));
+            if (config.serveStaticFiles) {
+                app.use("/", express.static(path.join(ROOT, '/public'), {
+                    maxAge: config.maxAge
+                }));
+            }
 
 
             // Server extend layer for adding global middlewares

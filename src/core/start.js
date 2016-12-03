@@ -1,3 +1,7 @@
+// set root folder
+const ROOT = __dirname + "/../../.build/";
+// end set root folder
+
 const fs = require("fs");
 const spawn = require("child_process").spawn;
 const config = JSON.parse(fs.readFileSync("./src/config/config.json"));
@@ -30,7 +34,7 @@ let watchSet = false;
 function run() {
     clearProcess();
 
-    appProcess = spawn('node', [config.serverStart], {
+    appProcess = spawn('node', [ ROOT + "main.js"], {
         stdio: 'inherit',
         detached: true
     });
@@ -41,7 +45,7 @@ function run() {
             return;
         }
 
-        if (config.NODE_ENV === "development") {
+        if (config.development) {
             console.log('Error detected, waiting for changes...');
             return;
         }
@@ -58,7 +62,7 @@ function run() {
 
 
 
-    if(!watchSet && config.NODE_ENV === "development") {
+    if(!watchSet && config.development) {
         watchSet = true;
         chokidar.watch('./src/**/*.*').on('change', path => {
             console.log(path);
