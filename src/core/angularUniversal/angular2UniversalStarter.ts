@@ -29,13 +29,13 @@ module.exports = (app) => {
             stdio: 'inherit'
         });
 
-        angularProcess.on('close', () => {
-            if (config.development) {
+        angularProcess.on('close', code => {
+            if (config.development && code !== 3) {
                 console.log('Error detected in angular process, waiting for changes...');
                 return;
             }
 
-            console.log("Angular process stop restart in 2 sec..");
+            console.log("Angular process stop restart in 3 sec..");
 
             setTimeout(() => {
                 run();

@@ -9,7 +9,7 @@ let appProcess, compileProcess;
 const chokidar = require('chokidar');
 
 function clearProcess() {
-    if (appProcess) process.kill(-appProcess.pid);
+    if (appProcess) appProcess.kill();
     if (compileProcess) compileProcess.kill();
     appProcess = null;
     compileProcess = null;
@@ -35,8 +35,7 @@ function run() {
     clearProcess();
 
     appProcess = spawn('node', [ ROOT + "main.js"], {
-        stdio: 'inherit',
-        detached: true
+        stdio: 'inherit'
     });
 
     appProcess.on('close', () => {

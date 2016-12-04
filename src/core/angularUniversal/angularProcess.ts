@@ -2,6 +2,15 @@
 const ROOT = __dirname + "/../../../.build/";
 // end set root folder
 
+const config = require(ROOT + 'config/config.json');
+
+const fs = require("fs");
+if (config.development) {
+    fs.watch(ROOT + 'public/dist/app.js', () => {
+        process.exit(3)
+    });
+}
+
 
 import * as express from 'express';
 const app: any = express();
@@ -12,7 +21,6 @@ import 'angular2-universal-polyfills';
 import './__workaround.node'; // temporary until 2.1.1 things are patched in Core
 
 
-const config = require(ROOT + 'config/config.json');
 
 
 // Angular 2
