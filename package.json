@@ -75,7 +75,6 @@
     "karma-webpack": "^1.8.0",
     "mkdirp": "0.5.1",
     "run-sequence": "^1.2.2",
-    "ts-loader": "1.2.2",
     "typescript": "2.1.0-dev.20160917",
     "webpack": "2.1.0-beta.22"
   },
