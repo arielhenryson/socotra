@@ -4,18 +4,18 @@ const webpack = require('webpack');
 
 module.exports = {
     plugins: [
-        /*
         new webpack.NoErrorsPlugin(),
-        new webpack.optimize.DedupePlugin(),
-
+        //new webpack.optimize.DedupePlugin(),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: ['app', 'vendor']
+        }),
+        new webpack.NoErrorsPlugin(),
         new webpack.optimize.UglifyJsPlugin({
             mangle: {
                 keep_fnames: true
             },
             sourceMap: false
-        }),
-        */
-
+        })
     ],
     entry: {
         app: ROOT + "./src/public/app/main",
@@ -44,6 +44,5 @@ module.exports = {
                 loader: 'null'
             },
         ]
-    },
-
+    }
 };
