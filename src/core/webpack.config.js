@@ -1,27 +1,49 @@
 const ROOT = "../../";
 const webpack = require('webpack');
-const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
 
 
 module.exports = {
     plugins: [
-        new DedupePlugin(),
+        /*
+        new webpack.NoErrorsPlugin(),
+        new webpack.optimize.DedupePlugin(),
+
         new webpack.optimize.UglifyJsPlugin({
-            comments: false
+            mangle: {
+                keep_fnames: true
+            },
+            sourceMap: false
         }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: ['app', 'vendor']
-        })
+        */
+
     ],
     entry: {
-        app: ROOT + "./.build/public/app/main",
-        vendor: ROOT + "./.build/public/app/vendor"
+        app: ROOT + "./src/public/app/main",
+        vendor: ROOT + "./src/public/app/vendor"
     },
     output: {
         path: __dirname,
         filename: ROOT +"./.build/public/dist/[name].js"
     },
     resolve: {
-        extensions: ['', '.js', '.ts']
-    }
+        extensions: ['', '.ts', '.js']
+    },
+    module: {
+        loaders: [
+            {
+                test: /\.ts/,
+                loaders: ['awesome-typescript-loader', 'angular2-template-loader'],
+                exclude: /node_modules/
+            },
+            {
+                test: /\.(html|css)$/,
+                loader: 'raw-loader'
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
+                loader: 'null'
+            },
+        ]
+    },
+
 };

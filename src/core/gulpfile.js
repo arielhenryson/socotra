@@ -12,7 +12,6 @@ const getDirName = require("path").dirname;
 const config = JSON.parse(fs.readFileSync(ROOT + "src/config/config.json"));
 const sass = require("gulp-sass");
 const inlineNg2Template = require("gulp-inline-ng2-template");
-const tsConfig = typescript.createProject(ROOT + "tsconfig.json", { typescript: require("typescript")});
 const tsConfigNode = typescript.createProject(ROOT + "tsconfig.json", { typescript: require("typescript")});
 const webpack = require("webpack");
 const karmaServer = require('karma').Server;
@@ -33,9 +32,6 @@ console.log("----------------------------------------------------------");
 console.log("");
 console.log("");
 if (config.development) {
-    webpackConfig = require("./webpack.config.dev.js");
-
-
     console.log("   Running in development mode");
 } else {
     console.log("   Running in production mode");
@@ -123,27 +119,20 @@ gulp.task('compileSASS', [], () => {
 
 
 //compile all the server side file to ES6 for Node.JS
-gulp.task('compileTSServer', [], () => {
-    return gulp.src([config.srcFolder + "/**/*.ts" ,"!" + config.srcFolder + "/public/app/**/*.ts"])
-        .pipe(tsConfigNode())
-        .pipe(gulp.dest(config.buildDir));
-});
-
-//compile all the client side file to ES5
-gulp.task('compileTSClient', [], () => {
-    return gulp.src([config.srcFolder + "/public/app/**/*.ts"])
+gulp.task('compileTS', [], () => {
+    return gulp.src([config.srcFolder + "/**/*.ts"])
         .pipe(inlineNg2Template({
-            useRelativePaths: false,
+            useRelativePaths: true,
             base: config.srcFolder + '/public/app/',
             removeLineBreaks: true,
             indent: 1
         }))
-        .pipe(tsConfig())
-        .pipe(gulp.dest(config.buildDir + "/public/app/"));
+        .pipe(tsConfigNode())
+        .pipe(gulp.dest(config.buildDir));
 });
 
 
-gulp.task("webpack", ['compileTSClient'], (cb) => {
+gulp.task("webpack", [], (cb) => {
     // modify some webpack config options
     const myConfig = Object.create(webpackConfig);
 
@@ -246,6 +235,6 @@ gulp.task('test', ['testServer', 'testClient']);
 
 
 gulp.task('compile', ['copySrcFolder', 'compileEmail',
-    'compileSASS', 'compileTSServer', 'compileTSClient', 'webpack']);
+    'compileSASS', 'compileTS', 'webpack']);
 
 gulp.task('run', ['startServer']);
