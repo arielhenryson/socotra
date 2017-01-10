@@ -5,7 +5,7 @@ const webpack = require('webpack');
 module.exports = {
     plugins: [
         new webpack.NoErrorsPlugin(),
-        //new webpack.optimize.DedupePlugin(),
+        // new webpack.optimize.DedupePlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             name: ['app', 'vendor']
         }),

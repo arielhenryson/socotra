@@ -76,7 +76,7 @@ function run() {
             // if its typescript but not client side compile tsServer
             if (path.search('.ts') > -1) {
                 clearProcess();
-                compile("compileTSServer");
+                compile("compile");
                 return;
             }
 
