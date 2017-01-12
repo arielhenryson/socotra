@@ -215,7 +215,7 @@ gulp.task('startServer', ['compile'],  () => {
     });
 });
 
-gulp.task('testServer', ['compileTSServer'], () => {
+gulp.task('testServer', ['compileTS'], () => {
     return gulp.src([
         config.buildDir + '/**/*.spec.js',
         "!" + config.buildDir + '/public/app/**'
