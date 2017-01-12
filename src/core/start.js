@@ -11,6 +11,15 @@ const chokidar = require('chokidar');
 function clearProcess() {
     if (appProcess) appProcess.kill();
     if (compileProcess) compileProcess.kill();
+
+    if (standaloneProcess.length) {
+        standaloneProcess.forEach(app => {
+           app.kill();
+        });
+
+        standaloneProcess = [];
+    }
+
     appProcess = null;
     compileProcess = null;
 }
@@ -33,6 +42,8 @@ let intentionallyKill = false;
 let watchSet = false;
 function run() {
     clearProcess();
+
+    standaloneProcessStart();
 
     appProcess = spawn('node', [ ROOT + "main.js"], {
         stdio: 'inherit'
@@ -92,6 +103,19 @@ function run() {
             compile("compile");
         });
     }
+}
+
+let standaloneProcess = [];
+function standaloneProcessStart() {
+    if (typeof config.standaloneProcess === "undefined") return;
+
+    config.standaloneProcess.forEach(name => {
+        const process = spawn('node', [ ROOT + "standaloneProcess/" + name + ".js" ], {
+            stdio: 'inherit'
+        });
+
+        standaloneProcess.push(process);
+    });
 }
 
 

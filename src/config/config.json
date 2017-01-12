@@ -27,5 +27,8 @@
 		"user": "sokotraqw@gmail.com",
 		"password": "QWE12345678904234",
 		"host":"smtp.gmail.com"
-	}
+	},
+	"standaloneProcess": [
+		"demo"
+	]
 }
