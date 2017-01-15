@@ -1,3 +1,4 @@
+const path = require("path");
 const ROOT = "../../";
 const webpack = require('webpack');
 
@@ -18,12 +19,12 @@ module.exports = {
         })
     ],
     entry: {
-        app: ROOT + "./src/public/app/main",
-        vendor: ROOT + "./src/public/app/vendor"
+        app: path.normalize(ROOT + "./src/public/app/main"),
+        vendor: path.normalize(ROOT + "./src/public/app/vendor")
     },
     output: {
         path: __dirname,
-        filename: ROOT +"./.build/public/dist/[name].js"
+        filename: path.normalize(ROOT +"./.build/public/dist/[name].js")
     },
     resolve: {
         extensions: ['', '.ts', '.js']

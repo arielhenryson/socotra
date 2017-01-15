@@ -1,13 +1,15 @@
+const path = require("path");
+
 // set root folder
 const ROOT = __dirname + "/../../../.build/";
 // end set root folder
 
-const config = require(ROOT + 'config/config.json');
+const config = require( path.normalize(ROOT + 'config/config.json') );
 
 const fs = require("fs");
 if (config.development) {
-    fs.watch(ROOT + 'public/dist/app.js', () => {
-        process.exit(3)
+    fs.watch( path.normalize(ROOT + 'public/dist/app.js') , () => {
+        process.exit(3);
     });
 }
 

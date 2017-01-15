@@ -27,7 +27,14 @@ function clearProcess() {
 function compile(type) {
     clearProcess();
 
-    compileProcess = spawn('gulp', [type, "--gulpfile", __dirname + "/gulpfile.js"], {
+    const isWin = /^win/.test(process.platform);
+    let gulp = "gulp";
+
+    if (isWin) {
+        gulp = "gulp.cmd";
+    }
+
+    compileProcess = spawn(gulp, [type, "--gulpfile", __dirname + "/gulpfile.js"], {
         stdio: 'inherit'
     });
 
