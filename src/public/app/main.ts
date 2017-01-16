@@ -10,7 +10,7 @@ import { platformUniversalDynamic } from 'angular2-universal';
 
 enableProdMode();
 
-import { MainModule } from './mainModule';
+import { MainModule } from './main.module';
 
 const platformRef = platformUniversalDynamic();
 
