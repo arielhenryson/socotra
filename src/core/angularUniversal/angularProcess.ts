@@ -37,7 +37,7 @@ import * as cookieParser from 'cookie-parser';
 
 
 const _routes = require(ROOT + "/public/app/app.routes")._routes;
-const MainModule = require(ROOT + "/public/app/mainModule").MainModule;
+const MainModule = require(ROOT + "/public/app/main.module").MainModule;
 
 
 enableProdMode();
