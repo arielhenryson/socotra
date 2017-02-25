@@ -136,7 +136,7 @@ gulp.task("webpack", [], (cb) => {
     // modify some webpack config options
     const myConfig = Object.create(webpackConfig);
 
-// run webpack
+    // run webpack
     webpack(myConfig, (err, stats) => {
         if (err) {
             console.log(err);
