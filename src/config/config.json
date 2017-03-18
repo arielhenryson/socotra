@@ -30,6 +30,10 @@
 	},
 	"standaloneProcess": [
 		{
+			"name": "demo",
+			"cron": "* * * * *"
+		},
+		{
 			"name": "demo"
 		}
 	]

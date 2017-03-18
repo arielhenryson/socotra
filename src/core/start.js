@@ -5,8 +5,11 @@ const ROOT = __dirname + "/../../.build/";
 const fs = require("fs");
 const spawn = require("child_process").spawn;
 const config = JSON.parse(fs.readFileSync("./src/config/config.json"));
-let appProcess, compileProcess;
 const chokidar = require('chokidar');
+const cron = require('node-cron');
+
+let appProcess, compileProcess;
+
 
 function clearProcess() {
     if (appProcess) appProcess.kill();
@@ -117,9 +120,21 @@ function standaloneProcessStart() {
     if (typeof config.standaloneProcess === "undefined") return;
 
     config.standaloneProcess.forEach(p => {
-        const process = spawn('node', [ ROOT + "standaloneProcess/" + p.name + ".js" ], {
-            stdio: 'inherit'
-        });
+        let process;
+        if (typeof p.cron === "undefined") {
+            process = spawn('node', [ ROOT + "standaloneProcess/" + p.name + ".js" ], {
+                stdio: 'inherit'
+            });
+        } else {
+            //cron jobs
+            cron.schedule(p.cron, () => {
+                console.log('running cron job -> ' + p.name);
+                process = spawn('node', [ ROOT + "standaloneProcess/" + p.name + ".js" ], {
+                    stdio: 'inherit'
+                });
+            });
+        }
+
 
         standaloneProcess.push(process);
     });
