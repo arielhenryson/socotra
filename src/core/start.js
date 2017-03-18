@@ -116,8 +116,8 @@ let standaloneProcess = [];
 function standaloneProcessStart() {
     if (typeof config.standaloneProcess === "undefined") return;
 
-    config.standaloneProcess.forEach(name => {
-        const process = spawn('node', [ ROOT + "standaloneProcess/" + name + ".js" ], {
+    config.standaloneProcess.forEach(p => {
+        const process = spawn('node', [ ROOT + "standaloneProcess/" + p.name + ".js" ], {
             stdio: 'inherit'
         });
 

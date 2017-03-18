@@ -29,6 +29,8 @@
 		"host":"smtp.gmail.com"
 	},
 	"standaloneProcess": [
-		"demo"
+		{
+			"name": "demo"
+		}
 	]
 }

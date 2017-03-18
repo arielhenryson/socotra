@@ -4,19 +4,20 @@ const webpack = require('webpack');
 
 
 module.exports = {
+
     plugins: [
-        new webpack.NoErrorsPlugin(),
-        // new webpack.optimize.DedupePlugin(),
+        //new webpack.NoErrorsPlugin(),
+         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             name: ['app', 'vendor']
-        }),
-        new webpack.NoErrorsPlugin(),
-        new webpack.optimize.UglifyJsPlugin({
-            mangle: {
-                keep_fnames: true
-            },
-            sourceMap: false
-        })
+       }),
+       // new webpack.NoErrorsPlugin(),
+       // new webpack.optimize.UglifyJsPlugin({
+          //  mangle: {
+            //    keep_fnames: true
+           // },
+          //  sourceMap: false
+       // })
     ],
     entry: {
         app: path.normalize(ROOT + "./src/public/app/main"),
@@ -27,7 +28,7 @@ module.exports = {
         filename: path.normalize(ROOT +"./.build/public/dist/[name].js")
     },
     resolve: {
-        extensions: ['', '.ts', '.js']
+        extensions: [ '.ts', '.js']
     },
     module: {
         loaders: [
