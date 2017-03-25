@@ -7,10 +7,10 @@ module.exports = {
 
     plugins: [
         //new webpack.NoErrorsPlugin(),
-         new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: ['app', 'vendor']
-       }),
+        // new webpack.optimize.DedupePlugin(),
+       //  new webpack.optimize.CommonsChunkPlugin({
+        //    name: ['app', 'vendor']
+      // }),
        // new webpack.NoErrorsPlugin(),
        // new webpack.optimize.UglifyJsPlugin({
           //  mangle: {
