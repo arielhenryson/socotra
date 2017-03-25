@@ -4,24 +4,8 @@ const webpack = require('webpack');
 
 
 module.exports = {
-
-    plugins: [
-        //new webpack.NoErrorsPlugin(),
-        // new webpack.optimize.DedupePlugin(),
-       //  new webpack.optimize.CommonsChunkPlugin({
-        //    name: ['app', 'vendor']
-      // }),
-       // new webpack.NoErrorsPlugin(),
-       // new webpack.optimize.UglifyJsPlugin({
-          //  mangle: {
-            //    keep_fnames: true
-           // },
-          //  sourceMap: false
-       // })
-    ],
     entry: {
-        app: path.normalize(ROOT + "./src/public/app/main"),
-        vendor: path.normalize(ROOT + "./src/public/app/vendor")
+        app: path.normalize(ROOT + "./src/public/app/main")
     },
     output: {
         path: __dirname,
