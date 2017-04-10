@@ -22,6 +22,7 @@
 	"serveStaticFiles": true,
     "development": true,
     "compression": true,
+	"serverRendering": true,
 	"numberOfRequestForIpPerMinute": 7000,
 	"smtp": {
 		"user": "sokotraqw@gmail.com",

@@ -79,7 +79,10 @@ export class Server {
             require('./onlySecure')(app);
 
             // angular2-universal
-            require('./angularUniversal/angular2UniversalStarter')(app);
+            if (config.serverRendering) {
+                require('./angularUniversal/angular2UniversalStarter')(app);
+            }
+
 
 
             // Setting the static folder fo the app
