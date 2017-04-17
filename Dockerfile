@@ -1,4 +1,4 @@
-FROM qwikwiz/socotra:latest
+FROM qwikwiz/ng2:latest
 
 # Create app directory
 RUN mkdir -p /app
@@ -10,6 +10,6 @@ COPY . /app
 # Install app dependencies
 RUN npm install
 
-EXPOSE 8080
-
 CMD [ "npm", "start" ]
+
+EXPOSE 8080
