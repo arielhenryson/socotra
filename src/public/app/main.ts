@@ -10,11 +10,12 @@ import { platformUniversalDynamic } from 'angular2-universal';
 
 enableProdMode();
 
-import {BrowserAppModule} from "./browser-app.module";
+import { MainModule } from './main.module';
+
 const platformRef = platformUniversalDynamic();
 
 
 // on document ready bootstrap Angular 2
 document.addEventListener('DOMContentLoaded', () => {
-    platformRef.bootstrapModule(BrowserAppModule);
+    platformRef.bootstrapModule(MainModule);
 });

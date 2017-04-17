@@ -1,5 +1,5 @@
 export function extractRoutes(content) {
-    content = content.replace(/\s/g,'');
+    content = content.replace(/\s/g, '');
     content = content.match(/\_routes.+]/g);
 
     content = content[0];
