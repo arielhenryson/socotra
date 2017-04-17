@@ -7,7 +7,6 @@ import {App} from './app.component';
 import {Home, Page2, Page3, _routes} from "./app.routes";
 
 @NgModule({
-    bootstrap: [ App ],
     declarations: [
         App,
         Home,
@@ -19,6 +18,9 @@ import {Home, Page2, Page3, _routes} from "./app.routes";
         FormsModule,
         RouterModule.forRoot(_routes)
     ],
+    exports: [
+        App
+    ]
 })
 export class MainModule {
 

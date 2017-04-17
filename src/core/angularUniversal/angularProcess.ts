@@ -37,7 +37,7 @@ import * as cookieParser from 'cookie-parser';
 
 
 const _routes = require(ROOT + "/public/app/app.routes")._routes;
-const MainModule = require(ROOT + "/public/app/main.module").MainModule;
+const ServerAppModule = require(ROOT + "/public/app/server-app.module").ServerAppModule;
 
 
 enableProdMode();
@@ -57,7 +57,7 @@ function ngApp(req, res) {
     res.render('main', {
         req,
         res,
-        ngModule: MainModule,
+        ngModule: ServerAppModule,
         preboot: false,
         baseUrl: '/',
         requestUrl: req.originalUrl,
