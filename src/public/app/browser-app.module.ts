@@ -5,24 +5,17 @@ import { RouterModule } from "@angular/router";
 
 import {App} from './app.component';
 import {Home, Page2, Page3, _routes} from "./app.routes";
+import {MainModule} from "./main.module";
 
 @NgModule({
     bootstrap: [ App ],
-    declarations: [
-        App,
-        Home,
-        Page2,
-        Page3
-    ],
     imports: [
+        MainModule,
         UniversalModule,
         FormsModule,
         RouterModule.forRoot(_routes)
     ],
-    exports: [
-        App
-    ]
 })
-export class MainModule {
+export class BrowserAppModule {
 
 }
