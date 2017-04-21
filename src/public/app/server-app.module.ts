@@ -12,8 +12,7 @@ import {MainModule} from "./main.module";
     imports: [
         MainModule,
         UniversalModule,
-        FormsModule,
-        RouterModule.forRoot(_routes)
+        FormsModule
     ],
 })
 export class ServerAppModule {
