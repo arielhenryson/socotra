@@ -1,3 +1,4 @@
+/*
 let __compiler__ = require('@angular/compiler');
 import { __platform_browser_private__ } from '@angular/platform-browser';
 import { __core_private__ } from '@angular/core';
@@ -35,3 +36,4 @@ function renderComponentFix(componentProto: any) {
     return new NodeDomRenderer(this, componentProto, this._animationDriver);
 }
 NodeDomRootRenderer.prototype.renderComponent = renderComponentFix;
+*/

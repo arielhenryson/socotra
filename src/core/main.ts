@@ -80,7 +80,7 @@ export class Server {
 
             // angular2-universal
             if (config.serverRendering) {
-                require('./angularUniversal/angular2UniversalStarter')(app);
+               // require('./angularUniversal/angular2UniversalStarter')(app);
             }
 
 
