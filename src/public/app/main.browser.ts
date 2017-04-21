@@ -1,21 +1,9 @@
-"use strict";
+import 'zone.js/dist/zone';
+import 'reflect-metadata';
+import 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
-// the polyfills must be the first thing imported ///
-import 'angular2-universal-polyfills';
-
-
-// Angular 2
-import { enableProdMode } from '@angular/core';
-import { platformUniversalDynamic } from 'angular2-universal';
-
-enableProdMode();
-
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { BrowserAppModule } from "./browser-app.module";
 
-const platformRef = platformUniversalDynamic();
-
-
-// on document ready bootstrap Angular 2
-document.addEventListener('DOMContentLoaded', () => {
-    platformRef.bootstrapModule(BrowserAppModule);
-});
+platformBrowserDynamic().bootstrapModule(BrowserAppModule);

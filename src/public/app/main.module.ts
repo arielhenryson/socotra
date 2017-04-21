@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { UniversalModule } from 'angular2-universal';
 import { RouterModule } from "@angular/router";
 
 import {App} from './app.component';
 import {Home, Page2, Page3, _routes} from "./app.routes";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
     bootstrap: [ App ],
@@ -15,14 +14,11 @@ import {Home, Page2, Page3, _routes} from "./app.routes";
         Page3
     ],
     imports: [
-        UniversalModule,
-        FormsModule,
+        CommonModule,
         RouterModule.forRoot(_routes)
     ],
     exports: [
         App
     ]
 })
-export class MainModule {
-
-}
+export class MainModule {}

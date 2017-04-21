@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
-import { UniversalModule } from 'angular2-universal';
 import { App } from './app.component';
 import { MainModule } from "./main.module";
+import { BrowserModule } from "@angular/platform-browser";
 
 @NgModule({
     bootstrap: [ App ],
     imports: [
-        MainModule,
-        UniversalModule
+        BrowserModule.withServerTransition({
+            appId: 'my-app-id'
+        }),
+        MainModule
     ],
 })
-export class BrowserAppModule {
-
-}
+export class BrowserAppModule {}

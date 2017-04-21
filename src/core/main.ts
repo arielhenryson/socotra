@@ -50,7 +50,7 @@ export class Server {
 
         const db = new DB();
         db.promiseConnection().then(() => {
-            if(config.compression) {
+            if (config.compression) {
                 app.use(compression());
             }
 
@@ -80,7 +80,7 @@ export class Server {
 
             // angular2-universal
             if (config.serverRendering) {
-               // require('./angularUniversal/angular2UniversalStarter')(app);
+                require('./angularUniversal/angularUniversalStarter')(app);
             }
 
 
