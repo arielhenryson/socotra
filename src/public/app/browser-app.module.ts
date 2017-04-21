@@ -11,8 +11,7 @@ import {MainModule} from "./main.module";
     bootstrap: [ App ],
     imports: [
         MainModule,
-        UniversalModule,
-        FormsModule
+        UniversalModule
     ],
 })
 export class BrowserAppModule {
