@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from "@angular/router";
-
-import {App} from './app.component';
-import {Home, Page2, Page3, _routes} from "./app.routes";
-import {CommonModule} from "@angular/common";
-import {HttpModule} from "@angular/http";
-import {TransferHttpModule} from "./modules/transfer-http/transfer-http.module";
+import { App } from './app.component';
+import { Home, Page2, Page3, _routes } from "./app.routes";
+import { CommonModule } from "@angular/common";
+import { HttpModule } from "@angular/http";
+import { TransferHttpModule } from "./modules/transfer-http/transfer-http.module";
 
 @NgModule({
     bootstrap: [ App ],
