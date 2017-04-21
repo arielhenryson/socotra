@@ -5,7 +5,7 @@ const webpack = require('webpack');
 
 module.exports = {
     entry: {
-        app: path.normalize(ROOT + "./src/public/app/main")
+        app: path.normalize(ROOT + "./src/public/app/main.browser")
     },
     output: {
         path: __dirname,
