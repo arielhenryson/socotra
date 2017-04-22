@@ -1,12 +1,10 @@
 import { BehaviorSubject, Observable } from "rxjs";
-import {Injectable} from "@angular/core";
 const stringifyDate = require('json-stringify-date');
 
 const appState = {};
 const store = new BehaviorSubject<any>(appState);
 
 
-@Injectable()
 export class RXBox {
     private static isWasRun: boolean = false;
 
