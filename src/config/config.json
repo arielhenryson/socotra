@@ -20,7 +20,6 @@
 	"stripTag": true,
 	"maxAge": 86400000,
 	"serveStaticFiles": true,
-    "development": true,
     "compression": true,
 	"serverRendering": true,
 	"numberOfRequestForIpPerMinute": 7000,

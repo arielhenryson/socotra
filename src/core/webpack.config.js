@@ -3,13 +3,10 @@ const path = require("path");
 const ROOT = "../../";
 const webpack = require('webpack');
 const {AotPlugin} = require('@ngtools/webpack');
+const environment = require('../config/environment.json');
+
 
 let useAOT = false;
-
-if (!config.development) {
-        useAOT = true;
-}
-
 
 let tsLoader = {
         test: /\.ts/,
@@ -18,6 +15,36 @@ let tsLoader = {
 };
 
 let plugins = [];
+
+
+if (!environment.development) {
+        useAOT = true;
+
+        plugins.push(
+                new webpack.LoaderOptionsPlugin({
+                        minimize: true,
+                        debug: false
+                }),
+                new webpack.optimize.UglifyJsPlugin({
+                        compress: {
+                                warnings: false,
+                                screw_ie8: true,
+                                conditionals: true,
+                                unused: true,
+                                comparisons: true,
+                                sequences: true,
+                                dead_code: true,
+                                evaluate: true,
+                                if_return: true,
+                                join_vars: true,
+                        },
+                        output: {
+                                comments: false,
+                        },
+                })
+        );
+}
+
 if (useAOT) {
         const aot = new AotPlugin({
                 tsConfigPath: path.normalize(ROOT + "./tsconfig.json")

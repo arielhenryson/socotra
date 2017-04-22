@@ -1,6 +1,7 @@
 import {Server} from "./core/main";
-
 const config = require('./config/config.json');
+const environment = require('./config/environment.json');
+config.development = environment.development;
 
 function extend(app) {
     // console.log(__dirname);
