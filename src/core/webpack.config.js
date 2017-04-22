@@ -1,11 +1,14 @@
+const config = require('../config/config.json');
 const path = require("path");
 const ROOT = "../../";
 const webpack = require('webpack');
+const {AotPlugin} = require('@ngtools/webpack');
 
-const { AotPlugin } = require('@ngtools/webpack');
+let useAOT = false;
 
-
-const useAOT = false;
+if (!config.development) {
+        useAOT = true;
+}
 
 
 let tsLoader = {
