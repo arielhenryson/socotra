@@ -5,7 +5,7 @@ import { Home, Page2, Page3, _routes } from "./app.routes";
 import { CommonModule } from "@angular/common";
 import { HttpModule } from "@angular/http";
 import { TransferHttpModule } from "./modules/transfer-http/transfer-http.module";
-import { RXBox } from "./services/rxbos.service";
+import { RXBox } from "rxbox";
 
 @NgModule({
     bootstrap: [ App ],

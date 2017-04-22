@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RXBox } from "./services/rxbos.service";
+import { RXBox } from "rxbox";
 
 @Component({
     selector: 'app',
