@@ -23,6 +23,18 @@
   {
     "path": "/api/login",
     "controller": "loginAPI",
-    "middlewares": []
+    "middlewares": [],
+    "params": [
+      {
+        "username": {
+          "type": "string"
+        }
+      },
+      {
+        "password": {
+          "type": "string"
+        }
+      }
+    ]
   }
 ]  

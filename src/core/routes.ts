@@ -1,4 +1,4 @@
-import {FileStorage} from  './lib/fileStorage';
+import { FileStorage } from  './lib/fileStorage';
 import * as fs from 'fs';
 
 
@@ -9,7 +9,8 @@ module.exports = (app) => {
     
     // email routing
     app.use('/_email/:id', emailBrowserCtrl);
-    
+
+
     // test delete route
     app.all('/_delete/:id', (req, res) => {
         const id = req.params.id;
@@ -36,6 +37,7 @@ module.exports = (app) => {
         res.end(results.data, 'binary');
     });
 
+
 	// test upload route
     const _uploadMid = require('./middlewares/_upload.mid');
     app.post('/_upload', _uploadMid, function (req, res) {
@@ -55,18 +57,31 @@ module.exports = (app) => {
         const controller = require(ROOT + '/controllers/' + route.controller + '.ctrl');
         let middlewares = [];
 
+
+        // validate parameters if exists
+        if (typeof route.params !== "undefined") {
+            const m = require('./middlewares/requestValidator.mid');
+            middlewares.push(m);
+        }
+
 		// load middlewares if exist for this route
         if (typeof route.middlewares !== "undefined" && route.middlewares.length) {
-            route.middlewares.forEach((midName) => {
+            route.middlewares.forEach(midName => {
                 const m = require(ROOT + '/middlewares/' + midName + '.mid');
                 middlewares.push(m);
             });
         }
 
+
+        // set the http method
         if (typeof route.method !== "undefined" && route.method === "GET") {
             app.get(route.path, middlewares, controller);
+        } else if  (typeof route.method !== "undefined" && route.method === "PUT") {
+            app.put(route.path, middlewares, controller);
         } else if (typeof route.method !== "undefined" && route.method === "POST") {
             app.post(route.path, middlewares, controller);
+        } else if  (typeof route.method !== "undefined" && route.method === "DELETE") {
+            app.delete(route.path, middlewares, controller);
         } else {
             app.all(route.path, middlewares, controller);
         }

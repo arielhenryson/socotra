@@ -1,4 +1,5 @@
 module.exports = (req, res, next) => {
-    console.log("using auth middlewares");
+    console.log("inside req validator");
+
     next();
 };
