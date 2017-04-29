@@ -50,7 +50,7 @@ export class DB {
             let watcher = setInterval(() => {
                 if (this.db !== null) {
                     const what = {
-                        UTC: new Date()
+                        UTC: new Date()z
                     };
 
                     this.db.collection("_startLog").insert(what, function (err) {
