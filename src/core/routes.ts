@@ -1,5 +1,6 @@
 import { FileStorage } from  './lib/fileStorage';
 import * as fs from 'fs';
+import {RequestValidator} from "./lib/requestValidator";
 
 
 module.exports = (app) => {
@@ -60,7 +61,7 @@ module.exports = (app) => {
 
         // validate parameters if exists
         if (typeof route.params !== "undefined") {
-            const m = require('./middlewares/requestValidator.mid');
+            const m = requestValidator(route.params);
             middlewares.push(m);
         }
 
@@ -98,3 +99,18 @@ module.exports = (app) => {
         });
     });
 };
+
+
+function requestValidator(paramsSchema) {
+    const _RequestValidator = new RequestValidator();
+
+    return function(req, res, next) {
+        const test = _RequestValidator.testParams(paramsSchema, req.body);
+        if (test.error) {
+            res.send(test);
+            return;
+        }
+
+        next();
+    };
+}

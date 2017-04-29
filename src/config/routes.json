@@ -24,17 +24,15 @@
     "path": "/api/login",
     "controller": "loginAPI",
     "middlewares": [],
-    "params": [
-      {
-        "username": {
-          "type": "string"
-        }
+    "params": {
+      "username": {
+        "type": "string",
+        "required": true
       },
-      {
-        "password": {
-          "type": "string"
-        }
+      "password": {
+        "type": "string",
+        "required": true
       }
-    ]
+    }
   }
 ]  
