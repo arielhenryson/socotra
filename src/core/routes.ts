@@ -111,6 +111,19 @@ function requestValidator(paramsSchema) {
             return;
         }
 
-        next();
+        let typeError: boolean = false;
+
+        for (let i in req.body) {
+            const value = req.body[i];
+            if (!_RequestValidator.isValidType(value, paramsSchema[i].type)) {
+                typeError = true;
+                res.send({
+                    error: 4,
+                    msg: i + " is not with the correct type " + paramsSchema[i].type
+                });
+            }
+        }
+
+        if (!typeError) next();
     };
 }
