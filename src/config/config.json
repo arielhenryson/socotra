@@ -1,6 +1,6 @@
 {
 	"appName": "Socotra",
-	"domain": "localhost",
+	"domain": "https://localhost:3000",
 	"version": "0.0.1",
 	"dbName": "SocotraDB",
 	"systemEmail": "no-replay@qwikwiz.com",
