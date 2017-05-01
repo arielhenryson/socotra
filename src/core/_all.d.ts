@@ -14,11 +14,24 @@ interface SocotraResponse {
 interface SocotraRoute {
     path: string;
     controller: string;
-    method?: string;
+    method?: SocotraRequestMethod;
     middlewares?: Array<string>;
-    params?: any;
+    params?: SocotraRouteParams;
 }
 
+
+type SocotraRequestMethod = "GET" | "PUT" | "POST" | "DELETE";
+
+
 interface SocotraRouteParams {
-    [propName: string]: any;
+    [propName: string]: SocotraRouteParamsProp;
 }
+
+interface SocotraRouteParamsProp {
+    type?: SocotraRequestParamType;
+    required?: boolean;
+    maxLength?: number;
+    minLength?: number;
+}
+
+type SocotraRequestParamType = "string" | "number" | "int" | "float" | "boolean" | "email";
