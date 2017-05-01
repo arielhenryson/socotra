@@ -80,10 +80,15 @@ export class RequestValidator {
             case "boolean":
                 return typeof val === "boolean";
             case "email":
-                return typeof val === "string";
+                return this.validateEmail(val);
             default:
                 return true;
         }
+    }
+
+    validateEmail(email) {
+        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
     }
 
 
@@ -94,5 +99,23 @@ export class RequestValidator {
 
     private isLessThenMinChar(key, attrs) {
         return typeof attrs.minLength !== "undefined" && this.values[key].length < attrs.minLength;
+    }
+
+
+    toLowerCaseIfSet(key, attrs) {
+        if (attrs.toLowerCase) {
+            return this.values[key].toLocaleLowerCase();
+        }
+
+        return this.values[key];
+    }
+
+
+    toUpperCaseIfSet(key, attrs) {
+        if (attrs.toUpperCase) {
+            return this.values[key].toLocaleUpperCase();
+        }
+
+        return this.values[key];
     }
 }

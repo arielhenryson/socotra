@@ -32,6 +32,8 @@ interface SocotraRouteParamsProp {
     required?: boolean;
     maxLength?: number;
     minLength?: number;
+    toLowerCase?: boolean;
+    toUpperCase?: boolean;
 }
 
 type SocotraRequestParamType = "string" | "number" | "int" | "float" | "boolean" | "email";

@@ -122,6 +122,10 @@ function requestValidator(paramsSchema) {
                     msg: i + " is not with the correct type " + paramsSchema[i].type
                 });
             }
+
+            // formats
+            req.body[i] = _RequestValidator.toLowerCaseIfSet(i, paramsSchema[i]);
+            req.body[i] = _RequestValidator.toUpperCaseIfSet(i, paramsSchema[i]);
         }
 
         if (!typeError) next();

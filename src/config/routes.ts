@@ -26,10 +26,13 @@ export const routes: Array<SocotraRoute> = [
     middlewares: [],
     params: {
       username: {
-        type: "number",
+        type: "email",
         required: true,
         maxLength: 50,
-        minLength: 20
+        minLength: 20,
+        toLowerCase: true,
+        // toUpperCase: true
+
       },
       password: {
         type: "string",
