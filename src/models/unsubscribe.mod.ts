@@ -5,21 +5,13 @@ export class Unsubscribe extends Model {
         super();
     }
     
-    private addToUnsubscribe(email) {
+    private async addToUnsubscribe(email) {
         const obj = Model.makeDoc({
             email: email
         });
-        
-        return new Promise((resolve) => {
-            this.db.collection("unsubscribe").insert(obj, (err, doc) => {
-                if (err) {
-                    resolve(false);
-                    return;
-                }
-                
-                resolve(true);
-            });
-        });
+
+        const res: SocotraAPIResponse = await this.dbInsert('unsubscribe', obj, {});
+        return !res.error;
     }
     
     public async blockUser(userID) {

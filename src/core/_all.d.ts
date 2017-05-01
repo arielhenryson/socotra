@@ -4,7 +4,7 @@ interface MongoDoc {
 }
 
 
-interface SocotraResponse {
+interface SocotraAPIResponse {
     error: number;
     msg?: string;
     [propName: string]: any;

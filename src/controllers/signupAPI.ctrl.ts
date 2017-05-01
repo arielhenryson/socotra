@@ -6,7 +6,7 @@ module.exports = (req, res) => {
 
     const AuthOBJ = new Auth();
     const createUser = AuthOBJ.createUser(email, password);
-    createUser.then((results) => {
+    createUser.then(results => {
         if (results.error) {
             res.json(results);
             return;

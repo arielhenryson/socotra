@@ -1,6 +1,6 @@
-import {Model} from  './model.mod';
+import { Model } from  './model.mod';
 import * as validator from '../core/lib/generic/validation';
-import {AppEmail}  from '../services/appEmail.service';
+import { AppEmail }  from '../services/appEmail.service';
 
 const config = require('../config/config.json');
 const path = require("path");
@@ -30,7 +30,7 @@ export class Auth extends Model {
         emailObj.send(emailOptions);
     }
 
-    private makeNewUser(email: string, password: string) {
+    private async makeNewUser(email: string, password: string) {
         const solt = Model.makeNewSolt();
         const hashPassword = Model.hash(password, solt);
         const activationKey = Model.makeNewSolt();
@@ -44,17 +44,8 @@ export class Auth extends Model {
 
         Auth.sendMailToNewUser(newUser);
 
-        return new Promise((resolve) => {
-            this.db.collection("users").insert(newUser, (err) => {
-                if (err) {
-                    resolve(false);
-                    return;
-                }
-
-                resolve(true);
-                return;
-            });
-        });
+        const res: SocotraAPIResponse = await this.dbInsert('users', newUser, {});
+        return !res.error;
     }
 
     public async createUser(email: string, password: string) {

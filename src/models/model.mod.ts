@@ -1,5 +1,5 @@
-import {DB} from  '../core';
-import {DBHelper}  from '../services/dbHelper.service';
+import { DB } from  '../core';
+import { DBHelper }  from '../services/dbHelper.service';
 
 const config = require('../config/config.json');
 

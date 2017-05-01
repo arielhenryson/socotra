@@ -1,5 +1,5 @@
 import * as crypto from 'crypto';
-import {config} from "../global";
+import { config } from "../global";
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 
@@ -9,9 +9,11 @@ let mongo = null;
 export class DB {
     public db;
 
+
     constructor() {
         this.connect();
     }
+
 
     public connect(): void {
         if (mongo !== null) {
@@ -45,7 +47,8 @@ export class DB {
         }, 1000);
     }
 
-    public promiseConnection(): Promise<any> {
+
+    public promiseConnection(): Promise<boolean> {
         return new Promise((resolve) => {
             let watcher = setInterval(() => {
                 if (this.db !== null) {
@@ -70,14 +73,16 @@ export class DB {
         });
     }
 
+
     public static isValidId(str: string) {
         str = str + '';
-        var len = str.length, valid = false;
-        if (len == 12 || len == 24) {
+        let len = str.length, valid = false;
+        if (len === 12 || len === 24) {
             valid = /^[0-9a-fA-F]+$/.test(str);
         }
         return valid;
     };
+
 
     public static createNewId(value?: string) {
         if (DB.isValidId(value)) {
@@ -86,6 +91,7 @@ export class DB {
 
         return new ObjectID();
     }
+
 
     public static makeDoc(data: MongoDoc): Object {
         if (typeof data._createTime !== "undefined") {
@@ -103,15 +109,18 @@ export class DB {
         return object;
     }
 
+
     public static makeNewSolt(): string {
         return crypto.randomBytes(16).toString('hex');
     }
+
 
     public static hash(value: string, solt: string): string {
         return crypto.createHmac("sha256", solt).update(value).digest('hex');
     }
 
-    public dbFindOne(collection: string, where: any, options: any) {
+
+    public dbFindOne(collection: string, where: any, options: any): Promise<SocotraAPIResponse> {
         return new Promise((resolve) => {
             this.db.collection(collection).findOne(where, options, (error, data) => {
                 resolve({
@@ -122,7 +131,8 @@ export class DB {
         });
     }
 
-    public dbInsert(collection: string, docs, options: any) {
+
+    public dbInsert(collection: string, docs, options: any): Promise<SocotraAPIResponse> {
         return new Promise((resolve) => {
             if (docs instanceof Array) {
                 for (let i in docs) {
@@ -140,7 +150,8 @@ export class DB {
         });
     }
 
-    public dbUpdate(collection: string, where: any, what: any, options: any) {
+
+    public dbUpdate(collection: string, where: any, what: any, options: any): Promise<SocotraAPIResponse> {
         return new Promise((resolve) => {
             this.db.collection(collection).update(where, what, options, (error, results) => {
                 resolve({
@@ -151,7 +162,8 @@ export class DB {
         });
     }
 
-    public dbFind(collection: string, where: any, options: any) {
+
+    public dbFind(collection: string, where: any, options: any): Promise<SocotraAPIResponse> {
         return new Promise((resolve) => {
             this.db.collection(collection).find(where, options).toArray( (error, data) => {
                 resolve({

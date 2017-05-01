@@ -6,29 +6,19 @@ export class Activation extends Model {
         super();
     }
     
-    private getAccountData(activationKey: string) {
+    private async getAccountData(activationKey: string) {
         const where = {
             activationKey: activationKey
         };
-        
-        return new Promise((resolve, reject) => {
-            this.db.collection("users").findOne(where, (err, doc) => {
-                if (err) {
-                    reject(err);
-                    return;
-                }
-                
-                if (doc === null) {
-                    resolve(false);
-                    return;
-                }
-                
-                resolve(true);
-            });
-        });
+
+
+        const res: any = await this.dbFindOne('users', where, {});
+        if (res.error) return false;
+
+        return res.data;
     }
     
-    private verfidUser(activationKey: string) {
+    private async verifiedUser(activationKey: string) {
         const where = {
             activationKey: activationKey
         };
@@ -38,21 +28,10 @@ export class Activation extends Model {
                 verified: true
             }
         };
-        
-        return new Promise((resolve, reject) => {
-            this.db.collection("users").update(where, what, (err, doc) => {
-                if (err) {
-                    reject(err);
-                    return;
-                }
-                
-                if (doc === null) {
-                    resolve(false);
-                }
-                
-                resolve(true);
-            });
-        });
+
+        const res: any = await this.dbUpdate('users', where, what, {});
+        return !res.error;
+
     }
     
     public async activateAccount(activationKey: string) {
@@ -66,7 +45,7 @@ export class Activation extends Model {
         }
         
         
-        const verifiedUser = await this.verfidUser(activationKey);
+        const verifiedUser = await this.verifiedUser(activationKey);
         if (!verifiedUser) {
             return {
                 error: 1, 
