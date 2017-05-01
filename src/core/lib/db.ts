@@ -120,7 +120,9 @@ export class DB {
     }
 
 
-    public dbFindOne(collection: string, where: any, options: any): Promise<SocotraAPIResponse> {
+    public dbFindOne(collection: string, where: any, options?: any): Promise<SocotraAPIResponse> {
+        options = options || {};
+
         return new Promise((resolve) => {
             this.db.collection(collection).findOne(where, options, (error, data) => {
                 resolve({
@@ -132,7 +134,9 @@ export class DB {
     }
 
 
-    public dbInsert(collection: string, docs, options: any): Promise<SocotraAPIResponse> {
+    public dbInsert(collection: string, docs, options?: any): Promise<SocotraAPIResponse> {
+        options = options || {};
+
         return new Promise((resolve) => {
             if (docs instanceof Array) {
                 for (let i in docs) {
@@ -151,7 +155,9 @@ export class DB {
     }
 
 
-    public dbUpdate(collection: string, where: any, what: any, options: any): Promise<SocotraAPIResponse> {
+    public dbUpdate(collection: string, where: any, what: any, options?: any): Promise<SocotraAPIResponse> {
+        options = options || {};
+
         return new Promise((resolve) => {
             this.db.collection(collection).update(where, what, options, (error, results) => {
                 resolve({
@@ -163,7 +169,9 @@ export class DB {
     }
 
 
-    public dbFind(collection: string, where: any, options: any): Promise<SocotraAPIResponse> {
+    public dbFind(collection: string, where: any, options?: any): Promise<SocotraAPIResponse> {
+        options = options || {};
+
         return new Promise((resolve) => {
             this.db.collection(collection).find(where, options).toArray( (error, data) => {
                 resolve({
