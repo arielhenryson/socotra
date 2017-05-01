@@ -65,25 +65,32 @@ export class RequestValidator {
         }
     }
 
-    isValidType(val, type) {
-        if (typeof type === "undefined") return true;
+    isValidType(val, paramsSchema) {
+        try {
+            if (typeof paramsSchema.type === "undefined") return true;
 
-        switch (type) {
-            case "string":
-                return typeof val === "string";
-            case "number":
-                return typeof val === "number";
-            case "int":
-                return typeof val === "number";
-            case "float":
-                return typeof val === "number";
-            case "boolean":
-                return typeof val === "boolean";
-            case "email":
-                return RequestValidator.validateEmail(val);
-            default:
-                return true;
+            const type = paramsSchema.type;
+
+            switch (type) {
+                case "string":
+                    return typeof val === "string";
+                case "number":
+                    return typeof val === "number";
+                case "int":
+                    return typeof val === "number";
+                case "float":
+                    return typeof val === "number";
+                case "boolean":
+                    return typeof val === "boolean";
+                case "email":
+                    return RequestValidator.validateEmail(val);
+                default:
+                    return true;
+            }
+        } catch (e) {
+            return true;
         }
+
     }
 
     static validateEmail(email) {
@@ -103,7 +110,7 @@ export class RequestValidator {
 
 
     toLowerCaseIfSet(key, attrs) {
-        if (attrs.toLowerCase) {
+        if (typeof attrs.toLowerCase !== "undefined" && attrs.toLowerCase) {
             return this.values[key].toLocaleLowerCase();
         }
 
@@ -112,7 +119,7 @@ export class RequestValidator {
 
 
     toUpperCaseIfSet(key, attrs) {
-        if (attrs.toUpperCase) {
+        if (typeof attrs.toUpperCase !== "undefined" && attrs.toUpperCase) {
             return this.values[key].toLocaleUpperCase();
         }
 

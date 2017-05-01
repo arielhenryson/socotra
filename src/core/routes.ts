@@ -7,7 +7,7 @@ import * as fs from 'fs';
 module.exports = (app) => {
     const ROOT = app.locals.ROOT;
     const emailBrowserCtrl = require('./controllers/emailbrowser.ctrl');
-    
+
     // email routing
     app.use('/_email/:id', emailBrowserCtrl);
 
@@ -22,7 +22,7 @@ module.exports = (app) => {
         });
     });
 
-    
+
     // test download route
     app.get('/_download/:id', async (req, res) => {
         const id = req.params.id;
@@ -39,13 +39,13 @@ module.exports = (app) => {
     });
 
 
-	// test upload route
+    // test upload route
     const _uploadMid = require('./middlewares/_upload.mid');
     app.post('/_upload', _uploadMid, function (req, res) {
         res.send(req._upload);
     });
 
-    
+
     // routing
     // loop through the routes.json file
     // connecting the right controller
@@ -54,7 +54,7 @@ module.exports = (app) => {
         if (route.path.startsWith('/_')) {
             throw "routes that start with underscore are saved four system special routes";
         }
-        
+
         const controller = require(ROOT + '/controllers/' + route.controller + '.ctrl');
         let middlewares = [];
 
@@ -65,7 +65,7 @@ module.exports = (app) => {
             middlewares.push(m);
         }
 
-		// load middlewares if exist for this route
+        // load middlewares if exist for this route
         if (typeof route.middlewares !== "undefined" && route.middlewares.length) {
             route.middlewares.forEach(midName => {
                 const m = require(ROOT + '/middlewares/' + midName + '.mid');
@@ -115,7 +115,7 @@ function requestValidator(paramsSchema) {
 
         for (let i in req.body) {
             const value = req.body[i];
-            if (!_RequestValidator.isValidType(value, paramsSchema[i].type)) {
+            if (!_RequestValidator.isValidType(value, paramsSchema[i])) {
                 typeError = true;
                 res.send({
                     error: 4,
@@ -124,8 +124,10 @@ function requestValidator(paramsSchema) {
             }
 
             // formats
-            req.body[i] = _RequestValidator.toLowerCaseIfSet(i, paramsSchema[i]);
-            req.body[i] = _RequestValidator.toUpperCaseIfSet(i, paramsSchema[i]);
+            try {
+                req.body[i] = _RequestValidator.toLowerCaseIfSet(i, paramsSchema[i]);
+                req.body[i] = _RequestValidator.toUpperCaseIfSet(i, paramsSchema[i]);
+            } catch (e) {}
         }
 
         if (!typeError) next();
