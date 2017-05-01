@@ -1,11 +1,12 @@
 import { FileStorage } from  './lib/fileStorage';
 import * as fs from 'fs';
-import {RequestValidator} from "./lib/requestValidator";
+import { RequestValidator } from "./lib/requestValidator";
 
 
 module.exports = (app) => {
     const ROOT = app.locals.ROOT;
     const routes = require(ROOT + 'config/routes.json');
+    const _routes = routes;
     const emailBrowserCtrl = require('./controllers/emailbrowser.ctrl');
     
     // email routing
@@ -50,7 +51,7 @@ module.exports = (app) => {
     // loop through the routes.json file
     // connecting the right controller
     // for each route and create it
-    routes.forEach((route) => {
+    _routes.forEach(route => {
         if (route.path.startsWith('/_')) {
             throw "routes that start with underscore are saved four system special routes";
         }

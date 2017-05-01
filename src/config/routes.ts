@@ -1,4 +1,4 @@
-[
+export const routes = [
   {
     "path": "/",
     "method": "GET",
@@ -37,4 +37,4 @@
       }
     }
   }
-]  
+];
