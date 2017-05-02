@@ -64,7 +64,7 @@ export class Server {
             app.use(bodyParser.urlencoded({extended: true}));
 
             // set up session
-            require('./session')(app);
+            // require('./session')(app);
 
 
             // Log all the request to the database
