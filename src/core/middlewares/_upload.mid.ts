@@ -93,8 +93,12 @@ module.exports = (req, res, next) => {
             };
 
 
-            if (typeof req.session.user !== "undefined" && typeof req.session.user.id !== "undefined") {
-                data.metadata.userID = req.session.user.id;
+
+            if (
+                typeof req.appUser !== "undefined" &&
+                typeof req.appUser.id !== "undefined"
+            ) {
+                data.metadata.userID = req.appUser.id;
             }
 
             checkFileType(file.path).then(function (fileTypeOK) {
