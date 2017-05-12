@@ -53,7 +53,7 @@ export class DB {
             let watcher = setInterval(() => {
                 if (this.db !== null) {
                     const what = {
-                        UTC: new Date()
+                        _createdTime: new Date()
                     };
 
                     this.db.collection("_startLog").insert(what, function (err) {
@@ -93,14 +93,11 @@ export class DB {
     }
 
 
-    public static makeDoc(data: MongoDoc): Object {
-        if (typeof data._createTime !== "undefined") {
-            return data;
-        }
-
+    private static makeDoc(data: MongoDoc): Object {
         let object = {
-            _createTime: new Date()
+            _createdTime: new Date()
         };
+
 
         for (let key in data) {
             object[key] = data[key];
@@ -123,7 +120,7 @@ export class DB {
     public dbFindOne(collection: string, where: any, options?: any): Promise<SocotraAPIResponse> {
         options = options || {};
 
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             this.db.collection(collection).findOne(where, options, (error, data) => {
                 resolve({
                     error: error,
@@ -137,7 +134,7 @@ export class DB {
     public dbInsert(collection: string, docs, options?: any): Promise<SocotraAPIResponse> {
         options = options || {};
 
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             if (docs instanceof Array) {
                 for (let i in docs) {
                     docs[i] = DB.makeDoc(docs[i]);
@@ -158,7 +155,8 @@ export class DB {
     public dbUpdate(collection: string, where: any, what: any, options?: any): Promise<SocotraAPIResponse> {
         options = options || {};
 
-        return new Promise((resolve) => {
+
+        return new Promise(resolve => {
             this.db.collection(collection).update(where, what, options, (error, results) => {
                 resolve({
                     error: error,
@@ -172,7 +170,7 @@ export class DB {
     public dbFind(collection: string, where: any, options?: any): Promise<SocotraAPIResponse> {
         options = options || {};
 
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             this.db.collection(collection).find(where, options).toArray( (error, data) => {
                 resolve({
                     error: error,

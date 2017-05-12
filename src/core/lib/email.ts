@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 const fs = require('fs');
-import {DB} from './db';
-import {config} from "../global";
+import { DB } from './db';
+import { config } from "../global";
 
 export class Email extends DB {
     private sender;
@@ -68,7 +68,7 @@ export class Email extends DB {
     // async function that save every email sent from
     // the system
     private saveToDB(data): Promise<boolean> {
-        let sentMail = DB.makeDoc(data);
+        let sentMail = data;
         const newID = DB.createNewId("");
 
         data._id = this.id;

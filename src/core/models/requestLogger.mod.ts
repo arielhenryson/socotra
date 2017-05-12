@@ -6,8 +6,6 @@ export class RequestLogger extends DB {
     }
     
     public log(requestData: Object) {
-        const obj = DB.makeDoc(requestData);
-        
-        this.db.collection("_request").insert(obj);
+        this.dbInsert("_request", requestData);
     }
 }

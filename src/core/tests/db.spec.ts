@@ -25,11 +25,6 @@ describe('database class', () => {
         expect(isNewKeyValid).toEqual(true);
     });
 
-    it('expect makeDoc to add _createTime as type Date', () => {
-        const doc: any = DB.makeDoc({});
-        expect(doc._createTime instanceof Date).toBe(true);
-    });
-
     it('expect makeNewSolt to create random string', () => {
         const randomSolt = DB.makeNewSolt();
         expect(typeof randomSolt).toBe("string");
@@ -47,7 +42,7 @@ describe('database class', () => {
         let db = new DB();
         db.promiseConnection().then(async () => {
             const collection = "unitTest";
-            const doc = DB.makeDoc({ foo: "bar" });
+            const doc = { foo: "bar" };
             const insertQuery: any = await db.dbInsert(collection, doc, {});
 
             expect(insertQuery.error).toBe(null);

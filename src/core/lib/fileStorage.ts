@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import {DB} from '../lib/db';
+import { DB } from '../lib/db';
 
 
 const GridFSBucket = require('mongodb').GridFSBucket;
@@ -11,16 +11,16 @@ export class FileStorage extends DB {
     constructor() {
         super();
     }
-
+    
     public writeFile(data): Promise<any> {
         const bucket = new GridFSBucket(this.db);
-
+        
         return new Promise((resolve) => {
             let id = DB.createNewId("");
             let options = {
                 metadata: data.metadata
             };
-
+            
             fs.createReadStream(data.path).
             pipe(bucket.openUploadStreamWithId(id, data.name, options)).
             on('error', function() {
@@ -30,16 +30,16 @@ export class FileStorage extends DB {
             }).
             on('finish', function() {
                 resolve({
-                    error: 0,
+                    error: 0, 
                     id: id.toString()
                 });
             });
         });
     }
-
+    
     public async readFile(id) {
         id = DB.createNewId(id);
-
+        
         // first we try to get the file metadata
         const fileInfo: any = await this.getFileInfo(id);
 
@@ -49,14 +49,14 @@ export class FileStorage extends DB {
                 msg: "file not found"
             });
         }
-
+        
         // If we rich here we now that the file was found
         // so we can stream the file back
         const fileStream: any = await this.streamFile(id, fileInfo.metadata.mimetype);
 
         return fileStream;
     }
-
+    
     public deleteFile(id): Promise<any> {
         id = DB.createNewId(id);
         const bucket = new GridFSBucket(this.db);
@@ -77,7 +77,7 @@ export class FileStorage extends DB {
             });
         });
     }
-
+    
     public isFileExists(id): Promise<boolean> {
         return new Promise((resolve) => {
             this.db.collection("fs.files").findOne({
@@ -87,12 +87,12 @@ export class FileStorage extends DB {
                     resolve(false);
                     return;
                 }
-
+                
                 resolve(true);
             });
         });
     };
-
+    
     public getFileInfo(id): Promise<any> {
         return new Promise((resolve) => {
             this.db.collection("fs.files").findOne({
@@ -107,7 +107,7 @@ export class FileStorage extends DB {
             });
         });
     }
-
+    
     private streamFile(id, mimetype): Promise<any> {
         return new Promise((resolve) => {
             const gs = new GridStore(this.db, id, 'r');
@@ -132,8 +132,8 @@ export class FileStorage extends DB {
 }
 
 /*
- var test = new FileStorage();
- test.promiseConnection().then(function () {
- test.writeFile();
- });
- */
+var test = new FileStorage();
+test.promiseConnection().then(function () {
+	test.writeFile();
+});
+*/

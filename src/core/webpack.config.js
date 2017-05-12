@@ -60,13 +60,13 @@ if (useAOT) {
 
 module.exports = {
         entry: {
-        app: path.normalize(ROOT + "./src/public/app/main.browser")
+                app: path.normalize(ROOT + "./src/public/app/main.browser")
         },
         output: {
                 path: __dirname,
                 filename: path.normalize(ROOT +"./.build/public/dist/[name].js")
         },
-                resolve: {
+        resolve: {
                 extensions: [ '.ts', '.js']
         },
         module: {
