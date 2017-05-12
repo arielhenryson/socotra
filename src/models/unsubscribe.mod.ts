@@ -6,9 +6,9 @@ export class Unsubscribe extends Model {
     }
     
     private async addToUnsubscribe(email) {
-        const obj = Model.makeDoc({
+        const obj = {
             email: email
-        });
+        };
 
         const res: SocotraAPIResponse = await this.dbInsert('unsubscribe', obj, {});
         return !res.error;

@@ -34,13 +34,13 @@ export class Auth extends Model {
         const solt = Model.makeNewSolt();
         const hashPassword = Model.hash(password, solt);
         const activationKey = Model.makeNewSolt();
-        const newUser = Model.makeDoc({
+        const newUser = {
             email: email,
             solt: solt,
             password: hashPassword,
             verified: false,
             activationKey: activationKey
-        });
+        };
 
         Auth.sendMailToNewUser(newUser);
 
