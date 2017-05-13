@@ -97,9 +97,6 @@ export class Server {
             // that are specific for your app
             try {
                 this.options.extend(app);
-                if (this.options.extend !== null) {
-                    this.options.extend(app);
-                }
             } catch (e) {
                 console.log("No server extend layer found");
             }
