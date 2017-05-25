@@ -30,6 +30,10 @@ export class DB {
 
         }
 
+        if (typeof config.mongoUrl !== "undefined" && config.mongoUrl.length) {
+            url = config.mongoUrl;
+        }
+
         MongoClient.connect("mongodb://" + url, function(error, db) {
             console.log("database connection established");
             mongo = db;
