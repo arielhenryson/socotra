@@ -21,15 +21,8 @@ export class DB {
             return;
         }
 
-        // mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
-        let url = `${config.dbHost}:${config.dbPort}/${config.dbName}`;
-        if (typeof config.dbUserPassword !== undefined &&
-            config.dbUserPassword.length) {
-            // Authenticate a database
-            url = `${config.dbUserName$}:${config.dbUserPassword}@${config.dbHost}:${config.dbPort} /${config.dbName}`;
 
-        }
-
+        let url;
         if (typeof config.mongoUrl !== "undefined" && config.mongoUrl.length) {
             url = config.mongoUrl;
         }
