@@ -7,7 +7,7 @@ const ObjectID = require('mongodb').ObjectID;
 let mongo = null;
 
 export class DB {
-    public db;
+    public db = null;
 
 
     constructor() {
@@ -27,51 +27,40 @@ export class DB {
             url = config.mongoUrl;
         }
 
-        MongoClient.connect("mongodb://" + url, function(error, db) {
+        MongoClient.connect("mongodb://" + url, (error, db) => {
             console.log("database connection established");
             mongo = db;
+            this.db = mongo;
         });
-
-        let watcher = setInterval(() => {
-            if (mongo !== null) {
-                this.db = mongo;
-
-
-                (function (clearInterval){
-                    clearInterval(watcher);
-                }(clearInterval));
-            }
-        }, 1000);
     }
 
 
-    public promiseConnection(): Promise<boolean> {
-        return new Promise((resolve) => {
-            let watcher = setInterval(() => {
-                if (this.db !== null) {
-                    const what = {
-                        _createdTime: new Date()
-                    };
+    async promiseConnection() {
+        const self = this;
 
-                    this.db.collection("_startLog").insert(what, function (err) {
-                        if (err) {
-                            resolve(false);
-                            return;
-                        }
-
+        return new Promise(async(resolve) => {
+            async function isConnected() {
+                if (self.db !== null) {
+                    const res = await self.dbInsert("_startLog", {});
+                    if (!res.error) {
                         resolve(true);
-                    });
-
-                    (function (clearInterval){
-                        clearInterval(watcher);
-                    }(clearInterval));
+                        return;
+                    }
                 }
-            }, 1000);
+
+
+
+                setTimeout(() => {
+                    isConnected();
+                }, 1000);
+            }
+
+            isConnected();
         });
     }
 
 
-    public static isValidId(str: string) {
+    static isValidId(str: string) {
         str = str + '';
         let len = str.length, valid = false;
         if (len === 12 || len === 24) {
@@ -81,7 +70,7 @@ export class DB {
     };
 
 
-    public static createNewId(value?: string) {
+    static createNewId(value?: string) {
         if (DB.isValidId(value)) {
             return new ObjectID(value);
         }
@@ -104,17 +93,17 @@ export class DB {
     }
 
 
-    public static makeNewSolt(): string {
+    static makeNewSolt(): string {
         return crypto.randomBytes(16).toString('hex');
     }
 
 
-    public static hash(value: string, solt: string): string {
+    static hash(value: string, solt: string): string {
         return crypto.createHmac("sha256", solt).update(value).digest('hex');
     }
 
 
-    public dbFindOne(collection: string, where: any, options?: any): Promise<SocotraAPIResponse> {
+    dbFindOne(collection: string, where: any, options?: any): Promise<SocotraAPIResponse> {
         options = options || {};
 
         return new Promise(resolve => {
@@ -128,7 +117,7 @@ export class DB {
     }
 
 
-    public dbInsert(collection: string, docs, options?: any): Promise<SocotraAPIResponse> {
+    dbInsert(collection: string, docs, options?: any): Promise<SocotraAPIResponse> {
         options = options || {};
 
         return new Promise(resolve => {
@@ -149,7 +138,7 @@ export class DB {
     }
 
 
-    public dbUpdate(collection: string, where: any, what: any, options?: any): Promise<SocotraAPIResponse> {
+    dbUpdate(collection: string, where: any, what: any, options?: any): Promise<SocotraAPIResponse> {
         options = options || {};
 
 
@@ -164,7 +153,7 @@ export class DB {
     }
 
 
-    public dbFind(collection: string, where: any, options?: any): Promise<SocotraAPIResponse> {
+    dbFind(collection: string, where: any, options?: any): Promise<SocotraAPIResponse> {
         options = options || {};
 
         return new Promise(resolve => {
