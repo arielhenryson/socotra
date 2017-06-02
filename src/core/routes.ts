@@ -13,13 +13,12 @@ module.exports = (app) => {
 
 
     // test delete route
-    app.all('/_delete/:id', (req, res) => {
+    app.all('/_delete/:id', async (req, res) => {
         const id = req.params.id;
 
         const storage = new FileStorage();
-        storage.deleteFile(id).then((results) => {
-            res.send(results);
-        });
+        const results = await storage.deleteFile(id);
+        res.send(results);
     });
 
 
@@ -27,7 +26,7 @@ module.exports = (app) => {
     app.get('/_download/:id', async (req, res) => {
         const id = req.params.id;
         const storage = new FileStorage();
-        const results = await storage.readFile(id);
+        const results = await storage.readFile(id, false);
 
         if (results.error) {
             res.send(results);
@@ -39,11 +38,11 @@ module.exports = (app) => {
     });
 
 
-    // test upload route
-    const _uploadMid = require('./middlewares/_upload.mid');
-    app.post('/_upload', _uploadMid, function (req, res) {
-        res.send(req._upload);
-    });
+    // // test upload route
+    // const _uploadMid = require('./middlewares/_upload.mid');
+    // app.post('/_upload', _uploadMid, function (req, res) {
+    //     res.send(req._upload);
+    // });
 
 
     // routing

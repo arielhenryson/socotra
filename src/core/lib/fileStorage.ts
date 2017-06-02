@@ -15,7 +15,7 @@ export class FileStorage extends DB {
     public writeFile(data): Promise<any> {
         const bucket = new GridFSBucket(this.db);
         
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             let id = DB.createNewId("");
             let options = {
                 metadata: data.metadata
@@ -37,11 +37,11 @@ export class FileStorage extends DB {
         });
     }
     
-    public async readFile(id) {
+    public async readFile(id, allowPrivateFile) {
         id = DB.createNewId(id);
         
         // first we try to get the file metadata
-        const fileInfo: any = await this.getFileInfo(id);
+        const fileInfo: any = await this.getFileInfo(id, allowPrivateFile);
 
         if (fileInfo === null) {
             return ({
@@ -49,19 +49,26 @@ export class FileStorage extends DB {
                 msg: "file not found"
             });
         }
+
+
+        if (fileInfo === -1) {
+            return ({
+                error: 2,
+                msg: "access denied"
+            });
+        }
+
         
         // If we rich here we now that the file was found
         // so we can stream the file back
-        const fileStream: any = await this.streamFile(id, fileInfo.metadata.mimetype);
-
-        return fileStream;
+        return await this.streamFile(id, fileInfo.metadata.mimetype);
     }
     
     public deleteFile(id): Promise<any> {
         id = DB.createNewId(id);
         const bucket = new GridFSBucket(this.db);
 
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             bucket.delete(id, function(error) {
                 if (error) {
                     resolve({
@@ -79,7 +86,7 @@ export class FileStorage extends DB {
     }
     
     public isFileExists(id): Promise<boolean> {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             this.db.collection("fs.files").findOne({
                 _id: id
             }, (err, doc) => {
@@ -93,13 +100,19 @@ export class FileStorage extends DB {
         });
     };
     
-    public getFileInfo(id): Promise<any> {
-        return new Promise((resolve) => {
+    public getFileInfo(id, allowPrivateFile): Promise<any> {
+        return new Promise(resolve => {
             this.db.collection("fs.files").findOne({
                 _id: id
             }, (err, doc) => {
                 if (doc === null) {
                     resolve(null);
+                    return;
+                }
+
+
+                if (doc.metadata.privateFile && !allowPrivateFile) {
+                    resolve(-1);
                     return;
                 }
 
@@ -109,7 +122,7 @@ export class FileStorage extends DB {
     }
     
     private streamFile(id, mimetype): Promise<any> {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             const gs = new GridStore(this.db, id, 'r');
             gs.open((err, gs) => {
                 gs.read((error, fileContent) => {

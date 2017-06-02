@@ -76,6 +76,8 @@ module.exports = (req, res, next) => {
             file: null
         };
 
+        let privateFile = req.headers['private-file'] === "true";
+
 
         let file = req.file;
         let data = {
@@ -83,6 +85,7 @@ module.exports = (req, res, next) => {
             path: file.path,
             name: file.originalname,
             metadata: {
+                privateFile,
                 size: file.size,
                 encoding: file.encoding,
                 mimetype: file.mimetype,
