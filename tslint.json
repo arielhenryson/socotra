@@ -1,5 +1,7 @@
 {
     "rules": {
+        "max-line-length": [true, 220],
+        "no-inferrable-types": true,
         "class-name": true,
         "comment-format": [
             true,
@@ -9,27 +11,27 @@
             true,
             "spaces"
         ],
+        "eofline": true,
         "no-duplicate-variable": true,
         "no-eval": true,
+        "no-arg": true,
         "no-internal-module": true,
         "no-trailing-whitespace": false,
-        "no-var-keyword": false,
+        "semicolon": [true, "never"],
+        "no-bitwise": true,
+        "no-unused-expression": true,
+        "no-var-keyword": true,
         "one-line": [
             true,
+            "check-catch",
+            "check-else",
             "check-open-brace",
             "check-whitespace"
         ],
         "quotemark": [
-            false,
-            "double"
-        ],
-        "semicolon": [
             true,
-            "always"
-        ],
-        "triple-equals": [
-            true,
-            "allow-null-check"
+            "single",
+            "avoid-escape"
         ],
         "typedef-whitespace": [
             true,
@@ -41,9 +43,13 @@
                 "variable-declaration": "nospace"
             }
         ],
+        "curly": false,
         "variable-name": [
             true,
-            "ban-keywords"
+            "ban-keywords",
+            "check-format",
+            "allow-leading-underscore",
+            "allow-pascal-case"
         ],
         "whitespace": [
             true,

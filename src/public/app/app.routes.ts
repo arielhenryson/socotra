@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {Routes} from "@angular/router";
+import { Component } from '@angular/core'
+import { Routes } from '@angular/router'
 
 
 
@@ -27,5 +27,5 @@ export class Page3 {}
 export const _routes: Routes = [
     { path: 'home', component: Home },
     { path: 'page2', component: Page2 },
-    { path: "page3", component: Page3 }
-];
+    { path: 'page3', component: Page3 }
+]

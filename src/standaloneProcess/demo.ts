@@ -1,1 +1,1 @@
-console.log("just a demo standalone process");
+console.log('just a demo standalone process')

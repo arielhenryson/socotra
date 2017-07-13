@@ -1,15 +1,15 @@
-import {Server} from "./core/main";
-const config = require('./config/config.json');
-const environment = require('./config/environment.json');
-config.development = environment.development;
+import {Server} from './core/main'
+const config = require('./config/config.json')
+const environment = require('./config/environment.json')
+config.development = environment.development
 
-function extend(app) {
+function extend() {
     // console.log(__dirname);
 }
 
 
-const _server = new Server({
-    extend: extend,
-    config: config
-});
-_server.run();
+const server = new Server({
+    extend,
+    config
+})
+server.run()
