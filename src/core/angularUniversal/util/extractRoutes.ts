@@ -1,49 +1,48 @@
 export function extractRoutes(content) {
-    content = content.replace(/\s/g, '');
-    content = content.match(/\_routes.+]/g);
+    content = content.replace(/\s/g, '')
+    content = content.match(/\_routes.+]/g)
 
-    content = content[0];
+    content = content[0]
 
-    const array1 = content.match(/\path:'.+'/g);
-    const array2 = content.match(/\path:".+"/g);
+    const array1 = content.match(/\path:'.+'/g)
+    const array2 = content.match(/\path:".+"/g)
 
-    let returnArray = [];
+    let returnArray = []
 
     if (array1) {
-        const pathArray = getPath(array1[0]);
-
-        returnArray = returnArray.concat(pathArray);
+        const pathArray = getPath(array1[0])
+        returnArray = returnArray.concat(pathArray)
     }
+
 
     if (array2) {
-        const pathArray = getPath(array2[0]);
-
-        returnArray = returnArray.concat(pathArray);
+        const pathArray = getPath(array2[0])
+        returnArray = returnArray.concat(pathArray)
     }
 
-    return returnArray;
+    return returnArray
 }
 
 function getPath(path) {
-    path = replaceAll("}", "", path);
-    path = replaceAll("{", "", path);
-    path = replaceAll("'", "", path);
-    path = replaceAll('"', "", path);
-    path = path.split(",");
+    path = replaceAll('}', '', path)
+    path = replaceAll('{', '', path)
+    path = replaceAll("'", '', path)
+    path = replaceAll('"', '', path)
+    path = path.split(',')
 
-    let pathArray = [];
+    let pathArray = []
 
 
     path.forEach(p => {
-        if (!p.startsWith("path")) return;
-        p = p.replace("path:", "");
+        if (!p.startsWith('path')) return
+        p = p.replace('path:', '')
 
-        pathArray.push(p);
-    });
+        pathArray.push(p)
+    })
 
-    return pathArray;
+    return pathArray
 }
 
 function replaceAll(search, replacement, target) {
-    return target.split(search).join(replacement);
+    return target.split(search).join(replacement)
 }

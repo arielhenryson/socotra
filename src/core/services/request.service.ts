@@ -1,9 +1,10 @@
-const request = require('request');
+const request = require('request')
+
 
 interface RequestServiceResponse {
-    error: any;
-    response: any;
-    body: any;
+    error: any
+    response: any
+    body: any
 }
 
 
@@ -15,8 +16,8 @@ export class RequestService {
                     error: error,
                     response: response,
                     body: body
-                });
-            });
-        });
+                })
+            })
+        })
     }
 }

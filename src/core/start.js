@@ -4,7 +4,7 @@ const ROOT = __dirname + "/../../.build/";
 
 const fs = require("fs");
 const spawn = require("child_process").spawn;
-const config = JSON.parse(fs.readFileSync("./src/config/config.json"));
+const config = JSON.parse(fs.readFileSync(__dirname + "/../config/config.json"));
 const chokidar = require('chokidar');
 const cron = require('node-cron');
 

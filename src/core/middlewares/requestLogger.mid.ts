@@ -1,4 +1,4 @@
-import { RequestLogger } from '../models/requestLogger.mod';
+import { RequestLogger } from '../models/requestLogger.mod'
 
 
 module.exports = (req, res, next) => {
@@ -6,10 +6,10 @@ module.exports = (req, res, next) => {
         ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
         url: req.protocol + '://' + req.get('host') + req.originalUrl,
         params: req.query
-    };
+    }
 
-    let logger = new RequestLogger();
-    logger.log(requestData);
+    let logger = new RequestLogger()
+    logger.log(requestData)
 
-    next();
-};
+    next()
+}

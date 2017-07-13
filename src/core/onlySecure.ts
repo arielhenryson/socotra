@@ -1,21 +1,21 @@
 module.exports = (app) => {
-    const config = app.locals.config;
+    const config = app.locals.config
 
     if (config.onlySecure) {
         app.use((req, res, next) => {
             if (req.secure) {
-                next();
+                next()
                 return
             }
 
-            let address = "https://" + config.domain;
+            let address = 'https://' + config.domain
             if (config.httpsPort !== 443) {
-                address += ":" + config.httpsPort;
+                address += ':' + config.httpsPort
             }
 
-            address += req.url;
+            address += req.url
 
-            return res.redirect(address);
-        });
+            return res.redirect(address)
+        })
     }
-};
+}
