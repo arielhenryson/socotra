@@ -19,6 +19,9 @@
       "node",
       "serve-static",
       "hammerjs"
+    ],
+    "typeRoots": [
+      "./node_modules/@types"
     ]
   },
   "exclude": [
