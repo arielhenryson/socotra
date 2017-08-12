@@ -1,0 +1,19 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.7.1
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:marked:20170112':
+    - openlayers > marked:
+        patched: '2017-08-12T05:01:16.955Z'
+    - openlayers > jsdoc > marked:
+        patched: '2017-08-12T05:01:16.955Z'
+  'npm:ms:20170412':
+    - openlayers > closure-util > socket.io > socket.io-client > debug > ms:
+        patched: '2017-08-12T05:01:16.955Z'
+  'npm:request:20160119':
+    - openlayers > closure-util > get-down > request:
+        patched: '2017-08-12T05:01:16.955Z'
+  'npm:tar:20151103':
+    - openlayers > closure-util > get-down > tar:
+        patched: '2017-08-12T05:01:16.955Z'
