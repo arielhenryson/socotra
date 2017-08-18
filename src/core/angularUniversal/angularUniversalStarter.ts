@@ -11,7 +11,7 @@ module.exports = (app) => {
     let content
 
     try {
-        content = fs.readFileSync(config.root + '/public/app/app.routes.js', 'utf8')
+        content = fs.readFileSync(__dirname + '/../../public/app/app.routes.js', 'utf8')
     } catch (e) {
         throw new Error("Can't load app.routes files")
     }

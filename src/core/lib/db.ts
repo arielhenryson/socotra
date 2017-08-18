@@ -15,7 +15,7 @@ export class DB {
     }
 
 
-    public connect(): void {
+    connect() {
         if (mongo !== null) {
             this.db = mongo
             return

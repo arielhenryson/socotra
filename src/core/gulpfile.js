@@ -221,25 +221,27 @@ gulp.task('startServer', ['compile'],  () => {
 
 
 gulp.task('pre-test', ['compile'], () => {
-    return gulp.src([__dirname + '/.build/**/*.js'])
+    return gulp.src([
+        config.buildDir + '/**/*.spec.js',
+        '!' + config.buildDir + '/public/**/*.spec.js'
+    ])
     // Covering files
-        .pipe(istanbul())
-        // Force `require` to return covered files
-        .pipe(istanbul.hookRequire());
+    .pipe(istanbul())
+    // Force `require` to return covered files
+    .pipe(istanbul.hookRequire());
 });
 
 
 gulp.task('testServer', ['compileTS', 'pre-test'], () => {
         return gulp.src([
-                config.buildDir + '/**/*.spec.js',
-                '!' + config.buildDir + '/core/start.js',
-                '!' + config.buildDir + '/**/*.js',
-                '!' + config.buildDir + '/public/app/**'
+            config.buildDir + '/**/*.spec.js',
+            '!' + config.buildDir + '/public/**/*.spec.js'
         ])
             .pipe(jasmineNode({
                 timeout: 10000
-        })).pipe(istanbul.writeReports())
-            .pipe(istanbul.enforceThresholds({ thresholds: { global: 0 } }));
+            }))
+            .pipe(istanbul.writeReports())
+            .pipe(istanbul.enforceThresholds({ thresholds: { global: 0 } }))
 });
 
 

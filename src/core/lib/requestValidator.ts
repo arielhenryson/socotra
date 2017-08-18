@@ -39,11 +39,6 @@ export class RequestValidator {
     }
 
 
-    private isMissingRequired(key, attrs) {
-        return attrs.required && typeof this.values[key] === 'undefined'
-    }
-
-
     formatType(val, attrs) {
         if (typeof attrs.type !== 'undefined') {
             switch (attrs.type) {
@@ -93,21 +88,6 @@ export class RequestValidator {
 
     }
 
-    static validateEmail(email) {
-        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        return re.test(email)
-    }
-
-
-    private isMoreThenMaxChar(key, attrs) {
-        return typeof attrs.maxLength !== 'undefined' && this.values[key].length > attrs.maxLength
-    }
-
-
-    private isLessThenMinChar(key, attrs) {
-        return typeof attrs.minLength !== 'undefined' && this.values[key].length < attrs.minLength
-    }
-
 
     toLowerCaseIfSet(key, attrs) {
         if (typeof attrs.toLowerCase !== 'undefined' && attrs.toLowerCase) {
@@ -124,5 +104,26 @@ export class RequestValidator {
         }
 
         return this.values[key]
+    }
+
+
+    static validateEmail(email) {
+        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        return re.test(email)
+    }
+
+
+    private isMoreThenMaxChar(key, attrs) {
+        return typeof attrs.maxLength !== 'undefined' && this.values[key].length > attrs.maxLength
+    }
+
+
+    private isLessThenMinChar(key, attrs) {
+        return typeof attrs.minLength !== 'undefined' && this.values[key].length < attrs.minLength
+    }
+
+
+    private isMissingRequired(key, attrs) {
+        return attrs.required && typeof this.values[key] === 'undefined'
     }
 }

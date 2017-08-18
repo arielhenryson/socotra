@@ -14,7 +14,8 @@ export class Email extends DB {
         this.id = DB.createNewId('')
     }
 
-    public send(options): void {
+
+    send(options): void {
         // setup e-mail data with unicode symbols
         let mailOptions = {
             from: config.systemEmail,
@@ -38,7 +39,7 @@ export class Email extends DB {
     // async function that load template by name
     // insert the parameters to the template
     // and then resolve the template
-    public render(templateName, params): Promise<any> {
+    render(templateName, params): Promise<any> {
         return new Promise(resolve => {
             fs.readFile(config.buildDir + '/views/email/build/' + templateName + '.html', (err, data) => {
                 if (err) {
@@ -67,7 +68,7 @@ export class Email extends DB {
 
     // async function that save every email sent from
     // the system
-    private saveToDB(data): Promise<boolean> {
+    private saveToDB(data): Promise<any> {
         let sentMail = data
         const newID = DB.createNewId('')
 

@@ -85,7 +85,7 @@ function getDocument(filePath: string): string {
 /**
  * Handle the request with a given NgModuleRef
  */
-function handleModuleRef(moduleRef: NgModuleRef<{}>, callback: Send) {
+function handleModuleRef(moduleRef: NgModuleRef<{}>, callback: any) {
     const state = moduleRef.injector.get(PlatformState)
     const appRef = moduleRef.injector.get(ApplicationRef)
 
@@ -94,7 +94,7 @@ function handleModuleRef(moduleRef: NgModuleRef<{}>, callback: Send) {
         .first()
         .subscribe(stable => {
             const bootstrap = moduleRef.instance['ngOnBootstrap']
-            bootstrap && bootstrap()
+            // bootstrap && bootstrap()
 
             callback(null, state.renderToString())
             moduleRef.destroy()

@@ -12,7 +12,8 @@ export class FileStorage extends DB {
         super()
     }
     
-    public writeFile(data): Promise<any> {
+
+    writeFile(data): Promise<any> {
         const bucket = new GridFSBucket(this.db)
         
         return new Promise(resolve => {
@@ -38,7 +39,8 @@ export class FileStorage extends DB {
         })
     }
     
-    public async readFile(id, allowPrivateFile) {
+
+    async readFile(id, allowPrivateFile) {
         id = DB.createNewId(id)
         
         // first we try to get the file metadata
@@ -65,7 +67,8 @@ export class FileStorage extends DB {
         return await this.streamFile(id, fileInfo.metadata.mimetype)
     }
     
-    public deleteFile(id): Promise<any> {
+
+    deleteFile(id): Promise<any> {
         id = DB.createNewId(id)
         const bucket = new GridFSBucket(this.db)
 
@@ -86,7 +89,7 @@ export class FileStorage extends DB {
         })
     }
     
-    public isFileExists(id): Promise<boolean> {
+    isFileExists(id): Promise<boolean> {
         return new Promise(resolve => {
             this.db.collection('fs.files').findOne({
                 _id: id
@@ -101,7 +104,8 @@ export class FileStorage extends DB {
         })
     }
     
-    public getFileInfo(id, allowPrivateFile): Promise<any> {
+
+    getFileInfo(id, allowPrivateFile): Promise<any> {
         return new Promise(resolve => {
             this.db.collection('fs.files').findOne({
                 _id: id
@@ -121,7 +125,8 @@ export class FileStorage extends DB {
             })
         })
     }
-    
+
+
     private streamFile(id, mimetype): Promise<any> {
         return new Promise(resolve => {
             const gs = new GridStore(this.db, id, 'r')

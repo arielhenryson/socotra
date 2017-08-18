@@ -1,8 +1,8 @@
 const config = require('../config/config.json');
-const path = require("path");
-const ROOT = "../../";
+const path = require('path');
+const ROOT = '../../';
 const webpack = require('webpack');
-const {AotPlugin} = require('@ngtools/webpack');
+const { AotPlugin } = require('@ngtools/webpack');
 const environment = require('../config/environment.json');
 
 
@@ -47,7 +47,7 @@ if (!environment.development) {
 
 if (useAOT) {
         const aot = new AotPlugin({
-                tsConfigPath: path.normalize(ROOT + "./tsconfig.json")
+                tsConfigPath: path.normalize(ROOT + './tsconfig.json')
                 //entryModule:  "../../src/public/app/browser-app.module#BrowserAppModule"
         });
         plugins.push(aot);
@@ -58,29 +58,38 @@ if (useAOT) {
 }
 
 
-module.exports = {
-        entry: {
-                app: path.normalize(ROOT + "./src/public/app/main.browser")
-        },
-        output: {
-                path: __dirname,
-                filename: path.normalize(ROOT +"./.build/public/dist/[name].js")
-        },
-        resolve: {
-                extensions: [ '.ts', '.js']
-        },
-        module: {
-                loaders: [
-                        tsLoader,
-                        {
-                                test: /\.(html|css)$/,
-                                loader: 'raw-loader'
-                        },
-                        {
-                                test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
-                                loader: 'null'
-                        },
-                ]
-        },
-        plugins: plugins
+
+const webpackObj = {
+    entry: {
+        app: path.normalize(ROOT + "./src/public/app/main.browser")
+    },
+    output: {
+        path: __dirname,
+        filename: path.normalize(ROOT + './.build/public/dist/[name].js')
+    },
+    resolve: {
+        extensions: [ '.ts', '.js']
+    },
+    module: {
+        loaders: [
+            tsLoader,
+            {
+                test: /\.(html|css)$/,
+                loader: 'raw-loader'
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
+                loader: 'null'
+            },
+        ]
+    },
+    plugins: plugins,
 };
+
+
+if (environment.development) {
+    webpackObj['devtool'] = 'source-map'
+}
+
+
+module.exports = webpackObj;
