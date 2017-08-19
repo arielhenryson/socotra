@@ -2,7 +2,7 @@ import { DB } from './db'
 
 
 describe('database class', () => {
-    DB.prototype.connect = function() {}
+    DB.prototype.connect = () => {}
 
 
     it('should isValidId to say 5746b63b8f20bdd60741418a is valid _id', () => {
