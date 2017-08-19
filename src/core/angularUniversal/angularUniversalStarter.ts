@@ -31,7 +31,7 @@ module.exports = (app) => {
         })
 
         angularProcess.on('close', code => {
-            if (config.development && code !== 3) {
+            if (process.env.BUILD === 'dev' && code !== 3) {
                 console.log('Error detected in angular process, waiting for changes...')
                 return
             }

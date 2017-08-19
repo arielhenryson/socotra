@@ -10,7 +10,7 @@ const path = require('path')
 const ROOT = __dirname + '/../../../.build/'
 const config = require( path.normalize(ROOT + 'config/config.json') )
 
-if (config.development) {
+if (process.env.BUILD === 'dev') {
     fs.watch( path.normalize(ROOT + 'public/dist/app.js') , () => {
         process.exit(3)
     })

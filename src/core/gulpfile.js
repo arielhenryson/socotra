@@ -10,8 +10,6 @@ const glob = require('glob');
 const mkdirp = require('mkdirp');
 const getDirName = require('path').dirname;
 const config = require(ROOT + 'src/config/config.json');
-const environment = require(ROOT + 'src/config/environment.json');
-config.development = environment.development;
 const sass = require('gulp-sass');
 const inlineNg2Template = require('gulp-inline-ng2-template');
 const tsConfigNode = typescript.createProject(ROOT + 'tsconfigNode.json', { typescript: require('typescript')});
@@ -35,7 +33,7 @@ config.serverStart = ROOT + './main.js';
 console.log('----------------------------------------------------------');
 console.log('');
 console.log('');
-if (config.development) {
+if (process.env.BUILD === 'dev') {
         console.log('   Running in development mode');
 } else {
         console.log('   Running in production mode');
@@ -159,7 +157,7 @@ gulp.task('serve', () => {
                         return;
                 }
 
-                if (config.development) {
+                if (process.env.BUILD === 'dev') {
                         console.log('Error detected, waiting for changes...');
                 } else {
                         console.log('server stop restart in 3 sec..');
