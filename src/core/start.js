@@ -1,3 +1,8 @@
+if (typeof process.env.BUILD === 'undefined') {
+    process.env.BUILD = 'dev'
+}
+
+
 // set root folder
 const ROOT = __dirname + "/../../.build/";
 // end set root folder
@@ -65,7 +70,7 @@ function run() {
             return;
         }
 
-        if (config.development) {
+        if (process.env.BUILD === 'dev') {
             console.log('Error detected, waiting for changes...');
             return;
         }
@@ -82,7 +87,7 @@ function run() {
 
 
 
-    if(!watchSet && config.development) {
+    if(!watchSet && process.env.BUILD === 'dev') {
         watchSet = true;
         chokidar.watch('./src/**/*.*').on('change', path => {
             console.log(path);

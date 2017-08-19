@@ -9,7 +9,6 @@
 	"httpPort": 3000,
 	"httpsPort": 8080,
 	"onlySecure": false,
-	"mongoUrl": "localhost:27017/SocotraDB",
 	"sessionSecret": "efa109e0efec191b4e3c1da2e516f257",
 	"handlebarsTemplateEngine": true,
 	"logRequest": true,
@@ -32,5 +31,11 @@
 		{
 			"name": "demo"
 		}
-	]
+	],
+	"dev": {
+		"mongoUrl": "localhost:27017/SocotraDB"
+	},
+	"prod": {
+		"mongoUrl": "localhost:27017/SocotraDB"
+	}
 }

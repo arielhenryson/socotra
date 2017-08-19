@@ -22,10 +22,7 @@ export class DB {
         }
 
 
-        let url
-        if (typeof config.mongoUrl !== 'undefined' && config.mongoUrl.length) {
-            url = config.mongoUrl
-        }
+        let url = config[process.env.BUILD].mongoUrl
 
         MongoClient.connect('mongodb://' + url, (error, db) => {
             console.log('database connection established')

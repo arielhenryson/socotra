@@ -60,6 +60,7 @@ export class RequestValidator {
         }
     }
 
+
     isValidType(val, paramsSchema) {
         try {
             if (typeof paramsSchema.type === 'undefined') return true

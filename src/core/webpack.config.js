@@ -3,7 +3,6 @@ const path = require('path');
 const ROOT = '../../';
 const webpack = require('webpack');
 const { AotPlugin } = require('@ngtools/webpack');
-const environment = require('../config/environment.json');
 
 
 let useAOT = false;
@@ -17,7 +16,7 @@ let tsLoader = {
 let plugins = [];
 
 
-if (!environment.development) {
+if (process.env.BUILD !== 'dev') {
         useAOT = true;
 
         plugins.push(
@@ -87,7 +86,7 @@ const webpackObj = {
 };
 
 
-if (environment.development) {
+if (process.env.BUILD === 'dev') {
     webpackObj['devtool'] = 'source-map'
 }
 
