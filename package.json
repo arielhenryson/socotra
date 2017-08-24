@@ -55,6 +55,7 @@
     "@types/compression": "0.0.33",
     "@types/cookie-parser": "^1.4.0",
     "@types/hammerjs": "^2.0.34",
+    "@types/jasmine": "^2.5.54",
     "@types/node": "^8.0.19",
     "glob": "7.1.1",
     "gulp": "3.9.1",
@@ -79,10 +80,14 @@
     "mkdirp": "0.5.1",
     "run-sequence": "^1.2.2",
     "typescript": "2.4.2",
-    "webpack": "3.4.1"
+    "webpack": "3.4.1",
+    "tslint": "^5.6.0",
+    "tslint-eslint-rules": "^4.1.1"
   },
   "scripts": {
-    "start": "node ./src/core/start.js",
-    "test": "gulp test  --gulpfile ./src/core/gulpfile.js"
+    "start": "npm run lint && npm run serve",
+    "serve": "node ./src/core/start.js",
+    "test": "npm run lint && gulp test  --gulpfile ./src/core/gulpfile.js",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'"
   }
 }

@@ -66,7 +66,7 @@ export class DB {
         }
 
         return valid
-    };
+    }
 
 
     static createNewId(value?: string) {

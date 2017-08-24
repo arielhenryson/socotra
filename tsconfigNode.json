@@ -17,7 +17,8 @@
       "mime",
       "node",
       "serve-static",
-      "hammerjs"
+      "hammerjs",
+      "jasmine"
     ],
     "typeRoots": [
       "./node_modules/@types"
