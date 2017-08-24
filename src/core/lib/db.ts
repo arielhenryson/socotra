@@ -18,11 +18,12 @@ export class DB {
     connect() {
         if (mongo !== null) {
             this.db = mongo
+
             return
         }
 
 
-        let url = config[process.env.BUILD].mongoUrl
+        const url = config[process.env.BUILD].mongoUrl
 
         MongoClient.connect('mongodb://' + url, (error, db) => {
             console.log('database connection established')
@@ -41,10 +42,10 @@ export class DB {
                     const res = await self.dbInsert('_startLog', {})
                     if (!res.error) {
                         resolve(true)
+
                         return
                     }
                 }
-
 
 
                 setTimeout(() => {
@@ -59,7 +60,8 @@ export class DB {
 
     static isValidId(str: string) {
         str = str + ''
-        let len = str.length, valid = false
+        const len = str.length
+        let valid = false
 
         if (len === 12 || len === 24) {
             valid = /^[0-9a-fA-F]+$/.test(str)
@@ -79,12 +81,12 @@ export class DB {
 
 
     private static makeDoc(data: MongoDoc): Object {
-        let object = {
+        const object = {
             _createdTime: new Date()
         }
 
 
-        for (let key in data) {
+        for (const key in data) {
             object[key] = data[key]
         }
 
@@ -121,7 +123,7 @@ export class DB {
 
         return new Promise(resolve => {
             if (docs instanceof Array) {
-                for (let i in docs) {
+                for (const i in docs) {
                     docs[i] = DB.makeDoc(docs[i])
                 }
             } else {

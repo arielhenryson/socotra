@@ -6,7 +6,6 @@ const GridFSBucket = require('mongodb').GridFSBucket
 const GridStore = require('mongodb').GridStore
 
 
-
 export class FileStorage extends DB {
     constructor() {
         super()
@@ -17,9 +16,9 @@ export class FileStorage extends DB {
         const bucket = new GridFSBucket(this.db)
         
         return new Promise(resolve => {
-            let id = DB.createNewId('')
+            const id = DB.createNewId('')
 
-            let options = {
+            const options = {
                 metadata: data.metadata
             }
             
@@ -96,6 +95,7 @@ export class FileStorage extends DB {
             }, (err, doc) => {
                 if (doc === null) {
                     resolve(false)
+
                     return
                 }
                 
@@ -112,12 +112,14 @@ export class FileStorage extends DB {
             }, (err, doc) => {
                 if (doc === null) {
                     resolve(null)
+
                     return
                 }
 
 
                 if (doc.metadata.privateFile && !allowPrivateFile) {
                     resolve(-1)
+
                     return
                 }
 

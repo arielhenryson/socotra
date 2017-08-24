@@ -15,11 +15,13 @@ export class DBHelper extends DB {
             this.db.collection('users').findOne(where, (err, doc) => {
                 if (err) {
                     reject(err)
+
                     return
                 }
                 
                 if (doc === null) {
                     resolve(false)
+
                     return
                 }
                 
@@ -37,11 +39,13 @@ export class DBHelper extends DB {
             this.db.collection('users').findOne(where, (err, doc) => {
                 if (err) {
                     reject(err)
+
                     return
                 }
                 
                 if (doc === null) {
                     resolve(false)
+
                     return
                 }
                 
@@ -59,11 +63,13 @@ export class DBHelper extends DB {
             this.db.collection('users').findOne(where, (err, doc) => {
                 if (err) {
                     reject(err)
+
                     return
                 }
                 
                 if (doc !== null) {
                     resolve(true)
+
                     return
                 }
                 

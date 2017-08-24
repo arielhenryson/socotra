@@ -3,8 +3,7 @@ import * as validator from '../core/lib/generic/validation'
 import { AppEmail }  from '../services/appEmail.service'
 
 const config = require('../config/config.json')
-const path = require('path')
-const fs = require('fs')
+
 
 export class Auth extends Model {
     constructor() {
@@ -12,15 +11,15 @@ export class Auth extends Model {
     }
 
     public static async sendMailToNewUser(newUser) {
-        let emailObj = new AppEmail()
+        const emailObj = new AppEmail()
 
-        let data = {
+        const data = {
             to: newUser.email,
             activationKey: newUser.activationKey,
         }
 
 
-        let template = await emailObj.render('signup', data)
+        const template = await emailObj.render('signup', data)
 
         const emailOptions = {
             subject: config.appName + ' account activation',
@@ -45,6 +44,7 @@ export class Auth extends Model {
         Auth.sendMailToNewUser(newUser)
 
         const res: SocotraAPIResponse = await this.dbInsert('users', newUser, {})
+
         return !res.error
     }
 

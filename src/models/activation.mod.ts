@@ -30,6 +30,7 @@ export class Activation extends Model {
         }
 
         const res: any = await this.dbUpdate('users', where, what, {})
+
         return !res.error
 
     }

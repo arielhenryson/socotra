@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
         params: req.query
     }
 
-    let logger = new RequestLogger()
+    const logger = new RequestLogger()
     logger.log(requestData)
 
     next()

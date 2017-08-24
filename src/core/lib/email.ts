@@ -17,7 +17,7 @@ export class Email extends DB {
 
     send(options): void {
         // setup e-mail data with unicode symbols
-        let mailOptions = {
+        const mailOptions = {
             from: config.systemEmail,
             to: options.to,
             subject: options.subject,
@@ -46,18 +46,18 @@ export class Email extends DB {
                     throw err
                 }
 
-                let browserLink = config.domain + '/_email/' + this.id
+                const browserLink = config.domain + '/_email/' + this.id
                 let template = data.toString()
 
                 // Insert the  param to the template
-                for (let key in params) {
+                for (const key in params) {
                     // For replace all string not only the first
                     // string we use regex with g
-                    let re = new RegExp('{{' + key + '}}', 'g')
+                    const re = new RegExp('{{' + key + '}}', 'g')
                     template = template.replace(re, params[key])
                 }
 
-                let re = new RegExp('{{_browserLink}}', 'g')
+                const re = new RegExp('{{_browserLink}}', 'g')
                 template = template.replace(re, browserLink)
 
                 resolve(template)
@@ -69,7 +69,7 @@ export class Email extends DB {
     // async function that save every email sent from
     // the system
     private saveToDB(data): Promise<any> {
-        let sentMail = data
+        const sentMail = data
         const newID = DB.createNewId('')
 
         data._id = this.id
@@ -78,6 +78,7 @@ export class Email extends DB {
             this.db.collection('_sentEmails').insert(sentMail, (err, doc) => {
                 if (err) {
                     resolve(false)
+
                     return
                 }
 

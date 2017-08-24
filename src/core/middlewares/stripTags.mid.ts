@@ -2,7 +2,7 @@ const strip = require('striptags')
 
 
 function _stripTag(obj) {
-    for (let key in obj) {
+    for (const key in obj) {
         if (typeof obj[key] === 'object') {
             obj[key] = _stripTag(obj[key])
         } else {

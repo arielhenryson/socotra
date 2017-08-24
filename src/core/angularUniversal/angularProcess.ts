@@ -24,7 +24,6 @@ const app: any = express()
 import { enableProdMode } from '@angular/core'
 
 
-
 import * as bodyParser from 'body-parser'
 import * as cookieParser from 'cookie-parser'
 
@@ -42,7 +41,6 @@ app.engine('.html', ngExpressEngine({
 }))
 app.set('views', ROOT + '/public/')
 app.set('view engine', 'html')
-
 
 
 app.use(cookieParser('Angular 2 Universal'))

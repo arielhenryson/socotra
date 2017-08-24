@@ -11,6 +11,7 @@ export class Unsubscribe extends Model {
         }
 
         const res: SocotraAPIResponse = await this.dbInsert('unsubscribe', obj, {})
+
         return !res.error
     }
     

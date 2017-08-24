@@ -10,11 +10,9 @@ const ROOT = __dirname + '/../../.build/'
 // end set root folder
 
 
-
 const app: any = express()
 const fs = require('fs')
 const compression = require('compression')
-
 
 
 // create .temp folder for store temp files
@@ -82,7 +80,6 @@ export class Server {
             if (config.serverRendering) {
                 require('./angularUniversal/angularUniversalStarter')(app)
             }
-
 
 
             // Setting the static folder fo the app
