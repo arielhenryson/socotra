@@ -22,6 +22,6 @@ export class ServerAppModule {
 
     // Gotcha
     ngOnBootstrap = () => {
-        this.transferState.inject();
+        this.transferState.inject()
     }
 }

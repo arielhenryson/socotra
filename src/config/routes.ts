@@ -1,32 +1,32 @@
 export const routes: Array<SocotraRoute> = [
   {
-    path: "/",
-    method: "GET",
-    controller: "index",
-    middlewares: ["auth"]
+    path: '/',
+    method: 'GET',
+    controller: 'index',
+    middlewares: ['auth']
   },
   {
-    path: "/unsubscribe/:userID",
-    controller: "unsubscribe",
+    path: '/unsubscribe/:userID',
+    controller: 'unsubscribe',
     middlewares: []
   },
   {
-    path: "/activation/:activationKey",
-    controller: "activation",
+    path: '/activation/:activationKey',
+    controller: 'activation',
     middlewares: []
   },
   {
-    path: "/api/signup",
-    controller: "signupAPI",
+    path: '/api/signup',
+    controller: 'signupAPI',
     middlewares: []
   },
   {
-    path: "/api/login",
-    controller: "loginAPI",
+    path: '/api/login',
+    controller: 'loginAPI',
     middlewares: [],
     params: {
       username: {
-        type: "email",
+        type: 'email',
         required: true,
         maxLength: 50,
         minLength: 20,
@@ -35,9 +35,9 @@ export const routes: Array<SocotraRoute> = [
 
       },
       password: {
-        type: "string",
+        type: 'string',
         required: true
       }
     }
   }
-];
+]
