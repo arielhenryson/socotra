@@ -1,10 +1,8 @@
 import { extractRoutes } from './util/extractRoutes'
 const spawn = require('child_process').spawn
-import { config } from '../global'
 
 const proxy = require('express-http-proxy')
 const fs = require('fs')
-
 
 
 module.exports = (app) => {
@@ -33,6 +31,7 @@ module.exports = (app) => {
         angularProcess.on('close', code => {
             if (process.env.BUILD === 'dev' && code !== 3) {
                 console.log('Error detected in angular process, waiting for changes...')
+
                 return
             }
 

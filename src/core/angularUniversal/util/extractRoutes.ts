@@ -4,8 +4,10 @@ export function extractRoutes(content) {
 
     content = content[0]
 
+    /* tslint:disable */
     const array1 = content.match(/\path:'.+'/g)
     const array2 = content.match(/\path:".+"/g)
+    /* tslint:enable */
 
     let returnArray = []
 
@@ -30,7 +32,7 @@ function getPath(path) {
     path = replaceAll('"', '', path)
     path = path.split(',')
 
-    let pathArray = []
+    const pathArray = []
 
 
     path.forEach(p => {

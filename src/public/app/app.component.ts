@@ -30,7 +30,7 @@ export class App {
 
         let index = 0
         setInterval(() => {
-            let foo = this._store.getState()['foo']
+            const foo = this._store.getState()['foo']
             foo.bar = index
             index++
             // foo.bar

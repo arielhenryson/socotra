@@ -30,6 +30,7 @@ module.exports = (app) => {
 
         if (results.error) {
             res.send(results)
+
             return
         }
 
@@ -55,7 +56,7 @@ module.exports = (app) => {
         }
 
         const controller = require(ROOT + '/controllers/' + route.controller + '.ctrl')
-        let middlewares = []
+        const middlewares = []
 
 
         // validate parameters if exists
@@ -108,12 +109,13 @@ function requestValidator(paramsSchema) {
 
         if (test.error) {
             res.send(test)
+
             return
         }
 
         let typeError = false
 
-        for (let i in req.body) {
+        for (const i in req.body) {
             const value = req.body[i]
             if (!_RequestValidator.isValidType(value, paramsSchema[i])) {
                 typeError = true

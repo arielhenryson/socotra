@@ -71,6 +71,7 @@ function getReqResProviders(req: Request, res: Response): Provider[] {
             useValue: res
         })
     }
+
     return providers
 }
 

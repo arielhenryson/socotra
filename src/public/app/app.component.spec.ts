@@ -30,6 +30,5 @@ describe('1st tests', () => {
     })
 
 
-
     it('test value', () => expect(comp.testValue).toBe('test'))
 })

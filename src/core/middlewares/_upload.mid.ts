@@ -38,6 +38,7 @@ module.exports = (req, res, next) => {
         return new Promise(resolve => {
             if (typeof req.uploadAllowedTypes === 'undefined') {
                 resolve(true)
+
                 return
             }
 
@@ -56,9 +57,6 @@ module.exports = (req, res, next) => {
     }
 
 
-
-
-
     upload(req, res, async (err) => {
         if (err) {
             req._upload = {
@@ -67,6 +65,7 @@ module.exports = (req, res, next) => {
             }
 
             next()
+
             return
         }
 
@@ -76,11 +75,11 @@ module.exports = (req, res, next) => {
             file: null
         }
 
-        let privateFile = req.headers['private-file'] === 'true'
+        const privateFile = req.headers['private-file'] === 'true'
 
 
-        let file = req.file
-        let data = {
+        const file = req.file
+        const data = {
             id: null,
             path: file.path,
             name: file.originalname,
@@ -93,7 +92,6 @@ module.exports = (req, res, next) => {
                 type: req.imageType
             }
         }
-
 
 
         if (

@@ -14,19 +14,19 @@ export class AppEmail extends Email {
     }
     
     public async render(templateName, data) {
-        let templateData = {
+        const templateData = {
             _appName: config.appName, 
             _domain: config.domain
         }
         
-        for (let key in data) {
+        for (const key in data) {
             templateData[key] = data[key]
         }
-        
-        let template = await super.render(templateName, templateData)
+
+        const template = await super.render(templateName, templateData)
         let finalTemplate = String(template)
-        let userId = await this.DBHelper.getUserIdByEmail(data.to)
-        let unsubscribeLink: string = config.domain + '/unsubscribe/' + userId
+        const userId = await this.DBHelper.getUserIdByEmail(data.to)
+        const unsubscribeLink: string = config.domain + '/unsubscribe/' + userId
         finalTemplate = finalTemplate.replace('{{unsubscribeLink}}', unsubscribeLink)
 
         return finalTemplate
@@ -41,11 +41,13 @@ export class AppEmail extends Email {
             this.db.collection('unsubscribe').findOne(where, (err, doc) => {
                 if (err) {
                     reject(err)
+
                     return
                 }
                 
                 if (doc !== null) {
                     resolve(true)
+
                     return
                 }
                 
@@ -58,6 +60,7 @@ export class AppEmail extends Email {
         const isInUnsubscribe = await this.isInUnsubscribe(options.to)
         if (isInUnsubscribe) {
             console.log("Can't send mail to " + options.to + ' email is in unsubscribe list')
+
             return false
         }
         

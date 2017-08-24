@@ -4,8 +4,7 @@ module.exports = (app) => {
     if (config.onlySecure) {
         app.use((req, res, next) => {
             if (req.secure) {
-                next()
-                return
+                return next()
             }
 
             let address = 'https://' + config.domain
