@@ -18,6 +18,7 @@ const karmaServer = require('karma').Server;
 const jasmineNode = require('gulp-jasmine-node');
 const runSequence = require('run-sequence');
 const istanbul = require('gulp-istanbul');
+const ifElse = require('gulp-if-else');
 
 
 let spawn = require('child_process').spawn,node;
@@ -34,9 +35,9 @@ console.log('----------------------------------------------------------');
 console.log('');
 console.log('');
 if (process.env.BUILD === 'dev') {
-        console.log('   Running in development mode');
+    console.log('   Running in development mode');
 } else {
-        console.log('   Running in production mode');
+    console.log('   Running in production mode');
 }
 console.log('');
 console.log('');
@@ -46,175 +47,175 @@ console.log('----------------------------------------------------------');
 //Helper function that will write file
 //also if the folder is not exist
 function writeFile(path, contents, cb) {
-        mkdirp(getDirName(path), function (err) {
-                if (err) return cb(err);
+    mkdirp(getDirName(path), function (err) {
+        if (err) return cb(err);
 
-                fs.writeFile(path, contents, cb);
-        });
+        fs.writeFile(path, contents, cb);
+    });
 }
 
 
 //Copy all of the src folder to the build directory
 gulp.task('copySrcFolder', () => {
-        return gulp.src([
-                config.srcFolder + '/**',
-                '!' + config.srcFolder + '/**/*.ts',
-                '!' + config.srcFolder + '/public/scss/**',
-                '!' + config.srcFolder + '/public/less/**',
-                '!' + config.srcFolder + '/public/app/**',
-                '!' + config.srcFolder + '/views/email/**',
-                '!' + config.srcFolder + '/public/app/**'
-        ])
-                .pipe(gulp.dest(config.buildDir))
+    return gulp.src([
+        config.srcFolder + '/**',
+        '!' + config.srcFolder + '/**/*.ts',
+        '!' + config.srcFolder + '/public/scss/**',
+        '!' + config.srcFolder + '/public/less/**',
+        '!' + config.srcFolder + '/public/app/**',
+        '!' + config.srcFolder + '/views/email/**',
+        '!' + config.srcFolder + '/public/app/**'
+    ])
+        .pipe(gulp.dest(config.buildDir))
 });
 
 
 //Build the email partials
 gulp.task('buildEmailParts', [], (cb) => {
-        let layoutParms = {
-                _appName: config.appName,
-                _year: new Date().getFullYear()
-        };
-        let layout = fs.readFileSync(config.srcFolder + '/views/email/layouts/main.layout.mjml', 'utf8');
+    let layoutParms = {
+        _appName: config.appName,
+        _year: new Date().getFullYear()
+    };
+let layout = fs.readFileSync(config.srcFolder + '/views/email/layouts/main.layout.mjml', 'utf8');
 
 //Insert the layout param to the template
-        for (let key in layoutParms) {
-                //For replace all string not only the first
-                //string we use regex with g
-                const re = new RegExp('{{' + key +'}}', 'g');
-                layout = layout.replace(re, layoutParms[key]);
-        }
+for (let key in layoutParms) {
+    //For replace all string not only the first
+    //string we use regex with g
+    const re = new RegExp('{{' + key +'}}', 'g');
+    layout = layout.replace(re, layoutParms[key]);
+}
 
-        glob.sync(config.srcFolder + '/views/email/*.mjml').forEach((filePath, idx, array) => {
-                //If the filePath is folder we skip to the next one
-                if (fs.statSync(filePath).isDirectory()) {
-                        return;
-                }
+glob.sync(config.srcFolder + '/views/email/*.mjml').forEach((filePath, idx, array) => {
+    //If the filePath is folder we skip to the next one
+    if (fs.statSync(filePath).isDirectory()) {
+    return;
+}
 
-                let fileName = filePath.split('/');
-                fileName = fileName[fileName.length -1];
-                const fileContent =  fs.readFileSync(filePath, 'utf8');
-                let template = layout.replace('{{body}}', fileContent);
-                writeFile(config.buildDir + '/views/email/partialsBuild/' + fileName, template, function () {
-                        if (idx === array.length - 1){
-                                cb();
-                        }
-                });
-        });
+let fileName = filePath.split('/');
+fileName = fileName[fileName.length -1];
+const fileContent =  fs.readFileSync(filePath, 'utf8');
+let template = layout.replace('{{body}}', fileContent);
+writeFile(config.buildDir + '/views/email/partialsBuild/' + fileName, template, function () {
+    if (idx === array.length - 1){
+        cb();
+    }
+});
+});
 });
 
 
 //Compile email from MJML to HTML
 gulp.task('compileEmail',['buildEmailParts'], () => {
-        return gulp.src(config.buildDir + '/views/email/partialsBuild/*.mjml')
-                .pipe(mjml())
-                .pipe(gulp.dest(config.buildDir + '/views/email/build/'))
+    return gulp.src(config.buildDir + '/views/email/partialsBuild/*.mjml')
+        .pipe(mjml())
+        .pipe(gulp.dest(config.buildDir + '/views/email/build/'))
 });
 
-
-//Compile SASS to CSS
+// Compile Sass to css
 gulp.task('compileSASS', [], () => {
-        return gulp.src(config.srcFolder + '/public/scss/style.scss')
-                .pipe(sass.sync().on('error', sass.logError))
-                .pipe(gulp.dest(config.buildDir + '/public/css'));
+    return gulp.src(config.srcFolder + '/public/scss/style.scss')
+        .pipe(ifElse(process.env.BUILD === 'dev',
+                () => {return sass({outputStyle: "nested"})},
+            () => {return sass({outputStyle: 'compressed'})}))
+.pipe(gulp.dest(config.buildDir + '/public/css'))
 });
-
 
 //compile all the server side file to ES6 for Node.JS
 gulp.task('compileTS', [], () => {
-        return gulp.src([config.srcFolder + '/**/*.ts'])
-                .pipe(inlineNg2Template({
-                        useRelativePaths: true,
-                        base: config.srcFolder + '/public/app/',
-                        removeLineBreaks: true,
-                        indent: 1
-                }))
-                .pipe(tsConfigNode())
-                .pipe(gulp.dest(config.buildDir));
+    return gulp.src([config.srcFolder + '/**/*.ts'])
+        .pipe(inlineNg2Template({
+            useRelativePaths: true,
+            base: config.srcFolder + '/public/app/',
+            removeLineBreaks: true,
+            indent: 1
+        }))
+        .pipe(tsConfigNode())
+        .pipe(gulp.dest(config.buildDir));
 });
 
 
 gulp.task('webpack', [], (cb) => {
-        // modify some webpack config options
-        const myConfig = Object.create(webpackConfig);
+    // modify some webpack config options
+    const myConfig = Object.create(webpackConfig);
 
-        // run webpack
-        webpack(myConfig, (err, stats) => {
-                if (err) {
-                        console.log(err);
-                }
+// run webpack
+webpack(myConfig, (err, stats) => {
+    if (err) {
+        console.log(err);
+    }
 
-                cb();
-        });
+    cb();
+});
 });
 
 
 gulp.task('serve', () => {
-        if (node) node.kill();
-        node = spawn('node', [config.serverStart], {stdio: 'inherit'});
-        node.on('close', function (code) {
-                if(code === null) {
-                        return;
-                }
+    if (node) node.kill();
+node = spawn('node', [config.serverStart], {stdio: 'inherit'});
+node.on('close', function (code) {
+    if(code === null) {
+        return;
+    }
 
-                if (process.env.BUILD === 'dev') {
-                        console.log('Error detected, waiting for changes...');
-                } else {
-                        console.log('server stop restart in 3 sec..');
-                        setTimeout(()=> {
-                                gulp.start('serve');
-                        }, 3000);
-                }
-        });
+    if (process.env.BUILD === 'dev') {
+        console.log('Error detected, waiting for changes...');
+    } else {
+        console.log('server stop restart in 3 sec..');
+        setTimeout(()=> {
+            gulp.start('serve');
+    }, 3000);
+    }
+});
 });
 
 
 let taskCounter = 0;
 gulp.task('addToTaskCounter', function () {
-        taskCounter++;
+    taskCounter++;
 });
 
 
 gulp.task('ServerStart', function () {
-        taskCounter--;
+    taskCounter--;
 
-        // there are active task that didn't finished yet
-        // so the last task will restart the server
-        // so wee can skip restart
-        if (taskCounter > 0) {
-                return;
-        }
+    // there are active task that didn't finished yet
+    // so the last task will restart the server
+    // so wee can skip restart
+    if (taskCounter > 0) {
+        return;
+    }
 
-        gulp.start('serve');
+    gulp.start('serve');
 });
 
 
 //Compile and run server
 gulp.task('startServer', ['compile'],  () => {
-        gulp.start('serve');
+    gulp.start('serve');
 
 
-        //watch for email template change
-        gulp.watch(config.srcFolder + '/views/email/**', function() {
-                runSequence('addToTaskCounter', 'compileEmail', 'ServerStart');
-        });
+//watch for email template change
+gulp.watch(config.srcFolder + '/views/email/**', function() {
+    runSequence('addToTaskCounter', 'compileEmail', 'ServerStart');
+});
 
 
-        gulp.watch(config.srcFolder + '/public/scss/**' , function() {
-                runSequence('addToTaskCounter', 'compileSASS', 'ServerStart');
-        });
+gulp.watch(config.srcFolder + '/public/scss/**' , function() {
+    runSequence('addToTaskCounter', 'compileSASS', 'ServerStart');
+});
 
 
-        gulp.watch(config.srcFolder +'/public/app/**' , function() {
-                runSequence('addToTaskCounter', 'webpack', 'ServerStart');
-        });
+gulp.watch(config.srcFolder +'/public/app/**' , function() {
+    runSequence('addToTaskCounter', 'webpack', 'ServerStart');
+});
 
-        gulp.watch([
-                config.srcFolder +'/**',
-                '!' + config.srcFolder + '/public/**'
-        ] , function() {
-                runSequence('addToTaskCounter', 'compileTSServer', 'ServerStart');
-        });
+gulp.watch([
+    config.srcFolder +'/**',
+    '!' + config.srcFolder + '/public/**'
+] , function() {
+    runSequence('addToTaskCounter', 'compileTSServer', 'ServerStart');
+});
 });
 
 
@@ -224,30 +225,30 @@ gulp.task('pre-test', ['compile'], () => {
         '!' + config.buildDir + '/public/**/*.spec.js'
     ])
     // Covering files
-    .pipe(istanbul())
-    // Force `require` to return covered files
-    .pipe(istanbul.hookRequire());
+        .pipe(istanbul())
+        // Force `require` to return covered files
+        .pipe(istanbul.hookRequire());
 });
 
 
 gulp.task('testServer', ['compileTS', 'pre-test'], () => {
-        return gulp.src([
-            config.buildDir + '/**/*.spec.js',
-            '!' + config.buildDir + '/public/**/*.spec.js'
-        ])
-            .pipe(jasmineNode({
-                timeout: 10000
-            }))
-            .pipe(istanbul.writeReports())
-            .pipe(istanbul.enforceThresholds({ thresholds: { global: 0 } }))
+    return gulp.src([
+        config.buildDir + '/**/*.spec.js',
+        '!' + config.buildDir + '/public/**/*.spec.js'
+    ])
+        .pipe(jasmineNode({
+            timeout: 10000
+        }))
+        .pipe(istanbul.writeReports())
+        .pipe(istanbul.enforceThresholds({ thresholds: { global: 0 } }))
 });
 
 
 gulp.task('testClient', ['webpack'], (done) => {
-        new karmaServer({
-                configFile: __dirname + '/karma.conf.js',
-                singleRun: true
-        }, function() { done(); }).start();
+    new karmaServer({
+        configFile: __dirname + '/karma.conf.js',
+        singleRun: true
+    }, function() { done(); }).start();
 });
 
 
@@ -255,6 +256,6 @@ gulp.task('test', ['testServer', 'testClient']);
 
 
 gulp.task('compile', ['copySrcFolder', 'compileEmail',
-        'compileSASS', 'compileTS', 'webpack']);
+    'compileSASS', 'compileTS', 'webpack']);
 
 gulp.task('run', ['startServer']);
