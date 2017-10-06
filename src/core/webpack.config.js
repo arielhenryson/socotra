@@ -46,8 +46,8 @@ if (process.env.BUILD !== 'dev') {
 
 if (useAOT) {
         const aot = new AotPlugin({
-                tsConfigPath: path.normalize(ROOT + './tsconfig.json')
-                //entryModule:  "../../src/public/app/browser-app.module#BrowserAppModule"
+                tsConfigPath: path.normalize(ROOT + './tsconfig.json'),
+                entryModule:  "../../src/public/app/browser-app.module#BrowserAppModule"
         });
         plugins.push(aot);
         tsLoader = {
