@@ -1,24 +1,19 @@
+/*
 import { TestBed } from '@angular/core/testing'
-
 import { App } from './app.component'
-import { BrowserDynamicTestingModule,
-    platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing'
 import { RouterTestingModule } from '@angular/router/testing'
+import { RXBox } from 'rxbox'
 
 let fixture
 let comp
 
 describe('1st tests', () => {
     beforeEach(() => {
-        TestBed.initTestEnvironment(
-            BrowserDynamicTestingModule,
-            platformBrowserDynamicTesting()
-        )
 
         // refine the test module by declaring the test component
         TestBed.configureTestingModule({
             declarations: [ App ],
-            imports: [ RouterTestingModule ]
+            imports: [ RouterTestingModule, RXBox ]
 
         })
 
@@ -32,3 +27,4 @@ describe('1st tests', () => {
 
     it('test value', () => expect(comp.testValue).toBe('test'))
 })
+*/

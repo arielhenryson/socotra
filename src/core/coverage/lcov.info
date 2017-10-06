@@ -1,5 +1,5 @@
 TN:
-SF:/Users/Ariel/WebstormProjects/Eventlix/.build/core/lib/db.spec.js
+SF:/home/shimon/PhpstormProjects/socotra/.build/core/lib/db.spec.js
 FN:5,(anonymous_1)
 FNF:1
 FNH:0
@@ -35,16 +35,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/Ariel/WebstormProjects/Eventlix/.build/core/tests/db.spec.js
-FNF:0
-FNH:0
-LF:0
-LH:0
-BRF:0
-BRH:0
-end_of_record
-TN:
-SF:/Users/Ariel/WebstormProjects/Eventlix/.build/core/tests/validation.spec.js
+SF:/home/shimon/PhpstormProjects/socotra/.build/core/tests/validation.spec.js
 FNF:0
 FNH:0
 DA:2,1
