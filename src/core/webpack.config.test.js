@@ -4,7 +4,6 @@ const ROOT = '../../';
 const webpack = require('webpack');
 const { AotPlugin } = require('@ngtools/webpack');
 
-
 const _root = path.resolve(__dirname, ROOT);
 
 function root(args) {
